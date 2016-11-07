@@ -18,13 +18,5 @@ module ManageIQ
     def self.separator
       SEPARATOR
     end
-
-    def self.log_header(title)
-      puts header(title)
-    end
-
-    def self.log_separator
-      puts separator
-    end
   end
 end

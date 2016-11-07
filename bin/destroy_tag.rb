@@ -13,7 +13,7 @@ end
 
 repos = ManageIQ::Release::Repos[opts[:branch]]
 repos.each do |repo|
-  ManageIQ::Release.log_header "Untagging #{repo.name}"
+  puts ManageIQ::Release.header("Untagging #{repo.name}")
   ManageIQ::Release::DestroyTag.new(repo, opts[:tag]).run
   puts
 end

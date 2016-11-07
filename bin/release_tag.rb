@@ -16,7 +16,7 @@ review = StringIO.new
 post_review = StringIO.new
 
 repos.each do |repo|
-  ManageIQ::Release.log_header "Tagging #{repo.name}"
+  puts ManageIQ::Release.header("Tagging #{repo.name}")
   release_tag = ManageIQ::Release::ReleaseTag.new(repo, opts[:branch], opts[:tag])
   release_tag.run
   puts
@@ -28,7 +28,7 @@ repos.each do |repo|
 end
 
 puts
-ManageIQ::Release.log_separator
+puts ManageIQ::Release.separator
 puts
 puts "Review the following:"
 puts
