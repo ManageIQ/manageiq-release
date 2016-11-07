@@ -7,7 +7,7 @@ Tools for releasing new branches and tags of ManageIQ.
 ## Installation
 
 ```sh
-git clone https://github.com/ManageIQ/manageiq-release.git`
+git clone https://github.com/ManageIQ/manageiq-release.git
 bundle
 ```
 
