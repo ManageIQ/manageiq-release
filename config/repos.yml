@@ -1,0 +1,24 @@
+master:
+  manageiq:
+    has_rake_release: true
+  manageiq-appliance:
+  manageiq-appliance-build:
+  manageiq-ui-service:
+  manageiq-providers-amazon:
+  manageiq-providers-azure:
+  manageiq-providers-lenovo:
+  manageiq_docs:
+euwe:
+  manageiq:
+    has_rake_release: true
+  manageiq-appliance:
+  manageiq-appliance-build:
+  manageiq-ui-service:
+  manageiq-providers-amazon:
+  manageiq_docs:
+darga:
+  manageiq:
+    has_rake_release: true
+  manageiq-appliance:
+  manageiq-appliance-build:
+  manageiq-ui-service:
