@@ -1,5 +1,6 @@
 require 'yaml'
 require 'pathname'
+require 'active_support/core_ext/enumerable'
 
 module ManageIQ
   module Release
@@ -15,6 +16,10 @@ module ManageIQ
           config.each_with_object({}) do |(branch, repos), h|
             h[branch] = repos.map { |name, options| Repo.new(name, options) }
           end
+      end
+
+      def self.all_repos
+        all.values.flatten.index_by(&:name).values
       end
 
       def self.config
