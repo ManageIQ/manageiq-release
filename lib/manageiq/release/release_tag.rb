@@ -21,7 +21,7 @@ module ManageIQ
 
       def post_review
         # TODO: Automate this with some questions at tag time
-        "pushd #{repo.name}; OVERRIDE=true git push origin #{branch} #{tag}; popd"
+        "pushd #{repo.path}; OVERRIDE=true git push origin #{branch} #{tag}; popd"
       end
 
       private
