@@ -4,6 +4,7 @@ master:
   manageiq-appliance:
   manageiq-appliance-build:
   manageiq-ui-service:
+  manageiq-pods:
   manageiq-providers-amazon:
   manageiq-providers-azure:
   manageiq-providers-lenovo:
@@ -14,6 +15,7 @@ euwe:
   manageiq-appliance:
   manageiq-appliance-build:
   manageiq-ui-service:
+  manageiq-pods:
   manageiq-providers-amazon:
   manageiq_docs:
 darga:
