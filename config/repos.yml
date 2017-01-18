@@ -3,20 +3,24 @@ master:
     has_rake_release: true
   manageiq-appliance:
   manageiq-appliance-build:
-  manageiq-ui-service:
+  manageiq-content:
+  manageiq-gems-pending:
   manageiq-pods:
   manageiq-providers-amazon:
   manageiq-providers-azure:
   manageiq-providers-lenovo:
+  manageiq-providers-vmware:
+  manageiq-ui-classic:
+  manageiq-ui-service:
   manageiq_docs:
 euwe:
   manageiq:
     has_rake_release: true
   manageiq-appliance:
   manageiq-appliance-build:
-  manageiq-ui-service:
   manageiq-pods:
   manageiq-providers-amazon:
+  manageiq-ui-service:
   manageiq_docs:
 darga:
   manageiq:
