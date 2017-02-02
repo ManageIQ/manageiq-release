@@ -15,6 +15,10 @@ module ManageIQ
         @path = REPOS_DIR.join(name)
       end
 
+      def github_repo
+        [options.org || "ManageIQ", name].join("/")
+      end
+
       def git
         @git ||= begin
           retried = false
