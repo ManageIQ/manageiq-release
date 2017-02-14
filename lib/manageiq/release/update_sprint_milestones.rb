@@ -6,10 +6,10 @@ module ManageIQ
     class UpdateSprintMilestones
       attr_reader :repo, :title, :dry_run
 
-      def initialize(repo, title, options = {})
-        @repo = repo
-        @title = title
-        @dry_run = options[:dry_run]
+      def initialize(repo, title:, dry_run: false)
+        @repo    = repo
+        @title   = title
+        @dry_run = dry_run
 
         raise "Invalid title #{title.inspect}" unless title_valid?
       end

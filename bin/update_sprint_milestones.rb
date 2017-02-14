@@ -15,6 +15,6 @@ end
 repos = ManageIQ::Release::Repos["master"]
 repos.each do |repo|
   puts ManageIQ::Release.header(repo.name)
-  ManageIQ::Release::UpdateSprintMilestones.new(repo.github_repo, opts[:title], opts).run
+  ManageIQ::Release::UpdateSprintMilestones.new(repo.github_repo, opts.slice(:title, :dry_run)).run
   puts
 end

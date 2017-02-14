@@ -16,7 +16,7 @@ bundle
 - Release a new tag
 
   ```sh
-  bin/release_tag.rb --tag <new_tag_name> --branch <branch_name>
+  bin/release_tag.rb [--dry-run] --tag <new_tag_name> --branch <branch_name>
   ```
 
 - Destroy a tag that was incorrectly created locally
