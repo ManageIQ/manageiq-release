@@ -1,12 +1,13 @@
 module ManageIQ
   module Release
     class ReleaseTag
-      attr_reader :repo, :branch, :tag
+      attr_reader :repo, :branch, :tag, :dry_run
 
-      def initialize(repo, branch, tag)
-        @repo = repo
-        @branch = branch
-        @tag = tag
+      def initialize(repo, branch:, tag:, dry_run: false)
+        @repo    = repo
+        @branch  = branch
+        @tag     = tag
+        @dry_run = dry_run
       end
 
       def run
@@ -31,14 +32,23 @@ module ManageIQ
       end
 
       def rake_release
-        Bundler.with_clean_env do
-          system!("bundle check || bundle update", :chdir => repo.path)
-          system!({"RELEASE_VERSION" => tag}, "bundle exec rake release", :chdir => repo.path)
+        if dry_run
+          puts "** dry-run: bundle check || bundle update"
+          puts "** dry-run: RELEASE_VERSION=#{tag} bundle exec rake release"
+        else
+          Bundler.with_clean_env do
+            system!("bundle check || bundle update", :chdir => repo.path)
+            system!({"RELEASE_VERSION" => tag}, "bundle exec rake release", :chdir => repo.path)
+          end
         end
       end
 
       def tagged_release
-        repo.git.tag(tag)
+        if dry_run
+          puts "** dry-run: git tag #{tag}"
+        else
+          repo.git.tag(tag)
+        end
       end
     end
   end

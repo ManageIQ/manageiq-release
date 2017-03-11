@@ -9,6 +9,8 @@ require 'trollop'
 opts = Trollop.options do
   opt :tag,    "The new tag name",  :type => :string, :required => true
   opt :branch, "The target branch", :type => :string, :required => true
+
+  opt :dry_run, "", :default => false
 end
 
 repos = ManageIQ::Release::Repos[opts[:branch]]
@@ -16,8 +18,9 @@ review = StringIO.new
 post_review = StringIO.new
 
 repos.each do |repo|
+  release_tag = ManageIQ::Release::ReleaseTag.new(repo, opts.slice(:branch, :tag, :dry_run))
+
   puts ManageIQ::Release.header("Tagging #{repo.name}")
-  release_tag = ManageIQ::Release::ReleaseTag.new(repo, opts[:branch], opts[:tag])
   release_tag.run
   puts
 
