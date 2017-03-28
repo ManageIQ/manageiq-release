@@ -4,6 +4,7 @@ master:
   manageiq-appliance:
   manageiq-appliance-build:
   manageiq-content:
+    has_rake_release: true
   manageiq-gems-pending:
   manageiq-pods:
   manageiq-providers-amazon:
