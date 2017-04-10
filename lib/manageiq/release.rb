@@ -8,6 +8,7 @@ require 'manageiq/release/destroy_tag'
 require 'manageiq/release/release_branch'
 require 'manageiq/release/release_tag'
 require 'manageiq/release/update_labels'
+require 'manageiq/release/update_repo_settings'
 require 'manageiq/release/update_sprint_milestones'
 
 module ManageIQ

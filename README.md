@@ -37,6 +37,12 @@ bundle
   bin/update_labels.rb [--dry-run]
   ```
 
+- Update the repository settings (see also [GitHub interactions](#github-interactions))
+
+  ```sh
+  bin/update_repo_settings.rb [--dry-run] [--branch <specific branch>] [--repo <specific_repo>]
+  ```
+
 - Update the Sprint milestones (see also [GitHub interactions](#github-interactions))
 
   ```sh
