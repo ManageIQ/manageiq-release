@@ -9,7 +9,7 @@ module ManageIQ
 
       attr_reader :name, :options, :path
 
-      def initialize(name, options)
+      def initialize(name, options = nil)
         @name = name
         @options = OpenStruct.new(options || {})
         @path = REPOS_DIR.join(name)
@@ -38,9 +38,9 @@ module ManageIQ
         git.fetch(:all => true, :tags => true)
       end
 
-      def checkout(branch)
+      def checkout(branch, source = "origin/#{branch}")
         git.reset(:hard => true)
-        git.checkout("-B", branch, "origin/#{branch}")
+        git.checkout("-B", branch, source)
       end
 
       private

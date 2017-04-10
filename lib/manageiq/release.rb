@@ -2,6 +2,7 @@ require 'manageiq/release/repo'
 require 'manageiq/release/repos'
 
 require 'manageiq/release/destroy_tag'
+require 'manageiq/release/release_branch'
 require 'manageiq/release/release_tag'
 require 'manageiq/release/update_sprint_milestones'
 

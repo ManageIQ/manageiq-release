@@ -13,6 +13,12 @@ bundle
 
 ## Usage
 
+- Release a new branch
+
+  ```sh
+  bin/release_branch.rb --branch <branch_name>
+  ```
+
 - Release a new tag
 
   ```sh
