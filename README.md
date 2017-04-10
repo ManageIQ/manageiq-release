@@ -31,6 +31,12 @@ bundle
   bin/destroy_tag.rb --tag <tag_name> --branch <branch_name>
   ```
 
+- Update the repository labels (see also [GitHub interactions](#github-interactions))
+
+  ```sh
+  bin/update_labels.rb [--dry-run]
+  ```
+
 - Update the Sprint milestones (see also [GitHub interactions](#github-interactions))
 
   ```sh

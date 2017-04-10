@@ -1,12 +1,9 @@
-require 'pathname'
 require 'minigit'
 require 'ostruct'
 
 module ManageIQ
   module Release
     class Repo
-      REPOS_DIR = Pathname.new("../../../repos").expand_path(__dir__)
-
       attr_reader :name, :options, :path
 
       def initialize(name, options = nil)

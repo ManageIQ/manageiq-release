@@ -1,12 +1,9 @@
 require 'yaml'
-require 'pathname'
 require 'active_support/core_ext/enumerable'
 
 module ManageIQ
   module Release
     class Repos
-      CONFIG_DIR = Pathname.new("../../../config").expand_path(__dir__)
-
       def self.[](branch)
         all[branch]
       end
@@ -23,9 +20,7 @@ module ManageIQ
       end
 
       def self.config
-        Dir.glob(CONFIG_DIR.join("repos*.yml")).sort.each_with_object({}) do |f, h|
-          h.merge!(YAML.load_file(f))
-        end
+        ManageIQ::Release.load_config_file("repos")
       end
       private_class_method :config
     end

@@ -1,0 +1,51 @@
+release_labels: &release_labels
+  fine/yes: "000000"
+  fine/no: "000000"
+  fine/backported: "000000"
+  fine/conflict: "000000"
+  euwe/yes: "555555"
+  euwe/no: "555555"
+  euwe/backported: "555555"
+  euwe/conflict: "555555"
+  darga/yes: "DDDDDD"
+  darga/no: "DDDDDD"
+  darga/backported: "DDDDDD"
+  darga/conflict: "DDDDDD"
+
+repos:
+  manageiq:
+    <<: *release_labels
+  manageiq-appliance:
+    <<: *release_labels
+  manageiq-appliance-build:
+    <<: *release_labels
+  manageiq-content:
+    <<: *release_labels
+  manageiq-gems-pending:
+    <<: *release_labels
+  manageiq-pods:
+    <<: *release_labels
+  manageiq-providers-amazon:
+    <<: *release_labels
+  manageiq-providers-azure:
+    <<: *release_labels
+  manageiq-providers-hawkular:
+    <<: *release_labels
+  manageiq-providers-kubernetes:
+    <<: *release_labels
+  manageiq-providers-lenovo:
+    <<: *release_labels
+  manageiq-providers-openshift:
+    <<: *release_labels
+  manageiq-providers-openstack:
+    <<: *release_labels
+  manageiq-providers-ovirt:
+    <<: *release_labels
+  manageiq-providers-vmware:
+    <<: *release_labels
+  manageiq-ui-classic:
+    <<: *release_labels
+  manageiq-ui-service:
+    <<: *release_labels
+  manageiq_docs:
+    <<: *release_labels

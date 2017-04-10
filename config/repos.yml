@@ -9,7 +9,12 @@ master:
   manageiq-pods:
   manageiq-providers-amazon:
   manageiq-providers-azure:
+  manageiq-providers-hawkular:
+  manageiq-providers-kubernetes:
   manageiq-providers-lenovo:
+  manageiq-providers-openshift:
+  manageiq-providers-openstack:
+  manageiq-providers-ovirt:
   manageiq-providers-vmware:
   manageiq-ui-classic:
   manageiq-ui-service:
