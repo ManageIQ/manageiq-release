@@ -13,6 +13,12 @@ bundle
 
 ## Usage
 
+- Release a new branch
+
+  ```sh
+  bin/release_branch.rb --branch <branch_name>
+  ```
+
 - Release a new tag
 
   ```sh
@@ -23,6 +29,18 @@ bundle
 
   ```sh
   bin/destroy_tag.rb --tag <tag_name> --branch <branch_name>
+  ```
+
+- Update the repository labels (see also [GitHub interactions](#github-interactions))
+
+  ```sh
+  bin/update_labels.rb [--dry-run]
+  ```
+
+- Update the repository settings (see also [GitHub interactions](#github-interactions))
+
+  ```sh
+  bin/update_repo_settings.rb [--dry-run] [--branch <specific branch>] [--repo <specific_repo>]
   ```
 
 - Update the Sprint milestones (see also [GitHub interactions](#github-interactions))

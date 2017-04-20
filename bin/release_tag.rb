@@ -14,6 +14,8 @@ opts = Trollop.options do
 end
 
 repos = ManageIQ::Release::Repos[opts[:branch]]
+Trollop.die "Repo #{opts[:branch].inspect} does not exist in repos.yml" if repos.nil?
+
 review = StringIO.new
 post_review = StringIO.new
 
