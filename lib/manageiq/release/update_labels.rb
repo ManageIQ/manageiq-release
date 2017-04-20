@@ -15,7 +15,7 @@ module ManageIQ
 
           if !github_label
             create(label, color)
-          elsif github_label.color != color
+          elsif github_label.color.downcase != color.downcase
             update(label, color)
           end
         end
