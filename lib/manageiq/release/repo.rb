@@ -31,8 +31,12 @@ module ManageIQ
         retry
       end
 
-      def fetch
-        git.fetch(:all => true, :tags => true)
+      def fetch(output: true)
+        if output
+          git.fetch(:all => true, :tags => true)
+        else
+          git.capturing.fetch(:all => true, :tags => true)
+        end
       end
 
       def checkout(branch, source = "origin/#{branch}")
