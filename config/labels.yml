@@ -1,4 +1,6 @@
-release_labels: &release_labels
+release: &release
+  blocker: "000000"
+  "bugzilla needed": "000000"
   fine/yes: "000000"
   fine/no: "000000"
   fine/backported: "000000"
@@ -7,45 +9,89 @@ release_labels: &release_labels
   euwe/no: "555555"
   euwe/backported: "555555"
   euwe/conflict: "555555"
-  darga/yes: "DDDDDD"
-  darga/no: "DDDDDD"
-  darga/backported: "DDDDDD"
-  darga/conflict: "DDDDDD"
+  darga/yes: "dddddd"
+  darga/no: "dddddd"
+  darga/backported: "dddddd"
+  darga/conflict: "dddddd"
+
+common: &common
+  bug: "fc2929"
+  "bug/sporadic test failure": "fc2929"
+  cleanup: "fef2c0"
+  developer: "bcf5db"
+  documentation: "d4c5f9"
+  duplicate: "eeeeee"
+  enhancement: "84b6eb"
+  "help wanted": "159818"
+  internationalization: "d4c5f9"
+  notabug: "eeeeee"
+  performance: "e99695"
+  question: "cc317c"
+  refactoring: "fbca04"
+  stale: "eeeeee"
+  "technical debt": "eb6420"
+  test: "bfe5bf"
+  tools: "bcf5db"
+  unmergeable: "eeeeee"
+  verified: "159818"
+  wip: "eeeeee"
+  wontfix: "eeeeee"
+
+core_ruby_common: &core_ruby_common
+  <<: *common
+  "gem changes": "6a92bc"
 
 repos:
   manageiq:
-    <<: *release_labels
+    <<: *core_ruby_common
+    <<: *release
   manageiq-appliance:
-    <<: *release_labels
+    <<: *common
+    <<: *release
   manageiq-appliance-build:
-    <<: *release_labels
+    <<: *common
+    <<: *release
   manageiq-content:
-    <<: *release_labels
+    <<: *core_ruby_common
+    <<: *release
   manageiq-gems-pending:
-    <<: *release_labels
+    <<: *core_ruby_common
+    <<: *release
   manageiq-pods:
-    <<: *release_labels
+    <<: *common
+    <<: *release
   manageiq-providers-amazon:
-    <<: *release_labels
+    <<: *core_ruby_common
+    <<: *release
   manageiq-providers-azure:
-    <<: *release_labels
+    <<: *core_ruby_common
+    <<: *release
   manageiq-providers-hawkular:
-    <<: *release_labels
+    <<: *core_ruby_common
+    <<: *release
   manageiq-providers-kubernetes:
-    <<: *release_labels
+    <<: *core_ruby_common
+    <<: *release
   manageiq-providers-lenovo:
-    <<: *release_labels
+    <<: *core_ruby_common
+    <<: *release
   manageiq-providers-openshift:
-    <<: *release_labels
+    <<: *core_ruby_common
+    <<: *release
   manageiq-providers-openstack:
-    <<: *release_labels
+    <<: *core_ruby_common
+    <<: *release
   manageiq-providers-ovirt:
-    <<: *release_labels
+    <<: *core_ruby_common
+    <<: *release
   manageiq-providers-vmware:
-    <<: *release_labels
+    <<: *core_ruby_common
+    <<: *release
   manageiq-ui-classic:
-    <<: *release_labels
+    <<: *core_ruby_common
+    <<: *release
   manageiq-ui-service:
-    <<: *release_labels
+    <<: *common
+    <<: *release
   manageiq_docs:
-    <<: *release_labels
+    <<: *release
