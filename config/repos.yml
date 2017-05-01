@@ -3,6 +3,7 @@ master:
     has_rake_release: true
   manageiq-appliance:
   manageiq-appliance-build:
+  manageiq-automation_engine:
   manageiq-content:
     has_rake_release: true
   manageiq-gems-pending:
