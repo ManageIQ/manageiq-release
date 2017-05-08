@@ -11,9 +11,19 @@ opts = Trollop.options do
   opt :branch, "The target branch", :type => :string, :required => true
 end
 
+tag = opts[:tag]
+post_review = StringIO.new
+
 repos = ManageIQ::Release::Repos[opts[:branch]]
 repos.each do |repo|
   puts ManageIQ::Release.header("Untagging #{repo.name}")
-  ManageIQ::Release::DestroyTag.new(repo, opts[:tag]).run
+  destroy_tag = ManageIQ::Release::DestroyTag.new(repo, tag)
+  destroy_tag.run
+  post_review.puts(destroy_tag.post_review)
   puts
 end
+
+puts
+puts "Run the following script to delete '#{tag}' tag from all repos"
+puts
+puts post_review.string

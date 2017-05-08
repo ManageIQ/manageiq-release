@@ -14,6 +14,10 @@ module ManageIQ
         # TODO: Also remove anything that rake:release might have done like creating a commit
       end
 
+      def post_review
+        "pushd #{repo.path}; OVERRIDE=true git push origin :#{tag}; popd"
+      end
+
       private
 
       def destroy_tag
