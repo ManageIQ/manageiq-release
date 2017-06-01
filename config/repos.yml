@@ -18,6 +18,7 @@ master:
   manageiq-providers-openshift:
   manageiq-providers-openstack:
   manageiq-providers-ovirt:
+  manageiq-providers-scvmm:
   manageiq-providers-vmware:
   manageiq-ui-classic:
   manageiq-ui-service:
