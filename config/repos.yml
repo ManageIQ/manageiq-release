@@ -9,6 +9,7 @@ master:
   manageiq-gems-pending:
   manageiq-pods:
   manageiq-providers-amazon:
+  manageiq-providers-ansible_tower:
   manageiq-providers-azure:
   manageiq-providers-hawkular:
   manageiq-providers-kubernetes:
