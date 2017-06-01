@@ -10,6 +10,7 @@ master:
   manageiq-pods:
   manageiq-providers-amazon:
   manageiq-providers-azure:
+  manageiq-providers-foreman:
   manageiq-providers-hawkular:
   manageiq-providers-kubernetes:
   manageiq-providers-lenovo:
