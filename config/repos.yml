@@ -11,6 +11,7 @@ master:
   manageiq-providers-amazon:
   manageiq-providers-ansible_tower:
   manageiq-providers-azure:
+  manageiq-providers-foreman:
   manageiq-providers-hawkular:
   manageiq-providers-kubernetes:
   manageiq-providers-lenovo:
