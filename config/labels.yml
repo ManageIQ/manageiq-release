@@ -1,18 +1,35 @@
 release: &release
   blocker: "000000"
   "bugzilla needed": "000000"
+
+release_fine: &release_fine
   fine/yes: "000000"
   fine/no: "000000"
   fine/backported: "000000"
   fine/conflict: "000000"
+
+release_euwe: &release_euwe
   euwe/yes: "555555"
   euwe/no: "555555"
   euwe/backported: "555555"
   euwe/conflict: "555555"
+
+release_darga: &release_darga
   darga/yes: "dddddd"
   darga/no: "dddddd"
   darga/backported: "dddddd"
   darga/conflict: "dddddd"
+
+release_f_plus: &release_f_plus
+  <<: *release_fine
+
+release_e_plus: &release_e_plus
+  <<: *release_euwe
+  <<: *release_f_plus
+
+release_d_plus: &release_d_plus
+  <<: *release_darga
+  <<: *release_e_plus
 
 common: &common
   bug: "fc2929"
@@ -41,60 +58,119 @@ core_ruby_common: &core_ruby_common
   <<: *common
   "gem changes": "6a92bc"
 
+providers_common: &providers_common
+  events: "5319e7"
+  inventory: "5319e7"
+  metrics: "5319e7"
+  operations: "5319e7"
+
+ux_common: &ux_common
+  ux/review: "cc317c"
+  ux/approved: "159818"
+
 repos:
   manageiq:
     <<: *core_ruby_common
     <<: *release
+    <<: *release_d_plus
   manageiq-appliance:
     <<: *common
     <<: *release
+    <<: *release_d_plus
   manageiq-appliance-build:
     <<: *common
     <<: *release
+    <<: *release_d_plus
   manageiq-automation_engine:
     <<: *core_ruby_common
     <<: *release
+    <<: *release_d_plus
   manageiq-content:
     <<: *core_ruby_common
     <<: *release
+    <<: *release_d_plus
   manageiq-gems-pending:
     <<: *core_ruby_common
     <<: *release
+    <<: *release_d_plus
   manageiq-pods:
     <<: *common
     <<: *release
+    <<: *release_d_plus
   manageiq-providers-amazon:
     <<: *core_ruby_common
+    <<: *providers_common
     <<: *release
+    <<: *release_d_plus
+  manageiq-providers-ansible_tower:
+    <<: *core_ruby_common
+    <<: *providers_common
+    <<: *release
+    <<: *release_f_plus
   manageiq-providers-azure:
     <<: *core_ruby_common
+    <<: *providers_common
     <<: *release
+    <<: *release_d_plus
+  manageiq-providers-foreman:
+    <<: *core_ruby_common
+    <<: *providers_common
+    <<: *release
+    <<: *release_f_plus
+  manageiq-providers-google:
+    <<: *core_ruby_common
+    <<: *providers_common
+    <<: *release
+    <<: *release_f_plus
   manageiq-providers-hawkular:
     <<: *core_ruby_common
+    <<: *providers_common
     <<: *release
+    <<: *release_d_plus
   manageiq-providers-kubernetes:
     <<: *core_ruby_common
+    <<: *providers_common
     <<: *release
+    <<: *release_d_plus
   manageiq-providers-lenovo:
     <<: *core_ruby_common
+    <<: *providers_common
     <<: *release
+    <<: *release_f_plus
   manageiq-providers-openshift:
     <<: *core_ruby_common
+    <<: *providers_common
     <<: *release
+    <<: *release_d_plus
   manageiq-providers-openstack:
     <<: *core_ruby_common
+    <<: *providers_common
     <<: *release
+    <<: *release_d_plus
   manageiq-providers-ovirt:
     <<: *core_ruby_common
+    <<: *providers_common
     <<: *release
+    <<: *release_d_plus
+  manageiq-providers-scvmm:
+    <<: *core_ruby_common
+    <<: *providers_common
+    <<: *release
+    <<: *release_f_plus
   manageiq-providers-vmware:
     <<: *core_ruby_common
+    <<: *providers_common
     <<: *release
+    <<: *release_d_plus
   manageiq-ui-classic:
     <<: *core_ruby_common
+    <<: *ux_common
     <<: *release
+    <<: *release_e_plus
   manageiq-ui-service:
     <<: *common
+    <<: *ux_common
     <<: *release
+    <<: *release_d_plus
   manageiq_docs:
     <<: *release
