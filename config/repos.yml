@@ -1,4 +1,8 @@
 master:
+  container-httpd:
+  container-memcached:
+  container-postgresql:
+  container-ruby:
   manageiq:
     has_rake_release: true
   manageiq-appliance:
