@@ -14,6 +14,10 @@ repos = ManageIQ::Release::Repos["master"]
 repos.each do |repo|
   puts ManageIQ::Release.header(repo.name)
   expected_labels = ManageIQ::Release::Labels[repo.name]
-  ManageIQ::Release::UpdateLabels.new(repo.github_repo, expected_labels, opts.slice(:dry_run)).run
+  if expected_labels.nil?
+    puts "** No labels defined for #{repo.name}"
+  else
+    ManageIQ::Release::UpdateLabels.new(repo.github_repo, expected_labels, opts.slice(:dry_run)).run
+  end
   puts
 end
