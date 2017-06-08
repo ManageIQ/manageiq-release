@@ -20,6 +20,7 @@ master:
   manageiq-providers-hawkular:
   manageiq-providers-kubernetes:
   manageiq-providers-lenovo:
+  manageiq-providers-nuage:
   manageiq-providers-openshift:
   manageiq-providers-openstack:
   manageiq-providers-ovirt:

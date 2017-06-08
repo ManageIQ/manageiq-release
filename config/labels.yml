@@ -137,6 +137,11 @@ repos:
     <<: *providers_common
     <<: *release
     <<: *release_f_plus
+  manageiq-providers-nuage:
+    <<: *core_ruby_common
+    <<: *providers_common
+    <<: *release
+    <<: *release_f_plus
   manageiq-providers-openshift:
     <<: *core_ruby_common
     <<: *providers_common
