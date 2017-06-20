@@ -167,6 +167,10 @@ repos:
     <<: *providers_common
     <<: *release
     <<: *release_d_plus
+  manageiq-schema:
+    <<: *core_ruby_common
+    <<: *release
+    <<: *release_f_plus
   manageiq-ui-classic:
     <<: *core_ruby_common
     <<: *ux_common
