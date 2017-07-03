@@ -26,6 +26,7 @@ master:
   manageiq-providers-ovirt:
   manageiq-providers-scvmm:
   manageiq-providers-vmware:
+  manageiq-schema:
   manageiq-ui-classic:
   manageiq-ui-service:
   manageiq_docs:
