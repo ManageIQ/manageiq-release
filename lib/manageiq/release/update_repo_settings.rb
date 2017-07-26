@@ -22,8 +22,6 @@ module ManageIQ
         settings = {
           :has_wiki           => false,
           :has_projects       => false,
-
-          :accept             => "application/vnd.github.polaris-preview+json", # See https://developer.github.com/v3/repos/#pull-request-merge-configuration-settings-1)
           :allow_merge_commit => true,
           :allow_rebase_merge => false,
           :allow_squash_merge => false,
@@ -37,12 +35,16 @@ module ManageIQ
       end
 
       def protect_branch
-        puts "Protecting #{branch}"
+        puts "Protecting #{branch} branch"
+
+        settings = {
+          :enforce_admins => nil
+        }
 
         if dry_run
-          puts "** dry-run: github.protect_branch(#{repo.inspect}, #{branch.inspect})"
+          puts "** dry-run: github.protect_branch(#{repo.inspect}, #{branch.inspect}, #{settings.inspect[1..-2]})"
         else
-          github.protect_branch(repo, branch)
+          github.protect_branch(repo, branch, settings)
         end
       end
 
