@@ -8,9 +8,15 @@ require 'trollop'
 
 opts = Trollop.options do
   opt :dry_run, "", :default => false
+  opt :repo, "The repo to update. If not passed, will try all repos in config/repos.yml", :type => :string
 end
 
-repos = ManageIQ::Release::Repos["master"]
+if opts[:repo]
+  repos = [ManageIQ::Release::Repo.new(opts[:repo])]
+else
+  repos = ManageIQ::Release::Repos["master"]
+end
+
 repos.each do |repo|
   puts ManageIQ::Release.header(repo.name)
   expected_labels = ManageIQ::Release::Labels[repo.name]
