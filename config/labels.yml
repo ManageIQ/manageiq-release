@@ -56,7 +56,7 @@ common: &common
 
 core_ruby_common: &core_ruby_common
   <<: *common
-  "dependencies": "6a92bc"
+  dependencies: "6a92bc"
 
 providers_common: &providers_common
   events: "5319e7"
@@ -67,6 +67,11 @@ providers_common: &providers_common
 ux_common: &ux_common
   ux/review: "cc317c"
   ux/approved: "159818"
+
+gems_common: &gems_common
+  <<: *common
+  "needs major version": "6a92bc"
+  "needs minor version": "6a92bc"
 
 repos:
   manageiq:
@@ -183,3 +188,10 @@ repos:
     <<: *release_d_plus
   manageiq_docs:
     <<: *release
+  manageiq-messaging:
+    <<: *common
+    <<: *gems_common
+  ui-components:
+    <<: *common
+    <<: *ux_common
+    <<: *gems_common
