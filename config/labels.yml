@@ -191,6 +191,9 @@ repos:
   manageiq-messaging:
     <<: *common
     <<: *gems_common
+  log_decorator:
+    <<: *common
+    <<: *gems_common
   ui-components:
     <<: *common
     <<: *ux_common
