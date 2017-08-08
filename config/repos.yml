@@ -5,6 +5,7 @@ master:
   container-ruby:
   manageiq:
     has_rake_release: true
+  manageiq-api:
   manageiq-appliance:
   manageiq-appliance-build:
   manageiq-automation_engine:
@@ -33,6 +34,7 @@ master:
 fine:
   manageiq:
     has_rake_release: true
+  manageiq-api:
   manageiq-appliance:
   manageiq-appliance-build:
   manageiq-content:

@@ -78,6 +78,11 @@ repos:
     <<: *core_ruby_common
     <<: *release
     <<: *release_d_plus
+  manageiq-api:
+    <<: *core_ruby_common
+    <<: *gems_common
+    <<: *release
+    <<: *release_f_plus
   manageiq-appliance:
     <<: *common
     <<: *release
