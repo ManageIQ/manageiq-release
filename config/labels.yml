@@ -95,6 +95,9 @@ repos:
     <<: *core_ruby_common
     <<: *release
     <<: *release_d_plus
+  manageiq-consumption:
+    <<: *core_ruby_common
+    <<: *release
   manageiq-content:
     <<: *core_ruby_common
     <<: *release
