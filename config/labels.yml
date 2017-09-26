@@ -39,6 +39,7 @@ common: &common
   documentation: "d4c5f9"
   duplicate: "eeeeee"
   enhancement: "84b6eb"
+  hacktoberfest: "ff7619"
   "help wanted": "159818"
   internationalization: "d4c5f9"
   notabug: "eeeeee"
