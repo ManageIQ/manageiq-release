@@ -75,9 +75,6 @@ ux: &ux
   ux/approved: "159818"
 
 repos:
-  log_decorator:
-    <<: *common
-    <<: *semver
   manageiq:
     <<: *common
     <<: *feature_introduced_in_darga_or_prior
@@ -111,9 +108,6 @@ repos:
     <<: *common
     <<: *feature_introduced_in_darga_or_prior
     <<: *release
-  manageiq-messaging:
-    <<: *common
-    <<: *semver
   manageiq-pods:
     <<: *common
     <<: *feature_introduced_in_fine
@@ -204,6 +198,16 @@ repos:
     <<: *ux
   manageiq_docs:
     <<: *release
+  # Released gems and packages
+  log_decorator:
+    <<: *common
+    <<: *semver
+  manageiq-messaging:
+    <<: *common
+    <<: *semver
+  manageiq-smart_state:
+    <<: *common
+    <<: *semver
   ui-components:
     <<: *common
     <<: *semver
