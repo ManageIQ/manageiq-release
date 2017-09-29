@@ -68,7 +68,17 @@ provider_plugin: &provider_plugin
   operations: "5319e7"
   "smart state": "5319e7"
 
-non_provider_plugin: &non_provider_plugin
+provider_types: &provider_types
+  providers/automation: "5319e7"
+  providers/cloud: "5319e7"
+  providers/configuration: "5319e7"
+  providers/containers: "5319e7"
+  providers/middleware: "5319e7"
+  providers/network: "5319e7"
+  providers/physical: "5319e7"
+  providers/provisioning: "5319e7"
+  providers/storage: "5319e7"
+  providers/virtual: "5319e7"
 
 ux: &ux
   ux/review: "cc317c"
@@ -78,10 +88,12 @@ repos:
   manageiq:
     <<: *common
     <<: *feature_introduced_in_darga_or_prior
+    <<: *provider_types
     <<: *release
   manageiq-api:
     <<: *common
     <<: *feature_introduced_in_darga_or_prior
+    <<: *provider_types
     <<: *release
     <<: *semver
   manageiq-appliance:
@@ -103,6 +115,7 @@ repos:
   manageiq-content:
     <<: *common
     <<: *feature_introduced_in_darga_or_prior
+    <<: *provider_types
     <<: *release
   manageiq-gems-pending:
     <<: *common
@@ -185,6 +198,7 @@ repos:
   manageiq-schema:
     <<: *common
     <<: *feature_introduced_in_darga_or_prior
+    <<: *provider_types
     <<: *release
   manageiq-ui-classic:
     <<: *common
