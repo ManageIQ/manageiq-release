@@ -1,3 +1,28 @@
+common: &common
+  bug: "fc2929"
+  "bug/sporadic test failure": "fc2929"
+  cleanup: "fef2c0"
+  dependencies: "6a92bc"
+  developer: "bcf5db"
+  documentation: "d4c5f9"
+  duplicate: "eeeeee"
+  enhancement: "84b6eb"
+  hacktoberfest: "ff7619"
+  "help wanted": "159818"
+  internationalization: "d4c5f9"
+  notabug: "eeeeee"
+  performance: "e99695"
+  question: "cc317c"
+  refactoring: "fbca04"
+  stale: "eeeeee"
+  "technical debt": "eb6420"
+  test: "bfe5bf"
+  tools: "bcf5db"
+  unmergeable: "eeeeee"
+  verified: "159818"
+  wip: "eeeeee"
+  wontfix: "eeeeee"
+
 release: &release
   blocker: "000000"
   "bugzilla needed": "000000"
@@ -20,190 +45,184 @@ release_darga: &release_darga
   darga/backported: "dddddd"
   darga/conflict: "dddddd"
 
-release_f_plus: &release_f_plus
+feature_introduced_in_darga_or_prior: &feature_introduced_in_darga_or_prior
+  <<: *release_darga
+  <<: *release_euwe
   <<: *release_fine
 
-release_e_plus: &release_e_plus
+feature_introduced_in_euwe: &feature_introduced_in_euwe
   <<: *release_euwe
-  <<: *release_f_plus
+  <<: *release_fine
 
-release_d_plus: &release_d_plus
-  <<: *release_darga
-  <<: *release_e_plus
+feature_introduced_in_fine: &feature_introduced_in_fine
+  <<: *release_fine
 
-common: &common
-  bug: "fc2929"
-  "bug/sporadic test failure": "fc2929"
-  cleanup: "fef2c0"
-  developer: "bcf5db"
-  documentation: "d4c5f9"
-  duplicate: "eeeeee"
-  enhancement: "84b6eb"
-  hacktoberfest: "ff7619"
-  "help wanted": "159818"
-  internationalization: "d4c5f9"
-  notabug: "eeeeee"
-  performance: "e99695"
-  question: "cc317c"
-  refactoring: "fbca04"
-  stale: "eeeeee"
-  "technical debt": "eb6420"
-  test: "bfe5bf"
-  tools: "bcf5db"
-  unmergeable: "eeeeee"
-  verified: "159818"
-  wip: "eeeeee"
-  wontfix: "eeeeee"
+semver: &semver
+  "needs major version": "6a92bc"
+  "needs minor version": "6a92bc"
 
-core_ruby_common: &core_ruby_common
-  <<: *common
-  dependencies: "6a92bc"
-
-providers_common: &providers_common
+provider_plugin: &provider_plugin
   events: "5319e7"
   inventory: "5319e7"
   metrics: "5319e7"
   operations: "5319e7"
+  "smart state": "5319e7"
 
-ux_common: &ux_common
+provider_types: &provider_types
+  providers/automation: "5319e7"
+  providers/cloud: "5319e7"
+  providers/configuration: "5319e7"
+  providers/containers: "5319e7"
+  providers/middleware: "5319e7"
+  providers/network: "5319e7"
+  providers/physical: "5319e7"
+  providers/provisioning: "5319e7"
+  providers/storage: "5319e7"
+  providers/virtual: "5319e7"
+
+ux: &ux
   ux/review: "cc317c"
   ux/approved: "159818"
 
-gems_common: &gems_common
-  <<: *common
-  "needs major version": "6a92bc"
-  "needs minor version": "6a92bc"
-
 repos:
   manageiq:
-    <<: *core_ruby_common
+    <<: *common
+    <<: *feature_introduced_in_darga_or_prior
+    <<: *provider_types
     <<: *release
-    <<: *release_d_plus
   manageiq-api:
-    <<: *core_ruby_common
-    <<: *gems_common
+    <<: *common
+    <<: *feature_introduced_in_darga_or_prior
+    <<: *provider_types
     <<: *release
-    <<: *release_f_plus
+    <<: *semver
   manageiq-appliance:
     <<: *common
+    <<: *feature_introduced_in_darga_or_prior
     <<: *release
-    <<: *release_d_plus
   manageiq-appliance-build:
     <<: *common
+    <<: *feature_introduced_in_darga_or_prior
     <<: *release
-    <<: *release_d_plus
   manageiq-automation_engine:
-    <<: *core_ruby_common
+    <<: *common
+    <<: *feature_introduced_in_darga_or_prior
     <<: *release
-    <<: *release_d_plus
   manageiq-consumption:
-    <<: *core_ruby_common
+    <<: *common
+    # <<: *feature_introduced_in_gaprindashvili
     <<: *release
   manageiq-content:
-    <<: *core_ruby_common
+    <<: *common
+    <<: *feature_introduced_in_darga_or_prior
+    <<: *provider_types
     <<: *release
-    <<: *release_d_plus
   manageiq-gems-pending:
-    <<: *core_ruby_common
+    <<: *common
+    <<: *feature_introduced_in_darga_or_prior
     <<: *release
-    <<: *release_d_plus
   manageiq-pods:
     <<: *common
+    <<: *feature_introduced_in_fine
     <<: *release
-    <<: *release_d_plus
   manageiq-providers-amazon:
-    <<: *core_ruby_common
-    <<: *providers_common
+    <<: *common
+    <<: *feature_introduced_in_darga_or_prior
+    <<: *provider_plugin
     <<: *release
-    <<: *release_d_plus
   manageiq-providers-ansible_tower:
-    <<: *core_ruby_common
-    <<: *providers_common
+    <<: *common
+    <<: *feature_introduced_in_darga_or_prior
+    <<: *provider_plugin
     <<: *release
-    <<: *release_f_plus
   manageiq-providers-azure:
-    <<: *core_ruby_common
-    <<: *providers_common
+    <<: *common
+    <<: *feature_introduced_in_darga_or_prior
+    <<: *provider_plugin
     <<: *release
-    <<: *release_d_plus
   manageiq-providers-foreman:
-    <<: *core_ruby_common
-    <<: *providers_common
+    <<: *common
+    <<: *feature_introduced_in_darga_or_prior
+    <<: *provider_plugin
     <<: *release
-    <<: *release_f_plus
   manageiq-providers-google:
-    <<: *core_ruby_common
-    <<: *providers_common
+    <<: *common
+    <<: *feature_introduced_in_darga_or_prior
+    <<: *provider_plugin
     <<: *release
-    <<: *release_f_plus
   manageiq-providers-hawkular:
-    <<: *core_ruby_common
-    <<: *providers_common
+    <<: *common
+    <<: *feature_introduced_in_darga_or_prior
+    <<: *provider_plugin
     <<: *release
-    <<: *release_d_plus
   manageiq-providers-kubernetes:
-    <<: *core_ruby_common
-    <<: *providers_common
+    <<: *common
+    <<: *feature_introduced_in_darga_or_prior
+    <<: *provider_plugin
     <<: *release
-    <<: *release_d_plus
   manageiq-providers-lenovo:
-    <<: *core_ruby_common
-    <<: *providers_common
+    <<: *common
+    <<: *feature_introduced_in_fine
+    <<: *provider_plugin
     <<: *release
-    <<: *release_f_plus
   manageiq-providers-nuage:
-    <<: *core_ruby_common
-    <<: *providers_common
+    <<: *common
+    <<: *feature_introduced_in_euwe
+    <<: *provider_plugin
     <<: *release
-    <<: *release_f_plus
   manageiq-providers-openshift:
-    <<: *core_ruby_common
-    <<: *providers_common
+    <<: *common
+    <<: *feature_introduced_in_darga_or_prior
+    <<: *provider_plugin
     <<: *release
-    <<: *release_d_plus
   manageiq-providers-openstack:
-    <<: *core_ruby_common
-    <<: *providers_common
+    <<: *common
+    <<: *feature_introduced_in_darga_or_prior
+    <<: *provider_plugin
     <<: *release
-    <<: *release_d_plus
   manageiq-providers-ovirt:
-    <<: *core_ruby_common
-    <<: *providers_common
+    <<: *common
+    <<: *feature_introduced_in_darga_or_prior
+    <<: *provider_plugin
     <<: *release
-    <<: *release_d_plus
   manageiq-providers-scvmm:
-    <<: *core_ruby_common
-    <<: *providers_common
+    <<: *common
+    <<: *feature_introduced_in_darga_or_prior
+    <<: *provider_plugin
     <<: *release
-    <<: *release_f_plus
   manageiq-providers-vmware:
-    <<: *core_ruby_common
-    <<: *providers_common
+    <<: *common
+    <<: *feature_introduced_in_darga_or_prior
+    <<: *provider_plugin
     <<: *release
-    <<: *release_d_plus
   manageiq-schema:
-    <<: *core_ruby_common
+    <<: *common
+    <<: *feature_introduced_in_darga_or_prior
+    <<: *provider_types
     <<: *release
-    <<: *release_f_plus
   manageiq-ui-classic:
-    <<: *core_ruby_common
-    <<: *ux_common
+    <<: *common
+    <<: *feature_introduced_in_darga_or_prior
     <<: *release
-    <<: *release_e_plus
+    <<: *ux
   manageiq-ui-service:
     <<: *common
-    <<: *ux_common
+    <<: *feature_introduced_in_darga_or_prior
     <<: *release
-    <<: *release_d_plus
+    <<: *ux
   manageiq_docs:
     <<: *release
-  manageiq-messaging:
-    <<: *common
-    <<: *gems_common
+  # Released gems and packages
   log_decorator:
     <<: *common
-    <<: *gems_common
+    <<: *semver
+  manageiq-messaging:
+    <<: *common
+    <<: *semver
+  manageiq-smart_state:
+    <<: *common
+    <<: *semver
   ui-components:
     <<: *common
-    <<: *ux_common
-    <<: *gems_common
+    <<: *semver
+    <<: *ux
