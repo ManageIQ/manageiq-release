@@ -219,8 +219,9 @@ repos:
   manageiq-messaging:
     <<: *common
     <<: *semver
-  manageiq-smart_state:
+  manageiq-smartstate:
     <<: *common
+    <<: *feature_introduced_in_darga_or_prior
     <<: *semver
   ui-components:
     <<: *common
