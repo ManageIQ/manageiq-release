@@ -221,6 +221,7 @@ repos:
     <<: *semver
   manageiq-smart_state:
     <<: *common
+    <<: *feature_introduced_in_darga_or_prior
     <<: *semver
   ui-components:
     <<: *common
