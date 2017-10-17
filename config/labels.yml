@@ -85,6 +85,14 @@ ux: &ux
   ux/approved: "159818"
 
 repos:
+  dbus_api_service:
+    <<: *common
+    # <<: *feature_introduced_in_gaprindashvili
+    <<: *release
+  httpd_configmap_generator:
+    <<: *common
+    # <<: *feature_introduced_in_gaprindashvili
+    <<: *release
   manageiq:
     <<: *common
     <<: *feature_introduced_in_darga_or_prior
@@ -101,6 +109,10 @@ repos:
     <<: *feature_introduced_in_darga_or_prior
     <<: *release
   manageiq-appliance-build:
+    <<: *common
+    <<: *feature_introduced_in_darga_or_prior
+    <<: *release
+  manageiq-appliance_console:
     <<: *common
     <<: *feature_introduced_in_darga_or_prior
     <<: *release

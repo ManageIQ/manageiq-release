@@ -3,11 +3,14 @@ master:
   container-memcached:
   container-postgresql:
   container-ruby:
+  dbus_api_service:
+  httpd_configmap_generator:
   manageiq:
     has_rake_release: true
   manageiq-api:
   manageiq-appliance:
   manageiq-appliance-build:
+  manageiq-appliance_console:
   manageiq-automation_engine:
   manageiq-consumption:
   manageiq-content:
