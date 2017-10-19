@@ -137,6 +137,10 @@ repos:
     <<: *common
     <<: *feature_introduced_in_fine
     <<: *release
+  manageiq-postgres_admin:
+    <<: *common
+    <<: *feature_introduced_in_darga_or_prior
+    <<: *release
   manageiq-providers-amazon:
     <<: *common
     <<: *feature_introduced_in_darga_or_prior
