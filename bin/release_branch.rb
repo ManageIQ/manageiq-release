@@ -14,6 +14,8 @@ repos = ManageIQ::Release::Repos["master"]
 post_review = StringIO.new
 
 repos.each do |repo|
+  next if repo.options["has_real_releases"]
+
   release_branch = ManageIQ::Release::ReleaseBranch.new(repo, opts.slice(:branch))
 
   puts ManageIQ::Release.header("Branching #{repo.name}")

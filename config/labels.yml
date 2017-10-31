@@ -27,17 +27,23 @@ release: &release
   blocker: "000000"
   "bugzilla needed": "000000"
 
+release_gaprindashvili: &release_gaprindashvili
+  gaprindashvili/yes: "000000"
+  gaprindashvili/no: "000000"
+  gaprindashvili/backported: "000000"
+  gaprindashvili/conflict: "000000"
+
 release_fine: &release_fine
-  fine/yes: "000000"
-  fine/no: "000000"
-  fine/backported: "000000"
-  fine/conflict: "000000"
+  fine/yes: "555555"
+  fine/no: "555555"
+  fine/backported: "555555"
+  fine/conflict: "555555"
 
 release_euwe: &release_euwe
-  euwe/yes: "555555"
-  euwe/no: "555555"
-  euwe/backported: "555555"
-  euwe/conflict: "555555"
+  euwe/yes: "dddddd"
+  euwe/no: "dddddd"
+  euwe/backported: "dddddd"
+  euwe/conflict: "dddddd"
 
 release_darga: &release_darga
   darga/yes: "dddddd"
@@ -49,13 +55,19 @@ feature_introduced_in_darga_or_prior: &feature_introduced_in_darga_or_prior
   <<: *release_darga
   <<: *release_euwe
   <<: *release_fine
+  <<: *release_gaprindashvili
 
 feature_introduced_in_euwe: &feature_introduced_in_euwe
   <<: *release_euwe
   <<: *release_fine
+  <<: *release_gaprindashvili
 
 feature_introduced_in_fine: &feature_introduced_in_fine
   <<: *release_fine
+  <<: *release_gaprindashvili
+
+feature_introduced_in_gaprindashvili: &feature_introduced_in_gaprindashvili
+  <<: *release_gaprindashvili
 
 semver: &semver
   "needs major version": "6a92bc"
@@ -85,14 +97,6 @@ ux: &ux
   ux/approved: "159818"
 
 repos:
-  dbus_api_service:
-    <<: *common
-    # <<: *feature_introduced_in_gaprindashvili
-    <<: *release
-  httpd_configmap_generator:
-    <<: *common
-    # <<: *feature_introduced_in_gaprindashvili
-    <<: *release
   manageiq:
     <<: *common
     <<: *feature_introduced_in_darga_or_prior
@@ -122,7 +126,7 @@ repos:
     <<: *release
   manageiq-consumption:
     <<: *common
-    # <<: *feature_introduced_in_gaprindashvili
+    <<: *feature_introduced_in_gaprindashvili
     <<: *release
   manageiq-content:
     <<: *common
@@ -225,6 +229,14 @@ repos:
   manageiq_docs:
     <<: *release
   # Released gems and packages
+  dbus_api_service:
+    <<: *common
+    <<: *release
+    <<: *semver
+  httpd_configmap_generator:
+    <<: *common
+    <<: *release
+    <<: *semver
   log_decorator:
     <<: *common
     <<: *semver

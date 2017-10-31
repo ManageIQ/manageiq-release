@@ -1,16 +1,67 @@
 master:
   container-httpd:
+    has_real_releases: true
   container-memcached:
+    has_real_releases: true
   container-postgresql:
+    has_real_releases: true
   container-ruby:
+    has_real_releases: true
   dbus_api_service:
+    has_real_releases: true
   httpd_configmap_generator:
+    has_real_releases: true
   manageiq:
     has_rake_release: true
   manageiq-api:
   manageiq-appliance:
   manageiq-appliance-build:
   manageiq-appliance_console:
+    has_real_releases: true
+  manageiq-automation_engine:
+  manageiq-consumption:
+  manageiq-content:
+    has_rake_release: true
+  manageiq-gems-pending:
+  manageiq-pods:
+  manageiq-providers-amazon:
+  manageiq-providers-ansible_tower:
+  manageiq-providers-azure:
+  manageiq-providers-foreman:
+  manageiq-providers-google:
+  manageiq-providers-hawkular:
+  manageiq-providers-kubernetes:
+  manageiq-providers-lenovo:
+  manageiq-providers-nuage:
+  manageiq-providers-openshift:
+  manageiq-providers-openstack:
+  manageiq-providers-ovirt:
+  manageiq-providers-scvmm:
+  manageiq-providers-vmware:
+  manageiq-schema:
+  manageiq-ui-classic:
+  manageiq-ui-service:
+  manageiq_docs:
+gaprindashvili:
+  container-httpd:
+    has_real_releases: true
+  container-memcached:
+    has_real_releases: true
+  container-postgresql:
+    has_real_releases: true
+  container-ruby:
+    has_real_releases: true
+  dbus_api_service:
+    has_real_releases: true
+  httpd_configmap_generator:
+    has_real_releases: true
+  manageiq:
+    has_rake_release: true
+  manageiq-api:
+  manageiq-appliance:
+  manageiq-appliance-build:
+  manageiq-appliance_console:
+    has_real_releases: true
   manageiq-automation_engine:
   manageiq-consumption:
   manageiq-content:
