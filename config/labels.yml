@@ -245,7 +245,11 @@ repos:
     <<: *semver
   manageiq-smartstate:
     <<: *common
-    <<: *feature_introduced_in_darga_or_prior
+    # Starting with gaprindashvili, there are no more backports,
+    #   so this backport list is hardcoded
+    <<: *release_darga
+    <<: *release_euwe
+    <<: *release_fine
     <<: *semver
   ui-components:
     <<: *common

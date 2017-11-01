@@ -39,6 +39,8 @@ master:
   manageiq-providers-scvmm:
   manageiq-providers-vmware:
   manageiq-schema:
+  manageiq-smartstate:
+    has_rake_release: true
   manageiq-ui-classic:
   manageiq-ui-service:
   manageiq_docs:
@@ -83,6 +85,8 @@ gaprindashvili:
   manageiq-providers-scvmm:
   manageiq-providers-vmware:
   manageiq-schema:
+  manageiq-smartstate:
+    has_rake_release: true
   manageiq-ui-classic:
   manageiq-ui-service:
   manageiq_docs:
