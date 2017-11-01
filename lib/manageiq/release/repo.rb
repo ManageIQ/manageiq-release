@@ -44,6 +44,13 @@ module ManageIQ
         git.checkout("-B", branch, source)
       end
 
+      def branch?(branch)
+        git.rev_parse("--verify", branch)
+        true
+      rescue MiniGit::GitError
+        false
+      end
+
       private
 
       def git_clone

@@ -11,6 +11,8 @@ opts = Trollop.options do
 end
 
 repos = ManageIQ::Release::Repos["master"]
+
+review = StringIO.new
 post_review = StringIO.new
 
 repos.each do |repo|
@@ -22,13 +24,21 @@ repos.each do |repo|
   release_branch.run
   puts
 
+  review.puts ManageIQ::Release.header(repo.name)
+  review.puts release_branch.review
+  review.puts
   post_review.puts release_branch.post_review
 end
 
 puts
 puts ManageIQ::Release.separator
 puts
-puts "Run the following script to push all of the new branches"
+puts "Review the following:"
+puts
+puts review.string
+puts
+puts "If all changes are correct,"
+puts "  run the following script to push all of the new branches"
 puts
 puts post_review.string
 puts
