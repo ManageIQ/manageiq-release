@@ -116,10 +116,6 @@ repos:
     <<: *common
     <<: *feature_introduced_in_darga_or_prior
     <<: *release
-  manageiq-appliance_console:
-    <<: *common
-    <<: *feature_introduced_in_darga_or_prior
-    <<: *release
   manageiq-automation_engine:
     <<: *common
     <<: *feature_introduced_in_darga_or_prior
@@ -240,13 +236,21 @@ repos:
   log_decorator:
     <<: *common
     <<: *semver
+  manageiq-appliance_console:
+    <<: *common
+    <<: *release
+    # Starting with gaprindashvili, there are no more backports, so this backport list is hardcoded
+    <<: *release_darga
+    <<: *release_euwe
+    <<: *release_fine
+    <<: *semver
   manageiq-messaging:
     <<: *common
     <<: *semver
   manageiq-smartstate:
     <<: *common
-    # Starting with gaprindashvili, there are no more backports,
-    #   so this backport list is hardcoded
+    <<: *release
+    # Starting with gaprindashvili, there are no more backports, so this backport list is hardcoded
     <<: *release_darga
     <<: *release_euwe
     <<: *release_fine
