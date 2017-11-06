@@ -40,10 +40,12 @@ master:
   manageiq-providers-vmware:
   manageiq-schema:
   manageiq-smartstate:
-    has_real_release: true
+    has_real_releases: true
   manageiq-ui-classic:
   manageiq-ui-service:
   manageiq_docs:
+  ui-components:
+    has_real_releases: true
 gaprindashvili:
   container-httpd:
     has_real_releases: true
@@ -86,10 +88,12 @@ gaprindashvili:
   manageiq-providers-vmware:
   manageiq-schema:
   manageiq-smartstate:
-    has_real_release: true
+    has_real_releases: true
   manageiq-ui-classic:
   manageiq-ui-service:
   manageiq_docs:
+  ui-components:
+    has_real_releases: true
 fine:
   manageiq:
     has_rake_release: true
