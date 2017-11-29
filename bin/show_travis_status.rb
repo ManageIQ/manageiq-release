@@ -9,12 +9,12 @@ require 'travis'
 require 'trollop'
 
 opts = Trollop.options do
-  opt :branch, "The branch to check status for", :type => :string, :required => true
+  opt :branch, "The branch or release tag to check status for", :type => :string, :required => true
 end
 
 branch = opts[:branch]
 
-all_repos = ManageIQ::Release::Repos[branch]
+all_repos = ManageIQ::Release::Repos[branch.split(/-/).first]
 travis_repos = all_repos.collect do |github_repo|
   repo = Travis::Repository.find("ManageIQ/#{github_repo.name}")
   next unless repo.branches && repo.branches.include?(branch)
