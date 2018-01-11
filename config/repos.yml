@@ -23,6 +23,7 @@ master:
   manageiq-content:
     has_rake_release: true
   manageiq-gems-pending:
+  manageiq-graphql:
   manageiq-pods:
   manageiq-providers-amazon:
   manageiq-providers-ansible_tower:
