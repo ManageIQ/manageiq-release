@@ -134,6 +134,10 @@ repos:
     <<: *common
     <<: *feature_introduced_in_darga_or_prior
     <<: *release
+  manageiq-graphql:
+    <<: *common
+    #<<: *feature_introduced_in_hammer
+    <<: *release
   manageiq-pods:
     <<: *common
     <<: *feature_introduced_in_fine
