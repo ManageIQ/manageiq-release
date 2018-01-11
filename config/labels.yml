@@ -12,6 +12,7 @@ common: &common
   internationalization: "d4c5f9"
   notabug: "eeeeee"
   performance: "e99695"
+  pinned: "eeeeee"
   question: "cc317c"
   refactoring: "fbca04"
   stale: "eeeeee"
