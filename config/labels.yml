@@ -177,6 +177,11 @@ repos:
     <<: *feature_introduced_in_darga_or_prior
     <<: *provider_plugin
     <<: *release
+  manageiq-providers-kubevirt:
+    <<: *common
+    #<<: *feature_introduced_in_hammer
+    <<: *provider_plugin
+    <<: *release
   manageiq-providers-lenovo:
     <<: *common
     <<: *feature_introduced_in_fine

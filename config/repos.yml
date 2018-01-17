@@ -32,6 +32,7 @@ master:
   manageiq-providers-google:
   manageiq-providers-hawkular:
   manageiq-providers-kubernetes:
+  manageiq-providers-kubevirt:
   manageiq-providers-lenovo:
   manageiq-providers-nuage:
   manageiq-providers-openshift:
