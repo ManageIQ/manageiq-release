@@ -13,6 +13,7 @@ module ManageIQ
       def run
         repo.fetch
         repo.checkout(branch)
+        repo.git.pull
         repo.options.has_rake_release ? rake_release : tagged_release
       end
 
