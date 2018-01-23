@@ -5,6 +5,8 @@ master:
     has_real_releases: true
   container-postgresql:
     has_real_releases: true
+  container-redis:
+    has_real_releases: true
   container-ruby:
     has_real_releases: true
   dbus_api_service:
