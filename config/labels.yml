@@ -97,12 +97,16 @@ ux: &ux
   ux/review: "cc317c"
   ux/approved: "159818"
 
+transformation: &transformation
+  transformation: "5319e7"
+
 repos:
   manageiq:
     <<: *common
     <<: *feature_introduced_in_darga_or_prior
     <<: *provider_types
     <<: *release
+    <<: *transformation
   manageiq-api:
     <<: *common
     <<: *feature_introduced_in_darga_or_prior
@@ -121,6 +125,7 @@ repos:
     <<: *common
     <<: *feature_introduced_in_darga_or_prior
     <<: *release
+    <<: *transformation
   manageiq-consumption:
     <<: *common
     <<: *feature_introduced_in_gaprindashvili
@@ -130,6 +135,7 @@ repos:
     <<: *feature_introduced_in_darga_or_prior
     <<: *provider_types
     <<: *release
+    <<: *transformation
   manageiq-gems-pending:
     <<: *common
     <<: *feature_introduced_in_darga_or_prior
@@ -222,11 +228,13 @@ repos:
     <<: *feature_introduced_in_darga_or_prior
     <<: *provider_types
     <<: *release
+    <<: *transformation
   manageiq-ui-classic:
     <<: *common
     <<: *feature_introduced_in_darga_or_prior
     <<: *release
     <<: *ux
+    <<: *transformation
   manageiq-ui-service:
     <<: *common
     <<: *feature_introduced_in_darga_or_prior
