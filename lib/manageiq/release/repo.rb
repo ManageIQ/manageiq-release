@@ -54,7 +54,7 @@ module ManageIQ
       private
 
       def git_clone
-        clone_source = options.clone_source || "git@github.com:ManageIQ/#{name}.git"
+        clone_source = options.clone_source || "git@github.com:#{github_repo}.git"
         exit($CHILD_STATUS.exitstatus) unless system("git clone #{clone_source} #{path}")
       end
     end
