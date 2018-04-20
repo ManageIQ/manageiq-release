@@ -28,9 +28,7 @@ module ManageIQ
 
         if !commit_changes
           puts "!!! Failed to commit changes. Perhaps the script is wrong or #{repo.github_repo} is already updated."
-        elsif dry_run
-          puts "!!! --dry-run enabled: Verify the commit in #{repo.path} and run again without dry run to fork the repo, push the branch and open a pull request."
-        else
+        elsif !dry_run
           fork_repo unless forked?
           push_branch
           open_pull_request
@@ -80,6 +78,10 @@ module ManageIQ
             begin
               repo.git.add("-v", ".")
               repo.git.commit("-m", message)
+              repo.git.show
+              if dry_run
+                puts "!!! --dry-run enabled: If the above commit in #{repo.path} looks good, run again without dry run to fork the repo, push the branch and open a pull request."
+              end
               true
             rescue MiniGit::GitError => e
               e.status.exitstatus == 0
