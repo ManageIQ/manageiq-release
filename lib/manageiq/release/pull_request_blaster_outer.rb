@@ -109,7 +109,7 @@ module ManageIQ
       end
 
       def pr_branch
-        "pr_blaster_outer"
+        "pr_blaster_outer_#{branch}"
       end
 
       def pr_base
