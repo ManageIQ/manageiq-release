@@ -32,9 +32,13 @@ module ManageIQ
         elsif dry_run
           result = "Committed but is dry run"
         else
-          fork_repo unless forked?
-          push_branch
-          result = open_pull_request
+          puts "Do you want to open a pull request on #{repo.github_repo} with the above changes? (Y/N)"
+          answer = $stdin.gets.chomp
+          if answer.upcase.start_with?("Y")
+            fork_repo unless forked?
+            push_branch
+            result = open_pull_request
+          end
         end
         puts "--- blasting #{repo.github_repo} complete"
         result
