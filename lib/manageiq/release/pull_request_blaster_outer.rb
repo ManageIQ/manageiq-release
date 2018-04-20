@@ -26,14 +26,18 @@ module ManageIQ
 
         run_script
 
+        result = false
         if !commit_changes
           puts "!!! Failed to commit changes. Perhaps the script is wrong or #{repo.github_repo} is already updated."
-        elsif !dry_run
+        elsif dry_run
+          result = "Committed but is dry run"
+        else
           fork_repo unless forked?
           push_branch
-          open_pull_request
+          result = open_pull_request
         end
         puts "--- blasting #{repo.github_repo} complete"
+        result
       end
 
       private

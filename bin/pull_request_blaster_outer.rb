@@ -21,7 +21,12 @@ else
   repos = ManageIQ::Release::Repos["master"]
 end
 
+results = {}
 repos.each do |repo|
   puts ManageIQ::Release.header(repo.github_repo)
-  ManageIQ::Release::PullRequestBlasterOuter.new(repo, opts.slice(:branch, :script, :dry_run, :message)).blast
+  results[repo.github_repo] = ManageIQ::Release::PullRequestBlasterOuter.new(repo, opts.slice(:branch, :script, :dry_run, :message)).blast
+  puts ManageIQ::Release.separator
 end
+
+require 'pp'
+pp results
