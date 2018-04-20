@@ -21,7 +21,7 @@ module ManageIQ
         puts "+++ blasting #{repo.github_repo}..."
 
         repo.git
-        repo.fetch
+        repo.fetch(output: false)
         repo.checkout(pr_branch, "origin/#{branch}")
 
         run_script
