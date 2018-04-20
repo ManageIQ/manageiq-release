@@ -119,7 +119,7 @@ module ManageIQ
       def push_branch
         with_status do
           Dir.chdir(repo.path) do
-            repo.git.remote("add", origin_remote, origin_url)
+            repo.git.remote("add", origin_remote, origin_url) unless repo.remote?(origin_remote)
             repo.git.push("-f", origin_remote, "#{pr_branch}:#{pr_branch}")
           end
         end

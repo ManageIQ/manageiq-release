@@ -51,6 +51,16 @@ module ManageIQ
         false
       end
 
+      def remote?(remote)
+        begin
+          git.remote("show", remote)
+        rescue MiniGit::GitError => e
+          false
+        else
+          true
+        end
+      end
+
       private
 
       def git_clone
