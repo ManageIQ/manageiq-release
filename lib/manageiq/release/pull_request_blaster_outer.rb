@@ -4,12 +4,14 @@ module ManageIQ
   module Release
     class PullRequestBlasterOuter
       attr_reader :repo, :branch, :script, :dry_run, :message
+
+      ROOT_DIR = Pathname.new(__dir__).join("..", "..", "..").freeze
       def initialize(repo, branch:, script:, dry_run:, message:)
         @repo    = repo
         @branch  = branch
         @script  = begin
           s = Pathname.new(script)
-          s = Pathname.new(__dir__).join("..", "..", "..", script) if s.relative?
+          s = ROOT_DIR.join(script) if s.relative?
           raise "File not found #{s}" unless File.exist?(s)
           s.to_s
         end
