@@ -109,7 +109,7 @@ module ManageIQ
       end
 
       def pr_branch
-        "pr_blaster_outer_#{branch}"
+        "pr_blaster_outer_#{branch}_#{File.basename(script)[0,3]}"
       end
 
       def pr_base
