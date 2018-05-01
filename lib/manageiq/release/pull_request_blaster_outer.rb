@@ -57,46 +57,32 @@ module ManageIQ
         github.repos(github.login).any? { |m| m.name == repo.name }
       end
 
-      def with_status
-        calling_method = caller_locations(1,1)[0].label
-        puts "+++ #{calling_method}..."
-        result = yield
-        puts "--- #{calling_method}: #{result}"
-        result
-      end
-
       def fork_repo
-        with_status do
-          github.fork(repo.github_repo)
-          until forked?
-            print "."
-            sleep 3
-          end
+        github.fork(repo.github_repo)
+        until forked?
+          print "."
+          sleep 3
         end
       end
 
       def run_script
-        with_status do
-          Dir.chdir(repo.path) do
-            `#{script}`
-          end
+        Dir.chdir(repo.path) do
+          `#{script}`
         end
       end
 
       def commit_changes
-        with_status do
-          Dir.chdir(repo.path) do
-            begin
-              repo.git.add("-v", ".")
-              repo.git.commit("-m", message)
-              repo.git.show
-              if dry_run
-                puts "!!! --dry-run enabled: If the above commit in #{repo.path} looks good, run again without dry run to fork the repo, push the branch and open a pull request."
-              end
-              true
-            rescue MiniGit::GitError => e
-              e.status.exitstatus == 0
+        Dir.chdir(repo.path) do
+          begin
+            repo.git.add("-v", ".")
+            repo.git.commit("-m", message)
+            repo.git.show
+            if dry_run
+              puts "!!! --dry-run enabled: If the above commit in #{repo.path} looks good, run again without dry run to fork the repo, push the branch and open a pull request."
             end
+            true
+          rescue MiniGit::GitError => e
+            e.status.exitstatus == 0
           end
         end
       end
@@ -114,19 +100,15 @@ module ManageIQ
       end
 
       def push_branch
-        with_status do
-          Dir.chdir(repo.path) do
-            repo.git.remote("add", origin_remote, origin_url) unless repo.remote?(origin_remote)
-            repo.git.push("-f", origin_remote, "#{head}:#{head}")
-          end
+        Dir.chdir(repo.path) do
+          repo.git.remote("add", origin_remote, origin_url) unless repo.remote?(origin_remote)
+          repo.git.push("-f", origin_remote, "#{head}:#{head}")
         end
       end
 
       def open_pull_request
-        with_status do
-          pr = github.create_pull_request(repo.github_repo, base, pr_head, message[0,72], message[0,72])
-          pr.html_url
-        end
+        pr = github.create_pull_request(repo.github_repo, base, pr_head, message[0,72], message[0,72])
+        pr.html_url
       end
     end
   end
