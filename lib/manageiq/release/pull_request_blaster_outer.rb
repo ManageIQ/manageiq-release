@@ -3,12 +3,13 @@ require 'pathname'
 module ManageIQ
   module Release
     class PullRequestBlasterOuter
-      attr_reader :repo, :branch, :script, :dry_run, :message
+      attr_reader :repo, :base, :head, :script, :dry_run, :message
 
       ROOT_DIR = Pathname.new(__dir__).join("..", "..", "..").freeze
-      def initialize(repo, branch:, script:, dry_run:, message:)
+      def initialize(repo, base:, head:, script:, dry_run:, message:)
         @repo    = repo
-        @branch  = branch
+        @base    = base
+        @head    = head
         @script  = begin
           s = Pathname.new(script)
           s = ROOT_DIR.join(script) if s.relative?
@@ -24,7 +25,7 @@ module ManageIQ
 
         repo.git
         repo.fetch(output: false)
-        repo.checkout(pr_branch, "origin/#{branch}")
+        repo.checkout(head, "origin/#{base}")
 
         run_script
 
@@ -108,26 +109,22 @@ module ManageIQ
         "git@github.com:#{github.login}/#{repo.name}.git"
       end
 
-      def pr_branch
-        "pr_blaster_outer_#{branch}_#{File.basename(script)[0,3]}"
-      end
-
-      def pr_base
-        "#{github.login}:#{pr_branch}"
+      def pr_head
+        "#{github.login}:#{head}"
       end
 
       def push_branch
         with_status do
           Dir.chdir(repo.path) do
             repo.git.remote("add", origin_remote, origin_url) unless repo.remote?(origin_remote)
-            repo.git.push("-f", origin_remote, "#{pr_branch}:#{pr_branch}")
+            repo.git.push("-f", origin_remote, "#{head}:#{head}")
           end
         end
       end
 
       def open_pull_request
         with_status do
-          pr = github.create_pull_request(repo.github_repo, branch, pr_base, message[0,72], message[0,72])
+          pr = github.create_pull_request(repo.github_repo, base, pr_head, message[0,72], message[0,72])
           pr.html_url
         end
       end
