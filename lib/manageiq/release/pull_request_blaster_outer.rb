@@ -25,7 +25,13 @@ module ManageIQ
 
         repo.git
         repo.fetch(output: false)
-        repo.checkout(head, "origin/#{base}")
+
+        begin
+          repo.checkout(head, "origin/#{base}")
+        rescue => e
+          raise unless e.message =~ /is not a commit/
+          puts "!!! Skipping #{repo.github_repo}: #{e.message}"
+        end
 
         run_script
 
