@@ -95,7 +95,7 @@ provider_types: &provider_types
 
 ux: &ux
   ux/review: "cc317c"
-  ux/approved: "159818"
+  ux/approved: "0e8a16"
 
 transformation: &transformation
   transformation: "5319e7"
