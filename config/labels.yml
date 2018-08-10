@@ -244,6 +244,12 @@ repos:
     <<: *feature_introduced_in_darga_or_prior
     <<: *release
     <<: *ux
+  manageiq-v2v:
+    <<: *common
+    <<: *feature_introduced_in_gaprindashvili
+    <<: *release
+    <<: *ux
+    <<: *transformation
   manageiq_docs:
     <<: *release
   # Released gems and packages
