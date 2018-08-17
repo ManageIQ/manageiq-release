@@ -48,6 +48,7 @@ master:
     has_real_releases: true
   manageiq-ui-classic:
   manageiq-ui-service:
+  manageiq-v2v:
   manageiq_docs:
   ui-components:
     has_real_releases: true
@@ -96,6 +97,7 @@ gaprindashvili:
     has_real_releases: true
   manageiq-ui-classic:
   manageiq-ui-service:
+  manageiq-v2v:
   manageiq_docs:
   ui-components:
     has_real_releases: true
