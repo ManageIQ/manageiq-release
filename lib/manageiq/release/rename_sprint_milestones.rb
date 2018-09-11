@@ -11,7 +11,7 @@ module ManageIQ
 
       def run
         rename_hash.each do |old_title, new_title|
-          github_milestone = existing_milestones.detect { |l| l.title == old_title }
+          github_milestone = existing_milestones[old_title]
           update(github_milestone.number, old_title, new_title) if github_milestone
         end
       end
@@ -19,7 +19,7 @@ module ManageIQ
       private
 
       def existing_milestones
-        @existing_milestones ||= SprintMilestone.all(repo)
+        @existing_milestones ||= SprintMilestone.all(repo, :state => :all).index_by(&:title)
       end
 
       def update(old_number, old_title, new_title)
