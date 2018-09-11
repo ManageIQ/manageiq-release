@@ -16,14 +16,6 @@ end
 
 rename_hash = { opts[:old] => opts[:new] }
 
-if opts[:repo]
-  repos = [ManageIQ::Release::Repo.new(opts[:repo])]
-else
-  repos = ManageIQ::Release::Repos["master"]
-end
-
-repos.each do |repo|
-  puts ManageIQ::Release.header(repo.name)
+ManageIQ::Release.each_repo(opts[:repo]) do |repo|
   ManageIQ::Release::RenameLabels.new(repo.github_repo, rename_hash, opts.slice(:dry_run)).run
-  puts
 end
