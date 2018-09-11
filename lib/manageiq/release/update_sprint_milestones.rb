@@ -11,7 +11,7 @@ module ManageIQ
         @title   = title
         @dry_run = dry_run
 
-        raise "Invalid title #{title.inspect}" unless title_valid?
+        raise "Invalid title #{title.inspect}" unless SprintMilestone.valid_title?(title)
       end
 
       def run
@@ -20,10 +20,6 @@ module ManageIQ
       end
 
       private
-
-      def title_valid?
-        title.include?(" Ending ")
-      end
 
       def partitioned_sprint_milestones
         @partitioned_sprint_milestones ||= begin
