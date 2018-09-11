@@ -1,8 +1,8 @@
 module ManageIQ
   module Release
     module SprintMilestone
-      def self.all(repo)
-        ManageIQ::Release.github.list_milestones(repo).select { |m| m.title =~ /^Sprint \d+/ }
+      def self.all(repo, options = {})
+        ManageIQ::Release.github.list_milestones(repo, options).select { |m| m.title =~ /^Sprint \d+/ }
       end
 
       def self.due_date_from_title(title)
