@@ -7,7 +7,7 @@ require 'manageiq/release'
 require 'trollop'
 
 opts = Trollop.options do
-  opt :repo,    "The repo to update. If not passed, will try all repos in config/repos.yml. For example: --repo manageiq or --repo miq-test/sandbox", :type => :string
+  opt :repo,    "The repo to update. If not passed, will try all repos in config/repos.yml. For example: --repo manageiq or --repo miq-test/sandbox", :type => :strings
   opt :base,    "The name of the branch you want the changes pulled into.",                              :type => :string, :required => true
   opt :head,    "The name of the branch containing the changes.",                                        :type => :string, :required => true
   opt :script,  "The path to the script that will update the desired files. See the scripts directory.", :type => :string, :required => true
@@ -16,8 +16,11 @@ opts = Trollop.options do
 end
 
 if opts[:repo]
-  org, repo = opts[:repo].split("/")
-  repos = [ManageIQ::Release::Repo.new(repo, :org => org)]
+  repos = opts[:repo].collect do |repo_opt|
+    org, repo = repo_opt.split("/")
+    org, repo = "ManageIQ", org if repo.nil?
+    ManageIQ::Release::Repo.new(repo, :org => org)
+  end
 else
   repos = ManageIQ::Release::Repos["master"]
 end
