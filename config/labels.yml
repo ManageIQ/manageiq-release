@@ -173,11 +173,6 @@ repos:
     <<: *feature_introduced_in_darga_or_prior
     <<: *provider_plugin
     <<: *release
-  manageiq-providers-hawkular:
-    <<: *common
-    <<: *feature_introduced_in_darga_or_prior
-    <<: *provider_plugin
-    <<: *release
   manageiq-providers-kubernetes:
     <<: *common
     <<: *feature_introduced_in_darga_or_prior

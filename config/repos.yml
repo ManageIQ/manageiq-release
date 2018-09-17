@@ -32,7 +32,6 @@ master:
   manageiq-providers-azure:
   manageiq-providers-foreman:
   manageiq-providers-google:
-  manageiq-providers-hawkular:
   manageiq-providers-kubernetes:
   manageiq-providers-kubevirt:
   manageiq-providers-lenovo:
@@ -83,7 +82,6 @@ gaprindashvili:
   manageiq-providers-azure:
   manageiq-providers-foreman:
   manageiq-providers-google:
-  manageiq-providers-hawkular:
   manageiq-providers-kubernetes:
   manageiq-providers-lenovo:
   manageiq-providers-nuage:
