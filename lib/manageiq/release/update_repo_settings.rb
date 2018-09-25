@@ -38,7 +38,10 @@ module ManageIQ
         puts "Protecting #{branch} branch"
 
         settings = {
-          :enforce_admins => nil
+          :enforce_admins                => nil,
+          :required_status_checks        => nil,
+          :required_pull_request_reviews => nil,
+          :restrictions                  => nil
         }
 
         if dry_run
