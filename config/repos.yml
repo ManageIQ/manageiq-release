@@ -51,7 +51,6 @@ master:
   manageiq-v2v:
   manageiq_docs:
   ui-components:
-    has_real_releases: true
 gaprindashvili:
   container-httpd:
     has_real_releases: true

@@ -16,11 +16,16 @@ branch = opts[:branch]
 
 all_repos = ManageIQ::Release::Repos[branch.split(/-/).first]
 travis_repos = all_repos.collect do |github_repo|
+  next if github_repo.options["has_real_releases"]
   repo = Travis::Repository.find("ManageIQ/#{github_repo.name}")
-  next unless repo.branches && repo.branches.include?(branch)
-  last_build = repo.last_on_branch(branch)
-  { "Repo" => repo.name, "Status" => last_build.state, "Date" => last_build.finished_at }
+  begin
+    last_build = repo.last_on_branch(branch)
+  rescue Travis::Client::NotFound
+    # Ignore repo which doesn't have Travis enabled for that branch
+    next
+  end
+  { "Repo" => repo.name, "Status" => last_build.state, "Build ID" => last_build.number, "Date" => last_build.finished_at }
 end.compact
 
 travis_repos.sort_by! { |v| [ v["Status"], v["Date"] ] }
-puts travis_repos.tableize(:columns => ["Repo", "Status", "Date"])
+puts travis_repos.tableize(:columns => ["Repo", "Status", "Build ID", "Date"])
