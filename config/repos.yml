@@ -133,7 +133,6 @@ gaprindashvili:
   manageiq-providers-azure:
   manageiq-providers-foreman:
   manageiq-providers-google:
-  manageiq-providers-hawkular:
   manageiq-providers-kubernetes:
   manageiq-providers-lenovo:
   manageiq-providers-nuage:
