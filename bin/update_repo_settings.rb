@@ -14,14 +14,6 @@ opts = Trollop.options do
 end
 Trollop.die("Must pass either --repo or --branch") unless opts[:branch_given] || opts[:repo_given]
 
-if opts[:repo]
-  repos = [ManageIQ::Release::Repo.new(opts[:repo])]
-else
-  repos = ManageIQ::Release::Repos[opts[:branch]]
-end
-
-repos.each do |repo|
-  puts ManageIQ::Release.header("Updating #{repo.name}")
+ManageIQ::Release.each_repo(opts[:repo], opts[:branch]) do |repo|
   ManageIQ::Release::UpdateRepoSettings.new(repo.github_repo, opts.slice(:branch, :dry_run)).run
-  puts
 end

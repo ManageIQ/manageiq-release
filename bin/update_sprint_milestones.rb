@@ -13,14 +13,6 @@ opts = Trollop.options do
   opt :dry_run, "", :default => false
 end
 
-if opts[:repo]
-  repos = [ManageIQ::Release::Repo.new(opts[:repo])]
-else
-  repos = ManageIQ::Release::Repos["master"]
-end
-
-repos.each do |repo|
-  puts ManageIQ::Release.header(repo.name)
+ManageIQ::Release.each_repo(opts[:repo]).each do |repo|
   ManageIQ::Release::UpdateSprintMilestones.new(repo.github_repo, opts.slice(:title, :dry_run)).run
-  puts
 end
