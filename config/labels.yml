@@ -28,17 +28,23 @@ release: &release
   blocker: "000000"
   "bugzilla needed": "000000"
 
+release_hammer: &release_hammer
+  hammer/yes: "000000"
+  hammer/no: "000000"
+  hammer/backported: "000000"
+  hammer/conflict: "000000"
+
 release_gaprindashvili: &release_gaprindashvili
-  gaprindashvili/yes: "000000"
-  gaprindashvili/no: "000000"
-  gaprindashvili/backported: "000000"
-  gaprindashvili/conflict: "000000"
+  gaprindashvili/yes: "555555"
+  gaprindashvili/no: "555555"
+  gaprindashvili/backported: "555555"
+  gaprindashvili/conflict: "555555"
 
 release_fine: &release_fine
-  fine/yes: "555555"
-  fine/no: "555555"
-  fine/backported: "555555"
-  fine/conflict: "555555"
+  fine/yes: "dddddd"
+  fine/no: "dddddd"
+  fine/backported: "dddddd"
+  fine/conflict: "dddddd"
 
 release_euwe: &release_euwe
   euwe/yes: "dddddd"
@@ -57,18 +63,25 @@ feature_introduced_in_darga_or_prior: &feature_introduced_in_darga_or_prior
   <<: *release_euwe
   <<: *release_fine
   <<: *release_gaprindashvili
+  <<: *release_hammer
 
 feature_introduced_in_euwe: &feature_introduced_in_euwe
   <<: *release_euwe
   <<: *release_fine
   <<: *release_gaprindashvili
+  <<: *release_hammer
 
 feature_introduced_in_fine: &feature_introduced_in_fine
   <<: *release_fine
   <<: *release_gaprindashvili
+  <<: *release_hammer
 
 feature_introduced_in_gaprindashvili: &feature_introduced_in_gaprindashvili
   <<: *release_gaprindashvili
+  <<: *release_hammer
+
+feature_introduced_in_hammer: &feature_introduced_in_hammer
+  <<: *release_hammer
 
 semver: &semver
   "needs major version": "6a92bc"
@@ -142,7 +155,7 @@ repos:
     <<: *release
   manageiq-graphql:
     <<: *common
-    #<<: *feature_introduced_in_hammer
+    <<: *feature_introduced_in_hammer
     <<: *release
   manageiq-pods:
     <<: *common
@@ -175,7 +188,11 @@ repos:
     <<: *release
   manageiq-providers-hawkular:
     <<: *common
-    <<: *feature_introduced_in_darga_or_prior
+    # Starting with hammer, there are no more backports, so this backport list is hardcoded
+    <<: *release_darga
+    <<: *release_euwe
+    <<: *release_fine
+    <<: *release_gaprindashvili
     <<: *provider_plugin
     <<: *release
   manageiq-providers-kubernetes:
@@ -185,7 +202,7 @@ repos:
     <<: *release
   manageiq-providers-kubevirt:
     <<: *common
-    #<<: *feature_introduced_in_hammer
+    <<: *feature_introduced_in_hammer
     <<: *provider_plugin
     <<: *release
   manageiq-providers-lenovo:
@@ -215,6 +232,7 @@ repos:
     <<: *release
   manageiq-providers-redfish:
     <<: *common
+    <<: *feature_introduced_in_hammer
     <<: *provider_plugin
     <<: *release
   manageiq-providers-scvmm:
