@@ -252,7 +252,9 @@ repos:
     <<: *transformation
   manageiq_docs:
     <<: *release
+  #
   # Released gems and packages
+  #
   dbus_api_service:
     <<: *common
     <<: *release
@@ -260,6 +262,9 @@ repos:
   httpd_configmap_generator:
     <<: *common
     <<: *release
+    <<: *semver
+  inventory_refresh:
+    <<: *common
     <<: *semver
   log_decorator:
     <<: *common
