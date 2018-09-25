@@ -13,6 +13,6 @@ opts = Trollop.options do
   opt :dry_run, "", :default => false
 end
 
-ManageIQ::Release.each_repo(opts[:repo]).each do |repo|
+ManageIQ::Release.each_repo(opts[:repo]) do |repo|
   ManageIQ::Release::DeleteSprintMilestones.new(repo.github_repo, opts.slice(:title, :dry_run)).run
 end
