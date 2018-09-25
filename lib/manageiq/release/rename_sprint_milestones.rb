@@ -7,6 +7,9 @@ module ManageIQ
         @repo        = repo
         @rename_hash = rename_hash
         @dry_run     = dry_run
+
+        invalid = rename_hash.values.reject { |new_title| SprintMilestone.valid_title?(new_title) }
+        raise "Invalid title #{invalid.inspect}" if invalid.any?
       end
 
       def run
