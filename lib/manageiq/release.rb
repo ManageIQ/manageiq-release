@@ -5,6 +5,7 @@ require 'manageiq/release/repo'
 require 'manageiq/release/repos'
 require 'manageiq/release/sprint_milestone'
 
+require 'manageiq/release/delete_sprint_milestones'
 require 'manageiq/release/destroy_tag'
 require 'manageiq/release/release_branch'
 require 'manageiq/release/release_tag'
@@ -18,6 +19,27 @@ module ManageIQ
   module Release
     CONFIG_DIR = Pathname.new("../../config").expand_path(__dir__)
     REPOS_DIR = Pathname.new("../../repos").expand_path(__dir__)
+
+    #
+    # CLI helpers
+    #
+
+    def self.each_repo(repo_opt)
+      raise "no block given" unless block_given?
+      repos_for(repo_opt).each do |repo|
+        puts header(repo.name)
+        yield repo
+        puts
+      end
+    end
+
+    def self.repos_for(repo_opt)
+      if repo_opt
+        [ManageIQ::Release::Repo.new(repo_opt)]
+      else
+        ManageIQ::Release::Repos["master"]
+      end
+    end
 
     #
     # Logging helpers
