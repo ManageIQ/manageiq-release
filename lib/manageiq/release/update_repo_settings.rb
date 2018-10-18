@@ -1,17 +1,15 @@
 module ManageIQ
   module Release
     class UpdateRepoSettings
-      attr_reader :repo, :branch, :dry_run
+      attr_reader :repo, :dry_run
 
-      def initialize(repo, branch: nil, dry_run: false)
+      def initialize(repo, dry_run: false)
         @repo    = repo
-        @branch  = branch
         @dry_run = dry_run
       end
 
       def run
         edit_repository
-        protect_branch if branch
       end
 
       private
@@ -31,23 +29,6 @@ module ManageIQ
           puts "** dry-run: github.edit_repository(#{repo.inspect}, #{settings.inspect[1..-2]})"
         else
           github.edit_repository(repo, settings)
-        end
-      end
-
-      def protect_branch
-        puts "Protecting #{branch} branch"
-
-        settings = {
-          :enforce_admins                => nil,
-          :required_status_checks        => nil,
-          :required_pull_request_reviews => nil,
-          :restrictions                  => nil
-        }
-
-        if dry_run
-          puts "** dry-run: github.protect_branch(#{repo.inspect}, #{branch.inspect}, #{settings.inspect[1..-2]})"
-        else
-          github.protect_branch(repo, branch, settings)
         end
       end
 
