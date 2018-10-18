@@ -7,6 +7,7 @@ require 'manageiq/release/sprint_milestone'
 
 require 'manageiq/release/delete_sprint_milestones'
 require 'manageiq/release/destroy_tag'
+require 'manageiq/release/pull_request_blaster_outer'
 require 'manageiq/release/release_branch'
 require 'manageiq/release/release_tag'
 require 'manageiq/release/rename_labels'

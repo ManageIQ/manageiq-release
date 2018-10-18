@@ -51,10 +51,20 @@ module ManageIQ
         false
       end
 
+      def remote?(remote)
+        begin
+          git.remote("show", remote)
+        rescue MiniGit::GitError => e
+          false
+        else
+          true
+        end
+      end
+
       private
 
       def git_clone
-        clone_source = options.clone_source || "git@github.com:ManageIQ/#{name}.git"
+        clone_source = options.clone_source || "git@github.com:#{github_repo}.git"
         exit($CHILD_STATUS.exitstatus) unless system("git clone #{clone_source} #{path}")
       end
     end
