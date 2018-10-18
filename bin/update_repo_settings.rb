@@ -8,8 +8,8 @@ require 'trollop'
 
 opts = Trollop.options do
   opt :branch, "The branch to protect.", :type => :string
-  opt :repo, "The repo to update. If not passed, will try all repos for the branch specified.", :type => :string
 
+  opt :repo, "The repo to update. If not passed, will try all repos for the branch specified.", :type => :strings
   opt :dry_run, "", :default => false
 end
 Trollop.die("Must pass either --repo or --branch") unless opts[:branch_given] || opts[:repo_given]
