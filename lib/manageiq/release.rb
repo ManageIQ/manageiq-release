@@ -26,18 +26,21 @@ module ManageIQ
     # CLI helpers
     #
 
-    def self.each_repo(repo_name, branch = "master")
+    def self.each_repo(repo_names, branch = "master")
       raise "no block given" unless block_given?
-      repos_for(repo_name, branch).each do |repo|
-        puts header(repo.name)
+      repos_for(repo_names, branch).each do |repo|
+        puts header(repo.github_repo)
         yield repo
         puts
       end
     end
 
-    def self.repos_for(repo_name, branch = "master")
-      if repo_name
-        [ManageIQ::Release::Repo.new(repo_name)]
+    def self.repos_for(repo_names, branch = "master")
+      if repo_names
+        Array(repo_names).collect do |repo_name|
+          org, repo = repo_name.split("/").unshift(nil).last(2)
+          ManageIQ::Release::Repo.new(repo, :org => org)
+        end
       else
         ManageIQ::Release::Repos[branch]
       end
