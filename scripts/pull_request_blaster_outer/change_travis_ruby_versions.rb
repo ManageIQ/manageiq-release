@@ -9,14 +9,14 @@ end
 travis = File.join(Dir.pwd, ".travis.yml")
 unless File.exist?(travis)
   puts "#{travis} doesn't exist, skipping"
-  exit 1
+  exit 0
 end
 
 require 'yaml'
 yml = YAML.load_file(travis)
 unless yml.key?("rvm")
   puts "#{travis} doesn't have rvm key, skipping"
-  exit 1
+  exit 0
 end
 
 yml["rvm"] = versions
