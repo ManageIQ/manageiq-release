@@ -1,6 +1,8 @@
 common: &common
   bug: "ee0701"
   "bug/sporadic test failure": "ee0701"
+  changelog/yes: "d4c5f9"
+  changelog/no: "d4c5f9"
   cleanup: "fef2c0"
   dependencies: "b4a8d1"
   developer: "bcf5db"
