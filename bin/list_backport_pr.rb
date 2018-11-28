@@ -5,9 +5,9 @@ $LOAD_PATH << File.expand_path("../lib", __dir__)
 require 'bundler/setup'
 require 'manageiq/release'
 require 'more_core_extensions/core_ext/array/tableize'
-require 'trollop'
+require 'optimist'
 
-opts = Trollop.options do
+opts = Optimist.options do
   opt :blocker, "List 'blocker' PRs only",          :type => :boolean, :default => false
   opt :branch,  "The target branch to backport to", :type => :string,  :required => true
   opt :open,    "Open all links in a browser",      :type => :boolean, :default => false

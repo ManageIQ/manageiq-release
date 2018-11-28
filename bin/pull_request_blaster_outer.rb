@@ -4,9 +4,9 @@ $LOAD_PATH << File.expand_path("../lib", __dir__)
 
 require 'bundler/setup'
 require 'manageiq/release'
-require 'trollop'
+require 'optimist'
 
-opts = Trollop.options do
+opts = Optimist.options do
   opt :base,    "The name of the branch you want the changes pulled into.",   :type => :string, :required => true
   opt :head,    "The name of the branch containing the changes.",             :type => :string, :required => true
   opt :script,  "The path to the script that will update the desired files.", :type => :string, :required => true

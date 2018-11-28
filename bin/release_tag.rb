@@ -4,9 +4,9 @@ $LOAD_PATH << File.expand_path("../lib", __dir__)
 
 require 'bundler/setup'
 require 'manageiq/release'
-require 'trollop'
+require 'optimist'
 
-opts = Trollop.options do
+opts = Optimist.options do
   opt :tag,    "The new tag name",  :type => :string, :required => true
   opt :branch, "The target branch", :type => :string, :required => true
 
@@ -14,7 +14,7 @@ opts = Trollop.options do
 end
 
 repos = ManageIQ::Release::Repos[opts[:branch]]
-Trollop.die "Repo #{opts[:branch].inspect} does not exist in repos.yml" if repos.nil?
+Optimist.die "Repo #{opts[:branch].inspect} does not exist in repos.yml" if repos.nil?
 
 review = StringIO.new
 post_review = StringIO.new

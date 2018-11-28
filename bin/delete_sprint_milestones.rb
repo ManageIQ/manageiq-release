@@ -4,9 +4,9 @@ $LOAD_PATH << File.expand_path("../lib", __dir__)
 
 require 'bundler/setup'
 require 'manageiq/release'
-require 'trollop'
+require 'optimist'
 
-opts = Trollop.options do
+opts = Optimist.options do
   opt :title, "The milestone to delete", :type => :string, :required => true
 
   opt :repo, "The repo to update. If not passed, will try all repos in config/repos.yml", :type => :strings

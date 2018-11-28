@@ -4,9 +4,9 @@ $LOAD_PATH << File.expand_path("../lib", __dir__)
 
 require 'bundler/setup'
 require 'manageiq/release'
-require 'trollop'
+require 'optimist'
 
-opts = Trollop.options do
+opts = Optimist.options do
   opt :branch,   "The target branch",           :type => :string,  :required => false
   opt :checkout, "Also checkout target branch", :type => :boolean, :default => false
 end
