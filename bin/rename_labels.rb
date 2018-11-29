@@ -4,9 +4,9 @@ $LOAD_PATH << File.expand_path("../lib", __dir__)
 
 require 'bundler/setup'
 require 'manageiq/release'
-require 'trollop'
+require 'optimist'
 
-opts = Trollop.options do
+opts = Optimist.options do
   opt :new,  "The new label name", :type => :string, :required => true
   opt :old,  "The old label name", :type => :string, :required => true
 

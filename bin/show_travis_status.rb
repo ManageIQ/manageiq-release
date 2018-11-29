@@ -6,9 +6,9 @@ require 'bundler/setup'
 require 'manageiq/release'
 require 'more_core_extensions/core_ext/array/tableize'
 require 'travis'
-require 'trollop'
+require 'optimist'
 
-opts = Trollop.options do
+opts = Optimist.options do
   opt :branch, "The branch or release tag to check status for", :type => :string, :required => true
 end
 
