@@ -16,10 +16,4 @@ opts = Optimist.options do
   opt :dry_run, "Make local changes, but don't fork, push, or create the pull request.", :default => false
 end
 
-results = {}
-ManageIQ::Release.each_repo(opts[:repo]) do |repo|
-  results[repo.github_repo] = ManageIQ::Release::PullRequestBlasterOuter.new(repo, opts.slice(:base, :head, :script, :dry_run, :message)).blast
-end
-
-require 'pp'
-pp results
+ManageIQ::Release::PullRequestBlasterOuter.run opts

@@ -6,6 +6,19 @@ module ManageIQ
       attr_reader :repo, :base, :head, :script, :dry_run, :message
 
       ROOT_DIR = Pathname.new(__dir__).join("..", "..", "..").freeze
+
+      def self.run(opts)
+        results = {}
+
+        ManageIQ::Release.each_repo(opts[:repo]) do |repo|
+          kwargs = opts.slice(:base, :head, :script, :dry_run, :message)
+          results[repo.github_repo] = ManageIQ::Release::PullRequestBlasterOuter.new(repo, kwargs).blast
+        end
+
+        require "pp"
+        pp results
+      end
+
       def initialize(repo, base:, head:, script:, dry_run:, message:)
         @repo    = repo
         @base    = base
