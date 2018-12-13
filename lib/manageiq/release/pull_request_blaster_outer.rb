@@ -126,11 +126,21 @@ module ManageIQ
       end
 
       def open_pull_request
-        pr = github.create_pull_request(repo.github_repo, base, pr_head, message[0,72], message[0,72])
+        pr = github.create_pull_request(*create_pull_request_args)
         pr.html_url
       rescue => err
         raise unless err.message.include?("A pull request already exists")
         puts "!!! Skipping.  #{err.message}"
+      end
+
+      def create_pull_request_args
+        [
+          repo.github_repo,
+          base,
+          pr_head,
+          message[0,72],
+          message[0,72]
+        ]
       end
     end
   end
