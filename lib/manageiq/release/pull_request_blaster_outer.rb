@@ -3,7 +3,7 @@ require 'pathname'
 module ManageIQ
   module Release
     class PullRequestBlasterOuter
-      attr_reader :repo, :base, :head, :script, :dry_run, :message, :assignee, :labels
+      attr_reader :repo, :base, :head, :script, :dry_run, :message, :assignee, :labels, :pr_body
 
       ROOT_DIR = Pathname.new(__dir__).join("..", "..", "..").freeze
 
@@ -11,7 +11,7 @@ module ManageIQ
         results = {}
 
         ManageIQ::Release.each_repo(opts[:repo]) do |repo|
-          kwargs = opts.slice(:base, :head, :script, :dry_run, :message, :assign, :labels)
+          kwargs = opts.slice(:base, :head, :script, :dry_run, :message, :body, :body_file, :assign, :labels)
           results[repo.github_repo] = ManageIQ::Release::PullRequestBlasterOuter.new(repo, kwargs).blast
         end
 
@@ -19,7 +19,7 @@ module ManageIQ
         pp results
       end
 
-      def initialize(repo, base:, head:, script:, dry_run:, message:, assign:, labels:)
+      def initialize(repo, base:, head:, script:, dry_run:, message:, body:, body_file:, assign:, labels:)
         @repo    = repo
         @base    = base
         @head    = head
@@ -33,6 +33,8 @@ module ManageIQ
         @message  = message
         @assignee = assign
         @labels   = labels
+
+        assign_pr_body body, body_file
       end
 
       def blast
@@ -141,7 +143,7 @@ module ManageIQ
           base,
           pr_head,
           message[0,72],
-          message[0,72]
+          pr_body
         ].tap do |args|
           options = {}
 
@@ -150,6 +152,16 @@ module ManageIQ
 
           args << options unless options.empty?
         end
+      end
+
+      def assign_pr_body body, body_file
+        @pr_body = if body
+                     body
+                   elsif body_file
+                     File.read(body_file) if File.exist?(body_file)
+                   else
+                     message[0,72]
+                   end
       end
     end
   end
