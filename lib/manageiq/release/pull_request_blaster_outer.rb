@@ -3,7 +3,7 @@ require 'pathname'
 module ManageIQ
   module Release
     class PullRequestBlasterOuter
-      attr_reader :repo, :base, :head, :script, :dry_run, :message, :labels
+      attr_reader :repo, :base, :head, :script, :dry_run, :message, :assignee, :labels
 
       ROOT_DIR = Pathname.new(__dir__).join("..", "..", "..").freeze
 
@@ -11,7 +11,7 @@ module ManageIQ
         results = {}
 
         ManageIQ::Release.each_repo(opts[:repo]) do |repo|
-          kwargs = opts.slice(:base, :head, :script, :dry_run, :message, :labels)
+          kwargs = opts.slice(:base, :head, :script, :dry_run, :message, :assign, :labels)
           results[repo.github_repo] = ManageIQ::Release::PullRequestBlasterOuter.new(repo, kwargs).blast
         end
 
@@ -19,7 +19,7 @@ module ManageIQ
         pp results
       end
 
-      def initialize(repo, base:, head:, script:, dry_run:, message:, labels:)
+      def initialize(repo, base:, head:, script:, dry_run:, message:, assign:, labels:)
         @repo    = repo
         @base    = base
         @head    = head
@@ -29,9 +29,10 @@ module ManageIQ
           raise "File not found #{s}" unless File.exist?(s)
           s.to_s
         end
-        @dry_run = dry_run
-        @message = message
-        @labels  = labels
+        @dry_run  = dry_run
+        @message  = message
+        @assignee = assign
+        @labels   = labels
       end
 
       def blast
@@ -144,7 +145,8 @@ module ManageIQ
         ].tap do |args|
           options = {}
 
-          options[:labels] = labels if labels && !labels.empty?
+          options[:assignee] = assignee if assignee
+          options[:labels]   = labels   if labels && !labels.empty?
 
           args << options unless options.empty?
         end
