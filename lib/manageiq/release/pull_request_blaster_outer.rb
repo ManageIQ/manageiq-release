@@ -3,7 +3,7 @@ require 'pathname'
 module ManageIQ
   module Release
     class PullRequestBlasterOuter
-      attr_reader :repo, :base, :head, :script, :dry_run, :message
+      attr_reader :repo, :base, :head, :script, :dry_run, :message, :labels
 
       ROOT_DIR = Pathname.new(__dir__).join("..", "..", "..").freeze
 
@@ -11,7 +11,7 @@ module ManageIQ
         results = {}
 
         ManageIQ::Release.each_repo(opts[:repo]) do |repo|
-          kwargs = opts.slice(:base, :head, :script, :dry_run, :message)
+          kwargs = opts.slice(:base, :head, :script, :dry_run, :message, :labels)
           results[repo.github_repo] = ManageIQ::Release::PullRequestBlasterOuter.new(repo, kwargs).blast
         end
 
@@ -19,7 +19,7 @@ module ManageIQ
         pp results
       end
 
-      def initialize(repo, base:, head:, script:, dry_run:, message:)
+      def initialize(repo, base:, head:, script:, dry_run:, message:, labels:)
         @repo    = repo
         @base    = base
         @head    = head
@@ -31,6 +31,7 @@ module ManageIQ
         end
         @dry_run = dry_run
         @message = message
+        @labels  = labels
       end
 
       def blast
@@ -140,7 +141,13 @@ module ManageIQ
           pr_head,
           message[0,72],
           message[0,72]
-        ]
+        ].tap do |args|
+          options = {}
+
+          options[:labels] = labels if labels && !labels.empty?
+
+          args << options unless options.empty?
+        end
       end
     end
   end
