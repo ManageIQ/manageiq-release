@@ -5,6 +5,12 @@ require 'manageiq/release/repo'
 require 'manageiq/release/repos'
 require 'manageiq/release/sprint_milestone'
 
+require 'manageiq/release/code_climate'
+require 'manageiq/release/hakiri'
+require 'manageiq/release/license'
+require 'manageiq/release/readme_badges'
+require 'manageiq/release/travis'
+
 require 'manageiq/release/delete_sprint_milestones'
 require 'manageiq/release/destroy_tag'
 require 'manageiq/release/pull_request_blaster_outer'

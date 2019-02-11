@@ -73,7 +73,16 @@ module ManageIQ
 
       def run_script
         Dir.chdir(repo.path) do
-          `#{script}`
+          parts = []
+          parts << "GITHUB_REPO=#{repo.github_repo}"
+          parts << "DRY_RUN=true" if dry_run
+          parts << script
+          cmd = parts.join(" ")
+
+          unless system(cmd)
+            puts "!!! Script execution failed."
+            exit $?.exitstatus
+          end
         end
       end
 
@@ -113,7 +122,7 @@ module ManageIQ
       end
 
       def open_pull_request
-        pr = github.create_pull_request(repo.github_repo, base, pr_head, message[0,72], message[0,72])
+        pr = github.create_pull_request(repo.github_repo, base, pr_head, message[0, 72], message[0, 72])
         pr.html_url
       rescue => err
         raise unless err.message.include?("A pull request already exists")
