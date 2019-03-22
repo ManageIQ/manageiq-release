@@ -6,8 +6,9 @@ module ManageIQ
       attr_reader :repo, :base, :head, :script, :dry_run, :message
 
       ROOT_DIR = Pathname.new(__dir__).join("..", "..", "..").freeze
-      def initialize(repo, base:, head:, script:, dry_run:, message:)
+      def initialize(repo, conf, base:, head:, script:, dry_run:, message:)
         @repo    = repo
+        @conf    = conf
         @base    = base
         @head    = head
         @script  = begin
@@ -73,13 +74,7 @@ module ManageIQ
 
       def run_script
         Dir.chdir(repo.path) do
-          parts = []
-          parts << "GITHUB_REPO=#{repo.github_repo}"
-          parts << "DRY_RUN=true" if dry_run
-          parts << script
-          cmd = parts.join(" ")
-
-          unless system(cmd)
+          unless system(script, @conf)
             puts "!!! Script execution failed."
             exit $?.exitstatus
           end
