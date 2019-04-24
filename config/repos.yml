@@ -24,6 +24,7 @@ master:
   manageiq-consumption:
   manageiq-content:
     has_rake_release: true
+  manageiq-decorators:
   manageiq-gems-pending:
   manageiq-graphql:
   manageiq-pods:
