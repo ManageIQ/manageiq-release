@@ -26,13 +26,12 @@ module ManageIQ
         repo.git
         repo.fetch(output: false)
 
-        begin
-          repo.checkout(head, "origin/#{base}")
-        rescue => e
-          raise unless e.message =~ /is not a commit/
-          puts "!!! Skipping #{repo.github_repo}: #{e.message}"
+        unless repo.remote_branch?("origin", base)
+          puts "!!! Skipping #{repo.github_repo}: 'origin/#{base}' not found"
+          return
         end
 
+        repo.checkout(head, "origin/#{base}")
         run_script
 
         result = false
