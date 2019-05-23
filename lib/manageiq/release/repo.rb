@@ -65,6 +65,10 @@ module ManageIQ
         end
       end
 
+      def remote_branch?(remote, branch)
+        git.capturing.ls_remote(remote, branch).present?
+      end
+
       def write_file(file, content, dry_run: false, **kwargs)
         if dry_run
           puts "** dry-run: Writing #{path.join(file).expand_path}"
