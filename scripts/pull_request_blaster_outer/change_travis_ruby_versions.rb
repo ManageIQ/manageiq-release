@@ -1,7 +1,7 @@
 #! /usr/bin/env ruby
 
 versions = ENV["VERSIONS"].to_s.split(",").map(&:strip)
-if versions.empty? || versions.any? { |v| v !~ /^\d\.\d\.\d$/ }
+if versions.empty? || versions.any? { |v| v !~ /^\d+\.\d+\.\d+$/ }
   puts "ERROR: VERSIONS env var must be set to a comma separated list of version numbers"
   exit 1
 end
@@ -12,13 +12,15 @@ unless File.exist?(travis)
   exit 0
 end
 
-require 'yaml'
-yml = YAML.load_file(travis)
-unless yml.key?("rvm")
-  puts "#{travis} doesn't have rvm key, skipping"
-  exit 0
+travis_content = File.read(travis)
+
+changed = false
+versions.each do |version|
+  major_minor = version.split(".")[0, 2].join(".")
+  changed = true if travis_content.gsub!(/#{major_minor}\.[0-9]+/, version)
 end
 
-yml["rvm"] = versions
-
-File.write(travis, yml.to_yaml.sub("---\n", ""))
+if changed
+  File.write(travis, travis_content)
+  puts "Wrote updated travis.yml at: #{travis}"
+end
