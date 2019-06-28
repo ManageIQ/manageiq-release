@@ -1,0 +1,14 @@
+topological-stable:
+  topological_inventory-amazon:
+  topological_inventory-ansible_tower:
+  topological_inventory-api-client-ruby:
+  topological_inventory-api-jsclient:
+  topological_inventory-api:
+  topological_inventory-core:
+  topological_inventory-host_inventory_sync:
+  topological_inventory-ingress_api-client-ruby:
+  topological_inventory-ingress_api:
+  topological_inventory-openshift:
+  topological_inventory-orchestrator:
+  topological_inventory-persister:
+  topological_inventory-sync:
