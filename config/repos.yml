@@ -106,6 +106,7 @@ ivanchuk:
   manageiq-v2v:
   manageiq_docs:
   ui-components:
+    has_real_releases: true
 hammer:
   container-httpd:
     has_real_releases: true
