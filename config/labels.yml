@@ -30,17 +30,23 @@ release: &release
   blocker: "000000"
   "bugzilla needed": "000000"
 
+release_ivanchuk: &release_ivanchuk
+  ivanchuk/yes: "000000"
+  ivanchuk/no: "000000"
+  ivanchuk/backported: "000000"
+  ivanchuk/conflict: "000000"
+
 release_hammer: &release_hammer
-  hammer/yes: "000000"
-  hammer/no: "000000"
-  hammer/backported: "000000"
-  hammer/conflict: "000000"
+  hammer/yes: "555555"
+  hammer/no: "555555"
+  hammer/backported: "555555"
+  hammer/conflict: "555555"
 
 release_gaprindashvili: &release_gaprindashvili
-  gaprindashvili/yes: "555555"
-  gaprindashvili/no: "555555"
-  gaprindashvili/backported: "555555"
-  gaprindashvili/conflict: "555555"
+  gaprindashvili/yes: "dddddd"
+  gaprindashvili/no: "dddddd"
+  gaprindashvili/backported: "dddddd"
+  gaprindashvili/conflict: "dddddd"
 
 release_fine: &release_fine
   fine/yes: "dddddd"
@@ -66,24 +72,32 @@ feature_introduced_in_darga_or_prior: &feature_introduced_in_darga_or_prior
   <<: *release_fine
   <<: *release_gaprindashvili
   <<: *release_hammer
+  <<: *release_ivanchuk
 
 feature_introduced_in_euwe: &feature_introduced_in_euwe
   <<: *release_euwe
   <<: *release_fine
   <<: *release_gaprindashvili
   <<: *release_hammer
+  <<: *release_ivanchuk
 
 feature_introduced_in_fine: &feature_introduced_in_fine
   <<: *release_fine
   <<: *release_gaprindashvili
   <<: *release_hammer
+  <<: *release_ivanchuk
 
 feature_introduced_in_gaprindashvili: &feature_introduced_in_gaprindashvili
   <<: *release_gaprindashvili
   <<: *release_hammer
+  <<: *release_ivanchuk
 
 feature_introduced_in_hammer: &feature_introduced_in_hammer
   <<: *release_hammer
+  <<: *release_ivanchuk
+
+feature_introduced_in_ivanchuk: &feature_introduced_in_ivanchuk
+  <<: *release_ivanchuk
 
 semver: &semver
   "needs major version": "6a92bc"
@@ -176,6 +190,11 @@ repos:
   manageiq-providers-azure:
     <<: *common
     <<: *feature_introduced_in_darga_or_prior
+    <<: *provider_plugin
+    <<: *release
+  manageiq-providers-azure_stack:
+    <<: *common
+    <<: *feature_introduced_in_ivanchuk
     <<: *provider_plugin
     <<: *release
   manageiq-providers-foreman:
