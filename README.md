@@ -64,7 +64,7 @@ purposes
 - Copy the token given to you, and keep it in a safe location, as once you leave
   the page, the token is no longer accessible
 
-Then, in order to use is, export the ENV variable permanently, or pass it to the
+Then, in order to use it, export the ENV variable permanently, or pass it to the
 program as part of the call.
 
   ```sh
