@@ -52,6 +52,7 @@ master:
   manageiq-ui-service:
   manageiq-v2v:
   manageiq_docs:
+  react-ui-components:
   ui-components:
 ivanchuk:
   amazon_ssa_support:
