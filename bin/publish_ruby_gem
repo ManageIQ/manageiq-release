@@ -1,0 +1,25 @@
+#!/bin/bash
+
+mkdir -p tmp/rubygems/gems
+for var in "$@"
+do
+  cp -v $var tmp/rubygems/gems/
+done
+
+ls tmp/rubygems/gems
+
+pushd tmp/rubygems
+  echo "Downloading index bundle"
+  wget http://rubygems.manageiq.org/index.tgz
+  tar -zxvf index.tgz
+
+  echo "Updating index files"
+  gem generate_index --update
+  tar -czvf index.tgz $(find . -maxdepth 1 -not -name '*.gz' -not -name gems -not -name .)
+popd
+
+echo "Uploading..."
+bin/rackspace_files_sync.rb --destination rubygems --source tmp/rubygems
+
+echo "Cleaning up"
+rm -rf tmp/rubygems
