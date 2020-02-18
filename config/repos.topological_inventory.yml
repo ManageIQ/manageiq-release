@@ -10,4 +10,5 @@ topological-stable:
   topological_inventory-orchestrator:
   topological_inventory-persister:
   topological_inventory-providers-common:
+  topological_inventory-satellite:
   topological_inventory-sync:
