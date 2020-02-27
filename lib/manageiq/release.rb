@@ -73,8 +73,12 @@ module ManageIQ
     # Configuration
     #
 
+    def self.config_files_for(prefix)
+      Dir.glob(CONFIG_DIR.join("#{prefix}*.yml")).sort
+    end
+
     def self.load_config_file(prefix)
-      Dir.glob(CONFIG_DIR.join("#{prefix}*.yml")).sort.each_with_object({}) do |f, h|
+      config_files_for(prefix).each_with_object({}) do |f, h|
         h.merge!(YAML.load_file(f))
       end
     end
