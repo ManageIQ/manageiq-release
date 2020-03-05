@@ -31,17 +31,24 @@ release: &release
   blocker: "000000"
   "bugzilla needed": "000000"
 
+release_jansa: &release_jansa
+  jansa/yes: "000000"
+  jansa/yes?: "000000"
+  jansa/no: "000000"
+  jansa/backported: "000000"
+  jansa/conflict: "000000"
+
 release_ivanchuk: &release_ivanchuk
-  ivanchuk/yes: "000000"
-  ivanchuk/no: "000000"
-  ivanchuk/backported: "000000"
-  ivanchuk/conflict: "000000"
+  ivanchuk/yes: "555555"
+  ivanchuk/no: "555555"
+  ivanchuk/backported: "555555"
+  ivanchuk/conflict: "555555"
 
 release_hammer: &release_hammer
-  hammer/yes: "555555"
-  hammer/no: "555555"
-  hammer/backported: "555555"
-  hammer/conflict: "555555"
+  hammer/yes: "dddddd"
+  hammer/no: "dddddd"
+  hammer/backported: "dddddd"
+  hammer/conflict: "dddddd"
 
 release_gaprindashvili: &release_gaprindashvili
   gaprindashvili/yes: "dddddd"
@@ -74,6 +81,7 @@ feature_introduced_in_darga_or_prior: &feature_introduced_in_darga_or_prior
   <<: *release_gaprindashvili
   <<: *release_hammer
   <<: *release_ivanchuk
+  <<: *release_jansa
 
 feature_introduced_in_euwe: &feature_introduced_in_euwe
   <<: *release_euwe
@@ -81,24 +89,32 @@ feature_introduced_in_euwe: &feature_introduced_in_euwe
   <<: *release_gaprindashvili
   <<: *release_hammer
   <<: *release_ivanchuk
+  <<: *release_jansa
 
 feature_introduced_in_fine: &feature_introduced_in_fine
   <<: *release_fine
   <<: *release_gaprindashvili
   <<: *release_hammer
   <<: *release_ivanchuk
+  <<: *release_jansa
 
 feature_introduced_in_gaprindashvili: &feature_introduced_in_gaprindashvili
   <<: *release_gaprindashvili
   <<: *release_hammer
   <<: *release_ivanchuk
+  <<: *release_jansa
 
 feature_introduced_in_hammer: &feature_introduced_in_hammer
   <<: *release_hammer
   <<: *release_ivanchuk
+  <<: *release_jansa
 
 feature_introduced_in_ivanchuk: &feature_introduced_in_ivanchuk
   <<: *release_ivanchuk
+  <<: *release_jansa
+
+feature_introduced_in_jansa: &feature_introduced_in_jansa
+  <<: *release_jansa
 
 semver: &semver
   "needs major version": "6a92bc"
