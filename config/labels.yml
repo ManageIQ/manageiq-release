@@ -17,6 +17,7 @@ common: &common
   pinned: "eeeeee"
   question: "cc317c"
   refactoring: "fbca04"
+  redesign: "e99695"
   stale: "eeeeee"
   "technical debt": "ff7619"
   test: "bfe5bf"
@@ -126,8 +127,8 @@ ux: &ux
   ux/review: "cc317c"
   ux/approved: "0e8a16"
 
-transformation: &transformation
-  transformation: "5319e7"
+v2v: &v2v
+  v2v: "5319e7"
 
 repos:
   manageiq:
@@ -135,7 +136,7 @@ repos:
     <<: *feature_introduced_in_darga_or_prior
     <<: *provider_types
     <<: *release
-    <<: *transformation
+    <<: *v2v
   manageiq-api:
     <<: *common
     <<: *feature_introduced_in_darga_or_prior
@@ -154,7 +155,7 @@ repos:
     <<: *common
     <<: *feature_introduced_in_darga_or_prior
     <<: *release
-    <<: *transformation
+    <<: *v2v
   manageiq-consumption:
     <<: *common
     <<: *feature_introduced_in_gaprindashvili
@@ -164,7 +165,7 @@ repos:
     <<: *feature_introduced_in_darga_or_prior
     <<: *provider_types
     <<: *release
-    <<: *transformation
+    <<: *v2v
   manageiq-gems-pending:
     <<: *common
     <<: *feature_introduced_in_darga_or_prior
@@ -271,13 +272,13 @@ repos:
     <<: *feature_introduced_in_darga_or_prior
     <<: *provider_types
     <<: *release
-    <<: *transformation
+    <<: *v2v
   manageiq-ui-classic:
     <<: *common
     <<: *feature_introduced_in_darga_or_prior
     <<: *release
     <<: *ux
-    <<: *transformation
+    <<: *v2v
   manageiq-ui-service:
     <<: *common
     <<: *feature_introduced_in_darga_or_prior
@@ -288,7 +289,7 @@ repos:
     <<: *feature_introduced_in_gaprindashvili
     <<: *release
     <<: *ux
-    <<: *transformation
+    <<: *v2v
   manageiq_docs:
     <<: *release
   #
