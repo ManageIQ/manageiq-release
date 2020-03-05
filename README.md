@@ -43,12 +43,6 @@ bundle
   bin/update_repo_settings.rb [--dry-run] [--branch <specific branch>] [--repo <specific_repo>]
   ```
 
-- Update the Sprint milestones (see also [GitHub interactions](#github-interactions))
-
-  ```sh
-  bin/update_sprint_milestones.rb [--dry-run] --title <title>
-  ```
-
 ## GitHub interactions
 
 Certain commands interact with GitHub and expect a GitHub API Token set in the
@@ -68,7 +62,7 @@ Then, in order to use it, export the ENV variable permanently, or pass it to the
 program as part of the call.
 
   ```sh
-  GITHUB_API_TOKEN=<token> bin/update_sprint_milestones.rb --title <title>
+  GITHUB_API_TOKEN=<token> bin/update_labels.rb
   ```
 
 ## Development

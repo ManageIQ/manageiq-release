@@ -3,7 +3,6 @@ require 'pathname'
 require 'manageiq/release/labels'
 require 'manageiq/release/repo'
 require 'manageiq/release/repos'
-require 'manageiq/release/sprint_milestone'
 
 require 'manageiq/release/code_climate'
 require 'manageiq/release/hakiri'
@@ -11,17 +10,14 @@ require 'manageiq/release/license'
 require 'manageiq/release/readme_badges'
 require 'manageiq/release/travis'
 
-require 'manageiq/release/delete_sprint_milestones'
 require 'manageiq/release/destroy_tag'
 require 'manageiq/release/pull_request_blaster_outer'
 require 'manageiq/release/release_branch'
 require 'manageiq/release/release_tag'
 require 'manageiq/release/rename_labels'
-require 'manageiq/release/rename_sprint_milestones'
 require 'manageiq/release/update_branch_protection'
 require 'manageiq/release/update_labels'
 require 'manageiq/release/update_repo_settings'
-require 'manageiq/release/update_sprint_milestones'
 
 module ManageIQ
   module Release
