@@ -1,5 +1,6 @@
 master:
   amazon_ssa_support:
+  container-amazon-smartstate:
   container-httpd:
     has_real_releases: true
   container-memcached:
@@ -53,6 +54,8 @@ master:
   ui-components:
 jansa:
   amazon_ssa_support:
+  container-amazon-smartstate:
+    has_real_releases: true
   container-httpd:
     has_real_releases: true
   container-memcached:
@@ -107,6 +110,8 @@ jansa:
     has_real_releases: true
 ivanchuk:
   amazon_ssa_support:
+  container-amazon-smartstate:
+    has_real_releases: true
   container-httpd:
     has_real_releases: true
   container-memcached:
@@ -163,6 +168,8 @@ ivanchuk:
     has_real_releases: true
 hammer:
   amazon_ssa_support:
+  container-amazon-smartstate:
+    has_real_releases: true
   container-httpd:
     has_real_releases: true
   container-memcached:
