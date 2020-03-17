@@ -1,14 +1,14 @@
 topological-stable:
-  topological_inventory-amazon:
-  topological_inventory-ansible_tower:
-  topological_inventory-api:
-  topological_inventory-azure:
-  topological_inventory-core:
-  topological_inventory-host_inventory_sync:
-  topological_inventory-ingress_api:
-  topological_inventory-openshift:
-  topological_inventory-orchestrator:
-  topological_inventory-persister:
-  topological_inventory-providers-common:
-  topological_inventory-satellite:
-  topological_inventory-sync:
+  RedHatInsights/topological_inventory-amazon:
+  RedHatInsights/topological_inventory-ansible_tower:
+  RedHatInsights/topological_inventory-api:
+  RedHatInsights/topological_inventory-azure:
+  RedHatInsights/topological_inventory-core:
+  RedHatInsights/topological_inventory-host_inventory_sync:
+  RedHatInsights/topological_inventory-ingress_api:
+  RedHatInsights/topological_inventory-openshift:
+  RedHatInsights/topological_inventory-orchestrator:
+  RedHatInsights/topological_inventory-persister:
+  RedHatInsights/topological_inventory-providers-common:
+  RedHatInsights/topological_inventory-satellite:
+  RedHatInsights/topological_inventory-sync:
