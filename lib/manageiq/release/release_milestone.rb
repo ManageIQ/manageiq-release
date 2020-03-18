@@ -1,29 +1,60 @@
+require "active_support/core_ext/time"
+
 module ManageIQ
   module Release
     class ReleaseMilestone
-      attr_reader :repo, :title, :dry_run
+      def self.valid_date?(date)
+        !!parse_date(date)
+      end
 
-      def initialize(repo, title:, dry_run:)
+      def self.parse_date(date)
+        ActiveSupport::TimeZone.new('Pacific Time (US & Canada)').parse(date) # LOL GitHub, TimeZones are hard
+      end
+
+      attr_reader :repo, :title, :due_on, :dry_run
+
+      def initialize(repo, title:, due_on:, dry_run:)
         @repo    = repo
         @title   = title
+        @due_on  = self.class.parse_date(due_on)
         @dry_run = dry_run
       end
 
       def run
         return if repo.options.has_real_releases
-        return if github.list_milestones(github_repo).any? { |m| m.title.casecmp?(title) }
-        create_milestone
+
+        existing = github.list_milestones(github_repo, :state => :all).detect { |m| m.title.casecmp?(title) }
+        if existing
+          update_milestone(existing)
+        else
+          create_milestone
+        end
       end
 
       private
 
-      def create_milestone
-        puts "Creating milestone #{title.inspect}"
+      def due_on_str
+        due_on.strftime("%Y-%m-%d")
+      end
+
+      def update_milestone(existing)
+        milestone_number = existing.number
+        puts "Updating milestone #{title.inspect} (#{milestone_number}) with due date #{due_on_str.inspect}"
 
         if dry_run
-          puts "** dry-run: github.create_milestone(#{github_repo.inspect}, #{title.inspect})"
+          puts "** dry-run: github.update_milestone(#{github_repo.inspect}, #{milestone_number}, :due_on => #{due_on_str.inspect})"
         else
-          github.create_milestone(github_repo, title)
+          github.update_milestone(github_repo, milestone_number, :due_on => due_on)
+        end
+      end
+
+      def create_milestone
+        puts "Creating milestone #{title.inspect} with due date #{due_on_str.inspect}"
+
+        if dry_run
+          puts "** dry-run: github.create_milestone(#{github_repo.inspect}, #{title.inspect}, :due_on => #{due_on_str.inspect})"
+        else
+          github.create_milestone(github_repo, title, :due_on => due_on)
         end
       end
 
