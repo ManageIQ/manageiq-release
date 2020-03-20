@@ -306,6 +306,9 @@ repos:
     <<: *release
     <<: *ux
     <<: *v2v
+  manageiq-v2v-conversion_host-build:
+    <<: *feature_introduced_in_ivanchuk
+    <<: *release
   manageiq_docs:
     <<: *release
   #
