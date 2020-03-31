@@ -22,6 +22,7 @@ puts "Git commit log between #{from_version} and #{to_version}\n\n"
 
 repos = ManageIQ::Release::Repos[opts[:branch]]
 repos.each do |repo|
+  next if repo.options["has_real_releases"]
   next if skip_repos.include?(repo.name)
   repo.fetch(output: false)
   puts ManageIQ::Release.header(repo.name)
