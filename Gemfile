@@ -1,6 +1,9 @@
 source "https://rubygems.org"
 
 gem "activesupport",        :require => false
+gem "aws-sdk-s3",           :require => false
+gem "builder",              :require => false
+gem "config",               :require => false
 gem "licensee",             :require => false
 gem "minigit",              :require => false
 gem "more_core_extensions", :require => false
