@@ -51,6 +51,62 @@ master:
   manageiq-v2v:
   manageiq_docs:
   ui-components:
+jansa:
+  amazon_ssa_support:
+  container-httpd:
+    has_real_releases: true
+  container-memcached:
+    has_real_releases: true
+  container-postgresql:
+    has_real_releases: true
+  container-redis:
+    has_real_releases: true
+  container-ruby:
+    has_real_releases: true
+  dbus_api_service:
+    has_real_releases: true
+  httpd_configmap_generator:
+    has_real_releases: true
+  manageiq:
+    has_rake_release: true
+  manageiq-api:
+  manageiq-appliance:
+  manageiq-appliance-build:
+  manageiq-appliance_console:
+    has_real_releases: true
+  manageiq-automation_engine:
+  manageiq-consumption:
+  manageiq-content:
+    has_rake_release: true
+  manageiq-decorators:
+  manageiq-gems-pending:
+  manageiq-graphql:
+  manageiq-pods:
+  manageiq-providers-amazon:
+  manageiq-providers-ansible_tower:
+  manageiq-providers-azure:
+  manageiq-providers-azure_stack:
+  manageiq-providers-foreman:
+  manageiq-providers-google:
+  manageiq-providers-kubernetes:
+  manageiq-providers-kubevirt:
+  manageiq-providers-lenovo:
+  manageiq-providers-nuage:
+  manageiq-providers-openshift:
+  manageiq-providers-openstack:
+  manageiq-providers-ovirt:
+  manageiq-providers-redfish:
+  manageiq-providers-scvmm:
+  manageiq-providers-vmware:
+  manageiq-schema:
+  manageiq-smartstate:
+    has_real_releases: true
+  manageiq-ui-classic:
+  manageiq-ui-service:
+  manageiq-v2v:
+  manageiq_docs:
+  ui-components:
+    has_real_releases: true
 ivanchuk:
   amazon_ssa_support:
   container-httpd:
