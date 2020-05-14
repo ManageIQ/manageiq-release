@@ -37,6 +37,7 @@ master:
   manageiq-providers-kubernetes:
   manageiq-providers-kubevirt:
   manageiq-providers-lenovo:
+  manageiq-providers-nsxt:
   manageiq-providers-nuage:
   manageiq-providers-openshift:
   manageiq-providers-openstack:

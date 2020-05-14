@@ -248,6 +248,10 @@ repos:
     <<: *feature_introduced_in_fine
     <<: *provider_plugin
     <<: *release
+  manageiq-providers-nsxt:
+    <<: *common
+    <<: *provider_plugin
+    <<: *release
   manageiq-providers-nuage:
     <<: *common
     <<: *feature_introduced_in_euwe
