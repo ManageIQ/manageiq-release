@@ -13,9 +13,7 @@ Config.load_and_set_settings(
 
 module ManageIQ
   module Release
-    module MirrorHelper
-      extend self
-
+    class GitMirror
       def mirror_all
         Settings.repos_to_mirror.each { |repo, remote_source| mirror(repo.to_s, remote_source) }
       end
