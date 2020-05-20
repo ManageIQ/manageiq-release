@@ -1,4 +1,46 @@
 ---
+:git_mirror:
+  :branch_mirror_defaults: {}
+  :branch_mirror_overrides: {}
+  :productization_name: manageiq
+  :remotes:
+    :upstream: git@github.com:ManageIQ
+  :repos_to_mirror:
+    manageiq-api: :upstream
+    manageiq-appliance-build: :upstream
+    manageiq-appliance: :upstream
+    manageiq-automation_engine: :upstream
+    manageiq-consumption: :upstream
+    manageiq-content: :upstream
+    manageiq-decorators: :upstream
+    manageiq-gems-pending: :upstream
+    manageiq-graphql: :upstream
+    manageiq-pods: :upstream
+    manageiq-providers-amazon: :upstream
+    manageiq-providers-ansible_tower: :upstream
+    manageiq-providers-azure: :upstream
+    manageiq-providers-azure_stack: :upstream
+    manageiq-providers-foreman: :upstream
+    manageiq-providers-google: :upstream
+    manageiq-providers-hawkular: :upstream
+    manageiq-providers-kubernetes: :upstream
+    manageiq-providers-kubevirt: :upstream
+    manageiq-providers-lenovo: :upstream
+    manageiq-providers-nuage: :upstream
+    manageiq-providers-openshift: :upstream
+    manageiq-providers-openstack: :upstream
+    manageiq-providers-ovirt: :upstream
+    manageiq-providers-redfish: :upstream
+    manageiq-providers-scvmm: :upstream
+    manageiq-providers-vmware: :upstream
+    manageiq-release: :upstream
+    manageiq-schema: :upstream
+    manageiq-ui-classic: :upstream
+    manageiq-ui-service: :upstream
+    manageiq-v2v: :upstream
+    manageiq: :upstream
+    manageiq_docs: :upstream
+  :working_directory: ''
 :manageiq_rubygems:
   :s3_access_key:
   :s3_secret_key:

@@ -6,16 +6,15 @@ class String
   def bold;   "\e[1m#{self}\e[22m" end
 end
 
-require 'config'
-Config.load_and_set_settings(
-  Dir.glob(ManageIQ::Release::CONFIG_DIR.join("mirror*.yml")).sort.reverse
-)
-
 module ManageIQ
   module Release
     class GitMirror
+      def initialize
+        require 'manageiq/release/settings'
+      end
+
       def mirror_all
-        Settings.repos_to_mirror.each { |repo, remote_source| mirror(repo.to_s, remote_source) }
+        Settings.git_mirror.repos_to_mirror.each { |repo, remote_source| mirror(repo.to_s, remote_source) }
       end
 
       def mirror(repo, remote_source)
@@ -27,7 +26,7 @@ module ManageIQ
       private
 
       def mirror_branches_for(repo)
-        Settings.branch_mirror_defaults.to_h.merge(Settings.branch_mirror_overrides[repo].to_h || {}).each_with_object({}) { |(k, v), h| h[k.to_s] = v }
+        Settings.git_mirror.branch_mirror_defaults.to_h.merge(Settings.git_mirror.branch_mirror_overrides[repo].to_h || {}).each_with_object({}) { |(k, v), h| h[k.to_s] = v }
       end
 
       def mirror_branches(repo, source_remote, dest_remote)
@@ -53,7 +52,7 @@ module ManageIQ
       end
 
       def downstream_repo_name(repo)
-        repo.sub("manageiq", Settings.productization_name)
+        repo.sub("manageiq", Settings.git_mirror.productization_name)
       end
 
       def system(*args)
@@ -72,7 +71,7 @@ module ManageIQ
         repo_name = downstream_repo_name(repo)
         puts "\n==== Mirroring #{repo_name} ====".bold.cyan
 
-        path = "#{Settings.working_directory}/#{repo_name}"
+        path = "#{Settings.git_mirror.working_directory}/#{repo_name}"
         clone_repo(repo, repo_name, path, remote_source) unless File.directory?(path)
 
         Dir.chdir(path) do
@@ -90,10 +89,10 @@ module ManageIQ
       end
 
       def clone_repo(upstream_repo, downstream_repo, path, remote_source)
-        system("git clone #{Settings.remotes[remote_source]}/#{upstream_repo}.git #{path} -o upstream")
+        system("git clone #{Settings.git_mirror.remotes[remote_source]}/#{upstream_repo}.git #{path} -o upstream")
         Dir.chdir(path) do
-          system("git remote add downstream #{Settings.remotes.downstream}/#{downstream_repo}.git") unless remote_exists?("downstream")
-          system("git remote add backup #{Settings.remotes.backup}/#{downstream_repo}.git") if Settings.remotes.backup && !remote_exists?("backup")
+          system("git remote add downstream #{Settings.git_mirror.remotes.downstream}/#{downstream_repo}.git") unless remote_exists?("downstream")
+          system("git remote add backup #{Settings.git_mirror.remotes.backup}/#{downstream_repo}.git") if Settings.git_mirror.remotes.backup && !remote_exists?("backup")
         end
       end
 
@@ -113,7 +112,7 @@ module ManageIQ
       end
 
       def upstream_branch?(branch)
-        (Settings.branch_mirror_defaults.keys.collect(&:to_s) + ["master"]).include?(branch)
+        (Settings.git_mirror.branch_mirror_defaults.keys.collect(&:to_s) + ["master"]).include?(branch)
       end
 
       def remote_branch?(branch)
