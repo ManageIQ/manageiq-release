@@ -287,6 +287,10 @@ repos:
     <<: *feature_introduced_in_darga_or_prior
     <<: *provider_plugin
     <<: *release
+  manageiq-rpm_build:
+    <<: *common
+    <<: *feature_introduced_in_jansa
+    <<: *release
   manageiq-schema:
     <<: *common
     <<: *feature_introduced_in_darga_or_prior

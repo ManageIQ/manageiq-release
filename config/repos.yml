@@ -45,6 +45,7 @@ master:
   manageiq-providers-redfish:
   manageiq-providers-scvmm:
   manageiq-providers-vmware:
+  manageiq-rpm_build:
   manageiq-schema:
   manageiq-smartstate:
     has_real_releases: true
@@ -100,6 +101,7 @@ jansa:
   manageiq-providers-redfish:
   manageiq-providers-scvmm:
   manageiq-providers-vmware:
+  manageiq-rpm_build:
   manageiq-schema:
   manageiq-smartstate:
     has_real_releases: true
