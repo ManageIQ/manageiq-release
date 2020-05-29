@@ -209,6 +209,8 @@ repos:
     <<: *provider_types
     <<: *release
     <<: *v2v
+  ManageIQ/manageiq-documentation:
+    <<: *release
   ManageIQ/manageiq-gems-pending:
     <<: *common
     <<: *feature_introduced_in_darga_or_prior
@@ -332,8 +334,6 @@ repos:
     <<: *release
     <<: *ux
     <<: *v2v
-  ManageIQ/manageiq_docs:
-    <<: *release
   #
   # Released gems and packages
   #

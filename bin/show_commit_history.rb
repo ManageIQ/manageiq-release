@@ -10,7 +10,7 @@ opts = Optimist.options do
   opt :from,   "The commit log 'from' ref", :type => :string,  :required => true
   opt :to,     "The commit log 'to' ref" ,  :type => :string,  :required => true
   opt :branch, "The target branch",         :type => :string,  :required => true
-  opt :skip,   "The repos to skip",         :type => :strings, :default => ["manageiq_docs"]
+  opt :skip,   "The repos to skip",         :type => :strings, :default => ["manageiq-documentation"]
 end
 
 from_version = opts[:from]
