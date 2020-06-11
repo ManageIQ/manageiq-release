@@ -9,6 +9,7 @@ common: &common
   documentation: "d4c5f9"
   duplicate: "eeeeee"
   enhancement: "84b6eb"
+  "good first issue": "0e8a16"
   hacktoberfest: "ff7619"
   "help wanted": "0e8a16"
   internationalization: "d4c5f9"
