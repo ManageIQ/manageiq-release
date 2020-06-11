@@ -147,6 +147,10 @@ v2v: &v2v
   v2v: "5319e7"
 
 repos:
+  container-amazon-smartstate:
+    <<: *common
+    <<: *feature_introduced_in_hammer
+    <<: *release
   manageiq:
     <<: *common
     <<: *feature_introduced_in_darga_or_prior
