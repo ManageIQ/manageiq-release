@@ -1,3 +1,7 @@
+#
+# Label definitions
+#
+
 common: &common
   bug: "ee0701"
   "bug/sporadic test failure": "ee0701"
@@ -27,6 +31,40 @@ common: &common
   verified: "0e8a16"
   wip: "eeeeee"
   wontfix: "eeeeee"
+
+semver: &semver
+  "needs major version": "6a92bc"
+  "needs minor version": "6a92bc"
+
+provider_plugin: &provider_plugin
+  events: "5319e7"
+  inventory: "5319e7"
+  metrics: "5319e7"
+  operations: "5319e7"
+  "smart state": "5319e7"
+
+provider_types: &provider_types
+  providers/automation: "5319e7"
+  providers/cloud: "5319e7"
+  providers/configuration: "5319e7"
+  providers/containers: "5319e7"
+  providers/middleware: "5319e7"
+  providers/network: "5319e7"
+  providers/physical: "5319e7"
+  providers/provisioning: "5319e7"
+  providers/storage: "5319e7"
+  providers/virtual: "5319e7"
+
+ux: &ux
+  ux/review: "cc317c"
+  ux/approved: "0e8a16"
+
+v2v: &v2v
+  v2v: "5319e7"
+
+#
+# Release label definitions
+#
 
 release: &release
   blocker: "000000"
@@ -117,239 +155,206 @@ feature_introduced_in_ivanchuk: &feature_introduced_in_ivanchuk
 feature_introduced_in_jansa: &feature_introduced_in_jansa
   <<: *release_jansa
 
-semver: &semver
-  "needs major version": "6a92bc"
-  "needs minor version": "6a92bc"
+#
+# Label Assignments
+#
 
-provider_plugin: &provider_plugin
-  events: "5319e7"
-  inventory: "5319e7"
-  metrics: "5319e7"
-  operations: "5319e7"
-  "smart state": "5319e7"
-
-provider_types: &provider_types
-  providers/automation: "5319e7"
-  providers/cloud: "5319e7"
-  providers/configuration: "5319e7"
-  providers/containers: "5319e7"
-  providers/middleware: "5319e7"
-  providers/network: "5319e7"
-  providers/physical: "5319e7"
-  providers/provisioning: "5319e7"
-  providers/storage: "5319e7"
-  providers/virtual: "5319e7"
-
-ux: &ux
-  ux/review: "cc317c"
-  ux/approved: "0e8a16"
-
-v2v: &v2v
-  v2v: "5319e7"
+orgs:
+  ManageIQ:
+    except:
+    - ManageIQ/integration_tests
+    - ManageIQ/integration_tests_playbooks
+    - ManageIQ/miq_tools_services
+    - ManageIQ/polisher
+    labels:
+      <<: *common
 
 repos:
-  container-amazon-smartstate:
+  ManageIQ/container-amazon-smartstate:
     <<: *common
     <<: *feature_introduced_in_hammer
     <<: *release
-  manageiq:
+  ManageIQ/manageiq:
     <<: *common
     <<: *feature_introduced_in_darga_or_prior
     <<: *provider_types
     <<: *release
     <<: *v2v
-  manageiq-api:
+  ManageIQ/manageiq-api:
     <<: *common
     <<: *feature_introduced_in_darga_or_prior
     <<: *provider_types
     <<: *release
     <<: *semver
-  manageiq-appliance:
+  ManageIQ/manageiq-appliance:
     <<: *common
     <<: *feature_introduced_in_darga_or_prior
     <<: *release
-  manageiq-appliance-build:
+  ManageIQ/manageiq-appliance-build:
     <<: *common
     <<: *feature_introduced_in_darga_or_prior
     <<: *release
-  manageiq-automation_engine:
+  ManageIQ/manageiq-automation_engine:
     <<: *common
     <<: *feature_introduced_in_darga_or_prior
     <<: *release
     <<: *v2v
-  manageiq-consumption:
+  ManageIQ/manageiq-consumption:
     <<: *common
     <<: *feature_introduced_in_gaprindashvili
     <<: *release
-  manageiq-content:
+  ManageIQ/manageiq-content:
     <<: *common
     <<: *feature_introduced_in_darga_or_prior
     <<: *provider_types
     <<: *release
     <<: *v2v
-  manageiq-gems-pending:
+  ManageIQ/manageiq-gems-pending:
     <<: *common
     <<: *feature_introduced_in_darga_or_prior
     <<: *release
-  manageiq-graphql:
+  ManageIQ/manageiq-graphql:
     <<: *common
     <<: *feature_introduced_in_hammer
     <<: *release
-  manageiq-pods:
+  ManageIQ/manageiq-pods:
     <<: *common
     <<: *feature_introduced_in_fine
     <<: *release
-  manageiq-providers-amazon:
+  ManageIQ/manageiq-providers-amazon:
     <<: *common
     <<: *feature_introduced_in_darga_or_prior
     <<: *provider_plugin
     <<: *release
-  manageiq-providers-ansible_tower:
+  ManageIQ/manageiq-providers-ansible_tower:
     <<: *common
     <<: *feature_introduced_in_darga_or_prior
     <<: *provider_plugin
     <<: *release
-  manageiq-providers-azure:
+  ManageIQ/manageiq-providers-azure:
     <<: *common
     <<: *feature_introduced_in_darga_or_prior
     <<: *provider_plugin
     <<: *release
-  manageiq-providers-azure_stack:
+  ManageIQ/manageiq-providers-azure_stack:
     <<: *common
     <<: *feature_introduced_in_ivanchuk
     <<: *provider_plugin
     <<: *release
-  manageiq-providers-foreman:
+  ManageIQ/manageiq-providers-foreman:
     <<: *common
     <<: *feature_introduced_in_darga_or_prior
     <<: *provider_plugin
     <<: *release
-  manageiq-providers-google:
+  ManageIQ/manageiq-providers-google:
     <<: *common
     <<: *feature_introduced_in_darga_or_prior
     <<: *provider_plugin
     <<: *release
-  manageiq-providers-hawkular:
-    <<: *common
-    # Starting with hammer, there are no more backports, so this backport list is hardcoded
-    <<: *release_darga
-    <<: *release_euwe
-    <<: *release_fine
-    <<: *release_gaprindashvili
-    <<: *provider_plugin
-    <<: *release
-  manageiq-providers-kubernetes:
+  ManageIQ/manageiq-providers-kubernetes:
     <<: *common
     <<: *feature_introduced_in_darga_or_prior
     <<: *provider_plugin
     <<: *release
-  manageiq-providers-kubevirt:
+  ManageIQ/manageiq-providers-kubevirt:
     <<: *common
     <<: *feature_introduced_in_hammer
     <<: *provider_plugin
     <<: *release
-  manageiq-providers-lenovo:
+  ManageIQ/manageiq-providers-lenovo:
     <<: *common
     <<: *feature_introduced_in_fine
     <<: *provider_plugin
     <<: *release
-  manageiq-providers-nsxt:
+  ManageIQ/manageiq-providers-nsxt:
     <<: *common
     <<: *provider_plugin
     <<: *release
-  manageiq-providers-nuage:
+  ManageIQ/manageiq-providers-nuage:
     <<: *common
     <<: *feature_introduced_in_euwe
     <<: *provider_plugin
     <<: *release
-  manageiq-providers-openshift:
+  ManageIQ/manageiq-providers-openshift:
     <<: *common
     <<: *feature_introduced_in_darga_or_prior
     <<: *provider_plugin
     <<: *release
-  manageiq-providers-openstack:
+  ManageIQ/manageiq-providers-openstack:
     <<: *common
     <<: *feature_introduced_in_darga_or_prior
     <<: *provider_plugin
     <<: *release
-  manageiq-providers-ovirt:
+  ManageIQ/manageiq-providers-ovirt:
     <<: *common
     <<: *feature_introduced_in_darga_or_prior
     <<: *provider_plugin
     <<: *release
-  manageiq-providers-redfish:
+  ManageIQ/manageiq-providers-redfish:
     <<: *common
     <<: *feature_introduced_in_hammer
     <<: *provider_plugin
     <<: *release
-  manageiq-providers-scvmm:
+  ManageIQ/manageiq-providers-scvmm:
     <<: *common
     <<: *feature_introduced_in_darga_or_prior
     <<: *provider_plugin
     <<: *release
-  manageiq-providers-vmware:
+  ManageIQ/manageiq-providers-vmware:
     <<: *common
     <<: *feature_introduced_in_darga_or_prior
     <<: *provider_plugin
     <<: *release
-  manageiq-rpm_build:
+  ManageIQ/manageiq-rpm_build:
     <<: *common
     <<: *feature_introduced_in_jansa
     <<: *release
-  manageiq-schema:
+  ManageIQ/manageiq-schema:
     <<: *common
     <<: *feature_introduced_in_darga_or_prior
     <<: *provider_types
     <<: *release
     <<: *v2v
-  manageiq-ui-classic:
+  ManageIQ/manageiq-ui-classic:
     <<: *common
     <<: *feature_introduced_in_darga_or_prior
     <<: *release
     <<: *ux
     <<: *v2v
-  manageiq-ui-service:
+  ManageIQ/manageiq-ui-service:
     <<: *common
     <<: *feature_introduced_in_darga_or_prior
     <<: *release
     <<: *ux
-  manageiq-v2v:
+  ManageIQ/manageiq-v2v:
     <<: *common
     <<: *feature_introduced_in_gaprindashvili
     <<: *release
     <<: *ux
     <<: *v2v
-  manageiq_docs:
+  ManageIQ/manageiq_docs:
     <<: *release
   #
   # Released gems and packages
   #
-  dbus_api_service:
+  ansible/ansible_tower_client_ruby:
+    <<: *common
+    <<: *semver
+  ManageIQ/dbus_api_service:
     <<: *common
     <<: *release
     <<: *semver
-  httpd_configmap_generator:
+  ManageIQ/httpd_configmap_generator:
     <<: *common
     <<: *release
     <<: *semver
-  inventory_refresh:
+  ManageIQ/inventory_refresh:
     <<: *common
     <<: *semver
-  log_decorator:
+  ManageIQ/log_decorator:
     <<: *common
     <<: *semver
-  manageiq-appliance_console:
-    <<: *common
-    <<: *release
-    # Starting with gaprindashvili, there are no more backports, so this backport list is hardcoded
-    <<: *release_darga
-    <<: *release_euwe
-    <<: *release_fine
-    <<: *semver
-  manageiq-messaging:
-    <<: *common
-    <<: *semver
-  manageiq-smartstate:
+  ManageIQ/manageiq-appliance_console:
     <<: *common
     <<: *release
     # Starting with gaprindashvili, there are no more backports, so this backport list is hardcoded
@@ -357,7 +362,18 @@ repos:
     <<: *release_euwe
     <<: *release_fine
     <<: *semver
-  ui-components:
+  ManageIQ/manageiq-messaging:
+    <<: *common
+    <<: *semver
+  ManageIQ/manageiq-smartstate:
+    <<: *common
+    <<: *release
+    # Starting with gaprindashvili, there are no more backports, so this backport list is hardcoded
+    <<: *release_darga
+    <<: *release_euwe
+    <<: *release_fine
+    <<: *semver
+  ManageIQ/ui-components:
     <<: *common
     <<: *semver
     <<: *ux

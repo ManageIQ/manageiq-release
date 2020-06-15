@@ -41,13 +41,15 @@ module ManageIQ
 
     def self.repos_for(repo_names, branch = "master")
       if repo_names
-        Array(repo_names).collect do |repo_name|
-          org, repo = repo_name.split("/").unshift(nil).last(2)
-          ManageIQ::Release::Repo.new(repo, :org => org)
-        end
+        Array(repo_names).map { |n| repo_for(n) }
       else
         ManageIQ::Release::Repos[branch]
       end
+    end
+
+    def self.repo_for(repo_name)
+      org, repo = repo_name.split("/").unshift(nil).last(2)
+      ManageIQ::Release::Repo.new(repo, :org => org)
     end
 
     #
@@ -103,6 +105,13 @@ module ManageIQ
           :auto_paginate => true
         )
       end
+    end
+
+    def self.github_repo_names_for(org)
+      github
+        .list_repositories(org, :type => "sources")
+        .reject { |r| r.fork? || r.archived? }
+        .map { |r| "#{org}/#{r.name}" }
     end
   end
 end
