@@ -20,7 +20,7 @@ module ManageIQ
       end
 
       def self.config
-        ManageIQ::Release.load_config_file("repos")
+        @config ||= ManageIQ::Release.load_config_file("repos")
       end
       private_class_method :config
     end
