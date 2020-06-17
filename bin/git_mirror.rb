@@ -5,4 +5,5 @@ $LOAD_PATH << File.expand_path("../lib", __dir__)
 require 'bundler/setup'
 require 'manageiq/release'
 
-ManageIQ::Release::GitMirror.new.mirror_all
+success = ManageIQ::Release::GitMirror.new.mirror_all
+exit 1 unless success
