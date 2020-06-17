@@ -12,16 +12,20 @@ module ManageIQ
       def initialize
         require 'manageiq/release/settings'
         ::String.prepend(StringFormatting)
+
+        @errors_occurred = false
       end
 
       def mirror_all
         Settings.git_mirror.repos_to_mirror.each { |repo, remote_source| mirror(repo.to_s, remote_source) }
+        !@errors_occurred
       end
 
       def mirror(repo, remote_source)
         with_repo(repo, remote_source) do
           send("mirror_#{remote_source}_repo", repo)
         end
+        !@errors_occurred
       end
 
       private
@@ -64,7 +68,10 @@ module ManageIQ
         args.last[[:out, :err]] = ["/tmp/mirror_helper_out", "w"]
 
         super.tap do |result|
-          puts "!!! An error has occurred:\n#{File.read("/tmp/mirror_helper_out")}".bold.red unless result
+          unless result
+            @errors_occurred = true
+            STDERR.puts "!!! An error has occurred:\n#{File.read("/tmp/mirror_helper_out")}".bold.red
+          end
         end
       end
 
