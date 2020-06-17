@@ -70,7 +70,7 @@ module ManageIQ
         super.tap do |result|
           unless result
             @errors_occurred = true
-            puts "!!! An error has occurred:\n#{File.read("/tmp/mirror_helper_out")}".bold.red
+            STDERR.puts "!!! An error has occurred:\n#{File.read("/tmp/mirror_helper_out")}".bold.red
           end
         end
       end
