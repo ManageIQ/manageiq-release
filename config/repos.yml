@@ -25,6 +25,7 @@ master:
   manageiq-content:
     has_rake_release: true
   manageiq-decorators:
+  manageiq-documentation:
   manageiq-gems-pending:
   manageiq-graphql:
   manageiq-pods:
@@ -52,7 +53,6 @@ master:
   manageiq-ui-classic:
   manageiq-ui-service:
   manageiq-v2v:
-  manageiq_docs:
   ui-components:
 jansa:
   amazon_ssa_support:
@@ -82,6 +82,7 @@ jansa:
   manageiq-content:
     has_rake_release: true
   manageiq-decorators:
+  manageiq-documentation:
   manageiq-gems-pending:
   manageiq-graphql:
   manageiq-pods:
@@ -108,7 +109,6 @@ jansa:
   manageiq-ui-classic:
   manageiq-ui-service:
   manageiq-v2v:
-  manageiq_docs:
   ui-components:
     has_real_releases: true
 ivanchuk:
@@ -141,6 +141,7 @@ ivanchuk:
   manageiq-content:
     has_rake_release: true
   manageiq-decorators:
+  manageiq-documentation:
   manageiq-gems-pending:
   manageiq-graphql:
   manageiq-pods:
@@ -166,7 +167,6 @@ ivanchuk:
   manageiq-ui-classic:
   manageiq-ui-service:
   manageiq-v2v:
-  manageiq_docs:
   ui-components:
     has_real_releases: true
 hammer:
@@ -198,6 +198,7 @@ hammer:
   manageiq-consumption:
   manageiq-content:
     has_rake_release: true
+  manageiq-documentation:
   manageiq-gems-pending:
   manageiq-graphql:
   manageiq-pods:
@@ -222,7 +223,6 @@ hammer:
   manageiq-ui-classic:
   manageiq-ui-service:
   manageiq-v2v:
-  manageiq_docs:
   ui-components:
     has_real_releases: true
 gaprindashvili:
@@ -250,6 +250,7 @@ gaprindashvili:
   manageiq-consumption:
   manageiq-content:
     has_rake_release: true
+  manageiq-documentation:
   manageiq-gems-pending:
   manageiq-pods:
   manageiq-providers-amazon:
@@ -272,7 +273,6 @@ gaprindashvili:
   manageiq-ui-classic:
   manageiq-ui-service:
   manageiq-v2v:
-  manageiq_docs:
   ui-components:
     has_real_releases: true
 fine:
@@ -282,6 +282,7 @@ fine:
   manageiq-appliance-build:
   manageiq-content:
     has_rake_release: true
+  manageiq-documentation:
   manageiq-gems-pending:
   manageiq-pods:
   manageiq-providers-amazon:
@@ -290,16 +291,15 @@ fine:
   manageiq-providers-vmware:
   manageiq-ui-classic:
   manageiq-ui-service:
-  manageiq_docs:
 euwe:
   manageiq:
     has_rake_release: true
   manageiq-appliance:
   manageiq-appliance-build:
+  manageiq-documentation:
   manageiq-pods:
   manageiq-providers-amazon:
   manageiq-ui-service:
-  manageiq_docs:
 darga:
   manageiq:
     has_rake_release: true

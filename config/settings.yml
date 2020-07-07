@@ -13,6 +13,7 @@
     manageiq-consumption: :upstream
     manageiq-content: :upstream
     manageiq-decorators: :upstream
+    manageiq-documentation: :upstream
     manageiq-gems-pending: :upstream
     manageiq-graphql: :upstream
     manageiq-pods: :upstream
@@ -39,7 +40,6 @@
     manageiq-ui-service: :upstream
     manageiq-v2v: :upstream
     manageiq: :upstream
-    manageiq_docs: :upstream
   :working_directory: ''
 :manageiq_rubygems:
   :s3_access_key:
