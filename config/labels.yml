@@ -210,6 +210,7 @@ repos:
     <<: *release
     <<: *v2v
   ManageIQ/manageiq-documentation:
+    <<: *feature_introduced_in_darga_or_prior
     <<: *release
   ManageIQ/manageiq-gems-pending:
     <<: *common
