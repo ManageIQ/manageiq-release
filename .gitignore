@@ -1,3 +1,4 @@
+/.bundle/
 /repos
 config/settings.local.yml
 Gemfile.lock
