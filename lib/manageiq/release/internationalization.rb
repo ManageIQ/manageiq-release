@@ -73,11 +73,9 @@ module ManageIQ
           manageiq_repo.checkout(branch)
 
           Dir.chdir(manageiq_repo_path) do |dir|
-            execute "gem install bundler", "*** Installing Bundler ***"
-            execute "bundle install"
-            execute "mkdir log", "*** Creating log directory in #{dir} ***"
             create_database_yml
-            execute "RAILS_ENV=i18n bundle exec rake evm:db:reset"
+
+            execute "RAILS_ENV=i18n SKIP_TEST_RESET=true bin/setup"
             execute "bundle exec rake locale:update"
 
             puts "*** Resetting changes to files other than message catalog ***"
