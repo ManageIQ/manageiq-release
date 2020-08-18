@@ -9,10 +9,11 @@ module ManageIQ
         @dry_run = dry_run
       end
 
-      # In ManageIQ/manageiq repo, run equivalent of `rake locale:update`
-      # If there are material differences, push up to GitHub
-      def update_pot
-        generate_pot
+      # In ManageIQ/manageiq repo, run `rake locale:update`
+      # In ManageIQ/manageiq-ui-service repo, run `gulp gettext-extract`
+      # If there are material differences, push up to Transifex
+      def update_message_catalogs
+        generate_message_catalog_for_manageiq
       end
 
       private
@@ -33,17 +34,17 @@ module ManageIQ
         File.write("config/database.yml", database_config.to_yaml)
       end
 
-      def manageiq_pot_filename
+      def manageiq_message_catalog_filename
         "locale/manageiq.pot"
       end
 
-      def manageiq_pot_file_needs_commit?
+      def manageiq_message_catalog_file_needs_commit?
         needs_commit = false
         diffs = git_diff_stats
         return false if diffs.length != 1
-        return false unless diffs.key?(manageiq_pot_filename)
-        stats = diffs[manageiq_pot_filename]
-        puts "+#{stats[:insertions]}, -#{stats[:deletions]} for #{manageiq_pot_filename}"
+        return false unless diffs.key?(manageiq_message_catalog_filename)
+        stats = diffs[manageiq_message_catalog_filename]
+        puts "+#{stats[:insertions]}, -#{stats[:deletions]} for #{manageiq_message_catalog_filename}"
 
         # If the only changes are to POT-Creation-Date and PO-Revision-Date,
         # then there are no substantive changes
@@ -66,7 +67,7 @@ module ManageIQ
         @manageiq_repo ||= Repo.new('ManageIQ/manageiq')
       end
 
-      def generate_pot
+      def generate_message_catalog_for_manageiq
         Bundler.with_clean_env do
           manageiq_repo.fetch
           manageiq_repo.checkout(branch)
@@ -79,15 +80,15 @@ module ManageIQ
             execute "RAILS_ENV=i18n bundle exec rake evm:db:reset"
             execute "bundle exec rake locale:update"
 
-            puts "*** Resetting changes to non .pot files ***"
+            puts "*** Resetting changes to files other than message catalog ***"
             git_diff_stats.each do |fname, stats|
-              next if fname.end_with?(manageiq_pot_filename)
+              next if fname.end_with?(manageiq_message_catalog_filename)
               puts "- resetting #{fname}"
               system("git checkout HEAD -- #{fname}")
             end
 
-            puts "*** Checking #{manageiq_pot_filename} file ***"
-            puts "#{manageiq_pot_filename} needs commit?: #{manageiq_pot_file_needs_commit? ? 'YES' : 'NO'}"
+            puts "*** Checking #{manageiq_message_catalog_filename} file ***"
+            puts "#{manageiq_message_catalog_filename} needs commit?: #{manageiq_message_catalog_file_needs_commit? ? 'YES' : 'NO'}"
           end
         end
       end
