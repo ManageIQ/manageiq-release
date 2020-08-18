@@ -9,6 +9,7 @@ require 'manageiq/release/hakiri'
 require 'manageiq/release/license'
 require 'manageiq/release/readme_badges'
 require 'manageiq/release/travis'
+require 'manageiq/release/internationalization'
 
 require 'manageiq/release/destroy_tag'
 require 'manageiq/release/git_mirror'
