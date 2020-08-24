@@ -254,6 +254,11 @@ repos:
     <<: *feature_introduced_in_darga_or_prior
     <<: *provider_plugin
     <<: *release
+  ManageIQ/manageiq-providers-ibm_cloud:
+    <<: *common
+#    <<: *feature_introduced_in_kasparov
+    <<: *provider_plugin
+    <<: *release
   ManageIQ/manageiq-providers-kubernetes:
     <<: *common
     <<: *feature_introduced_in_darga_or_prior
