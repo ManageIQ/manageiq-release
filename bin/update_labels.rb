@@ -13,11 +13,5 @@ end
 opts[:repo] ||= ManageIQ::Release::Labels.all.keys
 
 ManageIQ::Release.each_repo(opts[:repo]) do |repo|
-  expected_labels = ManageIQ::Release::Labels[repo.github_repo]
-
-  if expected_labels.nil?
-    puts "** No labels defined for #{repo.github_repo}"
-  else
-    ManageIQ::Release::UpdateLabels.new(repo.github_repo, expected_labels, opts.slice(:dry_run)).run
-  end
+  ManageIQ::Release::UpdateLabels.new(repo.github_repo, opts.slice(:dry_run)).run
 end

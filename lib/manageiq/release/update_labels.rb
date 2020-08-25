@@ -1,15 +1,20 @@
 module ManageIQ
   module Release
     class UpdateLabels
-      attr_reader :repo, :expected_labels, :dry_run
+      attr_reader :repo, :dry_run, :expected_labels
 
-      def initialize(repo, expected_labels, dry_run: false)
+      def initialize(repo, dry_run: false)
         @repo            = repo
-        @expected_labels = expected_labels
         @dry_run         = dry_run
+        @expected_labels = ManageIQ::Release::Labels[repo]
       end
 
       def run
+        if expected_labels.nil?
+          puts "** No labels defined for #{repo}"
+          return
+        end
+
         expected_labels.each do |label, color|
           github_label = existing_labels.detect { |l| l.name == label }
 

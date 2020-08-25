@@ -110,66 +110,18 @@ module ManageIQ
       end
 
       def write_codeclimate_yaml
-        repo.write_file(".codeclimate.yml", <<~EOF, dry_run: dry_run)
----
-version: '2'
-prepare:
-  fetch:
-  - url: https://raw.githubusercontent.com/ManageIQ/guides/master/.rubocop_base.yml
-    path: ".rubocop_base.yml"
-  - url: https://raw.githubusercontent.com/ManageIQ/guides/master/.rubocop_cc_base.yml
-    path: ".rubocop_cc_base.yml"
-checks:
-  argument-count:
-    enabled: false
-  complex-logic:
-    enabled: false
-  file-lines:
-    enabled: false
-  method-complexity:
-    config:
-      threshold: 11
-  method-count:
-    enabled: false
-  method-lines:
-    enabled: false
-  nested-control-flow:
-    enabled: false
-  return-statements:
-    enabled: false
-plugins:
-  rubocop:
-    enabled: true
-    config: ".rubocop_cc.yml"
-EOF
+        write_generator_file(".codeclimate.yml")
       end
 
       def write_rubocop_yamls
-        repo.write_file(".rubocop.yml", <<~EOF, dry_run: dry_run)
-inherit_from:
-- https://raw.githubusercontent.com/ManageIQ/guides/master/.rubocop_base.yml
-- .rubocop_local.yml
-EOF
+        %w[.rubocop.yml .rubocop_cc.yml .rubocop_local.yml].each do |file|
+          write_generator_file(file)
+        end
+      end
 
-        repo.write_file(".rubocop_cc.yml", <<~EOF, dry_run: dry_run)
-inherit_from:
-- .rubocop_base.yml
-- .rubocop_cc_base.yml
-- .rubocop_local.yml
-EOF
-
-        repo.write_file(".rubocop_cc.yml", <<~EOF, dry_run: dry_run)
-inherit_from:
-- .rubocop_base.yml
-- .rubocop_cc_base.yml
-- .rubocop_local.yml
-EOF
-
-        repo.write_file(".rubocop_local.yml", <<~EOF, dry_run: dry_run)
-AllCops:
-  Exclude:
-  - db/schema.rb
-EOF
+      def write_generator_file(file)
+        content = RestClient.get("https://raw.githubusercontent.com/ManageIQ/manageiq/master/lib/generators/manageiq/plugin/templates/#{file}").body
+        repo.write_file(file, content, dry_run: dry_run)
       end
     end
   end
