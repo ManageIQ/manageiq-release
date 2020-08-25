@@ -14,7 +14,7 @@ end
 ManageIQ::Release::Repos[opts[:repo_set]].each do |repo|
   puts ManageIQ::Release.header(repo.name)
   repo.fetch
-  Dir.chdir(repo.path) do
+  repo.chdir do
     repo.checkout("stable", "origin/stable")
     repo.git.merge("--no-ff", "--no-edit", "origin/master")
 

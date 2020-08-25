@@ -16,7 +16,7 @@ post_review = StringIO.new
 
 repos.each do |repo|
   puts ManageIQ::Release.header("Updating #{repo.name}")
-  Dir.chdir(repo.path) do
+  repo.chdir do
     repo.fetch
     repo.checkout(opts[:branch])
 

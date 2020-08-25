@@ -15,7 +15,7 @@ repos = opts[:branch] ? ManageIQ::Release::Repos[opts[:branch]] : ManageIQ::Rele
 repos.each do |repo|
   puts ManageIQ::Release.header(repo.name)
   repo.fetch
-  Dir.chdir(repo.path) do
+  repo.chdir do
     repo.checkout(opts[:branch])
   end if opts[:checkout] && opts[:branch] && !repo.options["has_real_releases"]
   puts

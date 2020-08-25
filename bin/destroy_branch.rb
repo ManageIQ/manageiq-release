@@ -14,7 +14,7 @@ repos = ManageIQ::Release::Repos["master"]
 repos.each do |repo|
   puts ManageIQ::Release.header("Destroying #{repo.name}")
 
-  Dir.chdir(repo.path) do
+  repo.chdir do
     system("git checkout master")
     system("git branch -D #{opts[:branch]}")
   end

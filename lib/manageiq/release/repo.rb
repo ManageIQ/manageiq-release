@@ -12,6 +12,10 @@ module ManageIQ
         @path    = REPOS_DIR.join(github_repo)
       end
 
+      def chdir
+        Dir.chdir(path) { yield }
+      end
+
       def github_repo
         if name.include?("/")
           name
