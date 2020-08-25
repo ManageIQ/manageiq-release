@@ -6,7 +6,7 @@ module ManageIQ
       attr_reader :repo, :base, :head, :script, :dry_run, :message
 
       ROOT_DIR = Pathname.new(__dir__).join("..", "..", "..").freeze
-      def initialize(repo, base:, head:, script:, dry_run:, message:)
+      def initialize(repo, base:, head:, script:, dry_run:, message:, **_)
         @repo    = repo
         @base    = base
         @head    = head

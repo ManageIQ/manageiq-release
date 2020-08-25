@@ -3,7 +3,7 @@ module ManageIQ
     class UpdateLabels
       attr_reader :repo, :dry_run, :expected_labels
 
-      def initialize(repo, dry_run: false)
+      def initialize(repo, dry_run: false, **_)
         @repo            = repo
         @dry_run         = dry_run
         @expected_labels = ManageIQ::Release::Labels[repo]

@@ -16,7 +16,7 @@ opts[:repo_set] = opts[:tag].split("-").first unless opts[:repo] || opts[:repo_s
 post_review = StringIO.new
 
 ManageIQ::Release.each_repo(opts) do |repo|
-  destroy_tag = ManageIQ::Release::DestroyTag.new(repo, opts.slice(:tag))
+  destroy_tag = ManageIQ::Release::DestroyTag.new(repo, opts)
   destroy_tag.run
   post_review.puts(destroy_tag.post_review)
 end

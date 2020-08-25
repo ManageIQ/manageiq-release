@@ -3,7 +3,7 @@ module ManageIQ
     class ReleaseTag
       attr_reader :repo, :branch, :tag, :dry_run
 
-      def initialize(repo, branch:, tag:, dry_run: false)
+      def initialize(repo, branch:, tag:, dry_run: false, **_)
         @repo    = repo
         @branch  = branch
         @tag     = tag

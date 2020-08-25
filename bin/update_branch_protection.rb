@@ -17,6 +17,6 @@ ManageIQ::Release.repos_for(opts).each do |repo|
   next if opts[:branch] != "master" && repo.options.has_real_releases
 
   puts ManageIQ::Release.header(repo.name)
-  ManageIQ::Release::UpdateBranchProtection.new(repo.github_repo, opts.slice(:branch, :dry_run)).run
+  ManageIQ::Release::UpdateBranchProtection.new(repo.github_repo, opts).run
   puts
 end

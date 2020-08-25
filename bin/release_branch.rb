@@ -18,7 +18,7 @@ post_review = StringIO.new
 ManageIQ::Release.repos_for(opts).each do |repo|
   next if repo.options.has_real_releases
 
-  release_branch = ManageIQ::Release::ReleaseBranch.new(repo, opts.slice(:branch))
+  release_branch = ManageIQ::Release::ReleaseBranch.new(repo, opts)
 
   puts ManageIQ::Release.header("Branching #{repo.name}")
   release_branch.run

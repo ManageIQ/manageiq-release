@@ -12,5 +12,5 @@ end
 opts[:repo] = ManageIQ::Release::Labels.all.keys.sort unless opts[:repo] || opts[:repo_set]
 
 ManageIQ::Release.each_repo(opts) do |repo|
-  ManageIQ::Release::UpdateLabels.new(repo.github_repo, opts.slice(:dry_run)).run
+  ManageIQ::Release::UpdateLabels.new(repo.github_repo, opts).run
 end

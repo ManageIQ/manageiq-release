@@ -3,7 +3,7 @@ module ManageIQ
     class RenameLabels
       attr_reader :repo, :rename_hash, :dry_run
 
-      def initialize(repo, rename_hash, dry_run: false)
+      def initialize(repo, rename_hash, dry_run: false, **_)
         @repo        = repo
         @rename_hash = rename_hash
         @dry_run     = dry_run

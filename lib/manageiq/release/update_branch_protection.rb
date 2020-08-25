@@ -3,7 +3,7 @@ module ManageIQ
     class UpdateBranchProtection
       attr_reader :repo, :branch, :dry_run
 
-      def initialize(repo, branch:, dry_run: false)
+      def initialize(repo, branch:, dry_run: false, **_)
         @repo    = repo
         @branch  = branch
         @dry_run = dry_run

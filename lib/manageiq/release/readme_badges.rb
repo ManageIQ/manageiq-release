@@ -4,7 +4,7 @@ module ManageIQ
       attr_reader :repo, :dry_run
       attr_accessor :badges
 
-      def initialize(repo, dry_run: false)
+      def initialize(repo, dry_run: false, **_)
         @repo    = repo
         @dry_run = dry_run
         reload
