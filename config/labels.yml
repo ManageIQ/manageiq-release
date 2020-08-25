@@ -276,6 +276,7 @@ repos:
     <<: *release
   ManageIQ/manageiq-providers-nsxt:
     <<: *common
+#    <<: *feature_introduced_in_kasparov
     <<: *provider_plugin
     <<: *release
   ManageIQ/manageiq-providers-nuage:
