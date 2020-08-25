@@ -12,7 +12,7 @@ module ManageIQ
         repo.fetch
         repo.checkout(branch, "origin/master")
 
-        Dir.chdir(repo.path) do
+        repo.chdir do
           changes = edit_bin_setup
           changes = edit_readme || changes
 

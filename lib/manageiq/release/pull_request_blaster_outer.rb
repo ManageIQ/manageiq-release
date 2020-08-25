@@ -71,7 +71,7 @@ module ManageIQ
       end
 
       def run_script
-        Dir.chdir(repo.path) do
+        repo.chdir do
           parts = []
           parts << "GITHUB_REPO=#{repo.github_repo}"
           parts << "DRY_RUN=true" if dry_run
@@ -86,7 +86,7 @@ module ManageIQ
       end
 
       def commit_changes
-        Dir.chdir(repo.path) do
+        repo.chdir do
           begin
             repo.git.add("-v", ".")
             repo.git.commit("-m", message)
@@ -114,7 +114,7 @@ module ManageIQ
       end
 
       def push_branch
-        Dir.chdir(repo.path) do
+        repo.chdir do
           repo.git.remote("add", origin_remote, origin_url) unless repo.remote?(origin_remote)
           repo.git.push("-f", origin_remote, "#{head}:#{head}")
         end
