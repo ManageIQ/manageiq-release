@@ -8,12 +8,15 @@ require 'optimist'
 
 opts = Optimist.options do
   opt :branch, "The branch to protect.", :type => :string, :required => true
-  opt :repo, "The repo to update. If not passed, will try all repos for the branch specified.", :type => :string
 
-  opt :dry_run, "", :default => false
+  ManageIQ::Release.common_options(self, :repo_set_default => nil)
 end
+opts[:repo_set] = opts[:branch] unless opts[:repo] || opts[:repo_set]
 
-ManageIQ::Release.each_repo(opts[:repo], opts[:branch]) do |repo|
-  skip = opts[:branch] != "master" && repo.options[:has_real_releases]
-  ManageIQ::Release::UpdateBranchProtection.new(repo.github_repo, opts.slice(:branch, :dry_run)).run unless skip
+ManageIQ::Release.repos_for(opts).each do |repo|
+  next if opts[:branch] != "master" && repo.options.has_real_releases
+
+  puts ManageIQ::Release.header(repo.name)
+  ManageIQ::Release::UpdateBranchProtection.new(repo.github_repo, opts.slice(:branch, :dry_run)).run
+  puts
 end

@@ -1,7 +1,7 @@
 module ManageIQ
   module Release
     class ReleaseBranch
-      attr_reader :repo, :branch, :dry_run
+      attr_reader :repo, :branch
 
       def initialize(repo, branch:)
         @repo    = repo

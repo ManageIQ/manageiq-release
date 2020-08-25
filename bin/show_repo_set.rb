@@ -7,7 +7,7 @@ require 'manageiq/release'
 require 'optimist'
 
 opts = Optimist.options do
-  opt :branch, "The target branch", :type => :string, :required => true
+  ManageIQ::Release.common_options(self, :only => :repo_set)
 end
 
-puts ManageIQ::Release::Repos[opts[:branch]].collect(&:name)
+puts ManageIQ::Release.repos_for(opts).collect(&:name)

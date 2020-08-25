@@ -8,9 +8,10 @@ require 'more_core_extensions/core_ext/array/tableize'
 require 'optimist'
 
 opts = Optimist.options do
-  opt :blocker, "List 'blocker' PRs only",          :type => :boolean, :default => false
-  opt :branch,  "The target branch to backport to", :type => :string,  :required => true
-  opt :open,    "Open all links in a browser",      :type => :boolean, :default => false
+  opt :branch,  "The target branch to backport to.", :type => :string,  :required => true
+
+  opt :blocker, "List 'blocker' PRs only.",          :type => :boolean, :default => false
+  opt :open,    "Open all links in a browser.",      :type => :boolean, :default => false
 end
 
 branch = opts[:branch]

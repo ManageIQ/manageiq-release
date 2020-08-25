@@ -7,12 +7,10 @@ require 'manageiq/release'
 require 'optimist'
 
 opts = Optimist.options do
-  opt :repo_set, "The repo set", :type => :string,  :required => true
-  opt :dry_run,  "",             :default => true
+  ManageIQ::Release.common_options(self)
 end
 
-ManageIQ::Release::Repos[opts[:repo_set]].each do |repo|
-  puts ManageIQ::Release.header(repo.name)
+ManageIQ::Release.each_repo(opts) do |repo|
   repo.fetch
   repo.chdir do
     repo.checkout("stable", "origin/stable")
@@ -24,6 +22,5 @@ ManageIQ::Release::Repos[opts[:repo_set]].each do |repo|
       repo.git.push("origin", "stable")
     end
   end
-  puts
 end
 

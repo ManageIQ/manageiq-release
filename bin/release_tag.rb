@@ -7,20 +7,20 @@ require 'manageiq/release'
 require 'optimist'
 
 opts = Optimist.options do
-  opt :tag,    "The new tag name",  :type => :string, :required => true
-  opt :branch, "The target branch", :type => :string, :required => true
+  opt :tag,    "The new tag name.",       :type => :string, :required => true
+  opt :branch, "The branch to tag from.", :type => :string
 
-  opt :dry_run, "", :default => false
+  ManageIQ::Release.common_options(self, :repo_set_default => nil)
 end
-
-repos = ManageIQ::Release::Repos[opts[:branch]]
-Optimist.die "Repo #{opts[:branch].inspect} does not exist in repos.yml" if repos.nil?
+opts[:branch] ||= opts[:tag].split("-").first
+opts[:repo_set] = opts[:branch] unless opts[:repo] || opts[:repo_set]
 
 review = StringIO.new
 post_review = StringIO.new
 
-repos.each do |repo|
-  next if repo.options["has_real_releases"]
+ManageIQ::Release.repos_for(opts).each do |repo|
+  next if repo.options.has_real_releases
+
   release_tag = ManageIQ::Release::ReleaseTag.new(repo, opts.slice(:branch, :tag, :dry_run))
 
   puts ManageIQ::Release.header("Tagging #{repo.name}")

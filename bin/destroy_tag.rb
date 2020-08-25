@@ -7,23 +7,21 @@ require 'manageiq/release'
 require 'optimist'
 
 opts = Optimist.options do
-  opt :tag,    "The tag name",      :type => :string, :required => true
-  opt :branch, "The target branch", :type => :string, :required => true
-end
+  opt :tag, "The tag to destroy", :type => :string, :required => true
 
-tag = opts[:tag]
+  ManageIQ::Release.common_options(self, :except => :dry_run, :repo_set_default => nil)
+end
+opts[:repo_set] = opts[:tag].split("-").first unless opts[:repo] || opts[:repo_set]
+
 post_review = StringIO.new
 
-repos = ManageIQ::Release::Repos[opts[:branch]]
-repos.each do |repo|
-  puts ManageIQ::Release.header("Untagging #{repo.name}")
-  destroy_tag = ManageIQ::Release::DestroyTag.new(repo, tag)
+ManageIQ::Release.each_repo(opts) do |repo|
+  destroy_tag = ManageIQ::Release::DestroyTag.new(repo, opts.slice(:tag))
   destroy_tag.run
   post_review.puts(destroy_tag.post_review)
-  puts
 end
 
 puts
-puts "Run the following script to delete '#{tag}' tag from all repos"
+puts "Run the following script to delete '#{opts[:tag]}' tag from all remote repos"
 puts
 puts post_review.string

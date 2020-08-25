@@ -7,15 +7,16 @@ require 'manageiq/release'
 require 'optimist'
 
 opts = Optimist.options do
-  opt :branch, "The new branch name", :type => :string, :required => true
-end
+  opt :branch, "The new branch name.", :type => :string, :required => true
 
-repos = ManageIQ::Release::Repos["master"]
+  ManageIQ::Release.common_options(self, :repo_set_default => nil)
+end
+opts[:repo_set] = opts[:branch] unless opts[:repo] || opts[:branch]
+
 review = StringIO.new
 post_review = StringIO.new
 
-repos.each do |repo|
-  puts ManageIQ::Release.header("Updating #{repo.name}")
+ManageIQ::Release.each_repo(opts) do |repo|
   repo.chdir do
     repo.fetch
     repo.checkout(opts[:branch])

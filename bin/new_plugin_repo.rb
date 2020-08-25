@@ -7,9 +7,7 @@ require 'manageiq/release'
 require 'optimist'
 
 opts = Optimist.options do
-  opt :repo, "The repo to update.", :required => true, :type => :string
-
-  opt :dry_run, "", :default => false
+  ManageIQ::Release.common_options(self, :except => :repo_set)
 end
 
 repo = ManageIQ::Release.repo_for(opts[:repo])
