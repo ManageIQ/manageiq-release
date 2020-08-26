@@ -25,7 +25,9 @@ puts "\n** Enabling Travis / CodeClimate test reporter integration..."
 code_climate.set_travis_test_reporter_id
 
 puts "\n** Updating README.md for CodeClimate badges..."
-b = readme.badges.detect { |b| b["description"] == ManageIQ::Release::CodeClimate.badge_name }
+b = readme.badges.detect do |b|
+  b["description"] == ManageIQ::Release::CodeClimate.badge_name || b["description"] == "Code Climate"
+end
 b.update(code_climate.badge_details)
 b = readme.badges.detect { |b| b["description"] == ManageIQ::Release::CodeClimate.coverage_badge_name }
 b.update(code_climate.coverage_badge_details)
