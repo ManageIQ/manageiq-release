@@ -36,6 +36,7 @@ master:
   manageiq-providers-foreman:
   manageiq-providers-google:
   manageiq-providers-ibm_cloud:
+  manageiq-providers-ibm_terraform:
   manageiq-providers-kubernetes:
   manageiq-providers-kubevirt:
   manageiq-providers-lenovo:
