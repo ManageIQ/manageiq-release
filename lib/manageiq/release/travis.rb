@@ -28,7 +28,7 @@ module ManageIQ
 
       def enable
         if dry_run
-          puts "** dry-run: travis login --github-token $GITHUB_API_TOKEN"
+          puts "** dry-run: travis login --com --github-token $GITHUB_API_TOKEN"
           puts "** dry-run: travis enable --com"
         else
           `travis login --com --github-token $GITHUB_API_TOKEN`

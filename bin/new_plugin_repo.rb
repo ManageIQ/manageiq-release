@@ -36,6 +36,7 @@ ManageIQ::Release::PullRequestBlasterOuter.new(repo, opts.slice(:dry_run).merge(
 
 puts
 puts "******* MANUAL THINGS *******"
-puts "Go to https://codeclimate.com/github/#{repo.github_repo} => settings => GitHub => Pull Request Status Updates => Install"
-puts "Enable hakiri"
+puts "- https://codeclimate.com/github/#{repo.github_repo} => Repo Settings => GitHub => Pull Request Status Updates => Install"
+puts "- https://hakiri.io and follow the new project."
+puts "- https://gitter.im/ManageIQ#createroom and create a new room linked to the repository"
 puts "Add repo to the bot"
