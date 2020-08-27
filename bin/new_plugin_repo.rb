@@ -18,14 +18,14 @@ unless repo && labels
 end
 
 puts "\n** Updating Repo Settings"
-ManageIQ::Release::UpdateRepoSettings.new(repo.github_repo, opts.slice(:dry_run)).run
+ManageIQ::Release::UpdateRepoSettings.new(repo.github_repo, opts).run
 puts "\n** Updating Branch Protection"
-ManageIQ::Release::UpdateBranchProtection.new(repo.github_repo, opts.slice(:dry_run).merge(:branch => "master")).run
+ManageIQ::Release::UpdateBranchProtection.new(repo.github_repo, opts.merge(:branch => "master")).run
 puts "\n** Updating Labels"
-ManageIQ::Release::UpdateLabels.new(repo.github_repo, opts.slice(:dry_run)).run
+ManageIQ::Release::UpdateLabels.new(repo.github_repo, opts).run
 
 puts "\n** Preparing Pull Request"
-ManageIQ::Release::PullRequestBlasterOuter.new(repo, opts.slice(:dry_run).merge(
+ManageIQ::Release::PullRequestBlasterOuter.new(repo, opts).merge(
   :base    => "master",
   :head    => "new_plugin_repo",
   :script  => "scripts/pull_request_blaster_outer/new_plugin_repo.rb",

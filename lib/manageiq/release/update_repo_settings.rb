@@ -3,7 +3,7 @@ module ManageIQ
     class UpdateRepoSettings
       attr_reader :repo, :dry_run
 
-      def initialize(repo, dry_run: false)
+      def initialize(repo, dry_run: false, **_)
         @repo    = repo
         @dry_run = dry_run
       end

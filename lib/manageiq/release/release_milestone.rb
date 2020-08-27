@@ -13,7 +13,7 @@ module ManageIQ
 
       attr_reader :repo, :title, :due_on, :dry_run
 
-      def initialize(repo, title:, due_on:, dry_run:)
+      def initialize(repo, title:, due_on:, dry_run:, **_)
         @repo    = repo
         @title   = title
         @due_on  = self.class.parse_date(due_on)

@@ -3,7 +3,7 @@ module ManageIQ
     class ReleaseBranch
       attr_reader :repo, :branch
 
-      def initialize(repo, branch:)
+      def initialize(repo, branch:, **_)
         @repo    = repo
         @branch  = branch
       end

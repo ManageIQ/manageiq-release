@@ -19,5 +19,5 @@ puts "Renaming: #{rename_hash.pretty_inspect}"
 puts
 
 ManageIQ::Release.each_repo(opts) do |repo|
-  ManageIQ::Release::RenameLabels.new(repo.github_repo, rename_hash, opts.slice(:dry_run)).run
+  ManageIQ::Release::RenameLabels.new(repo.github_repo, rename_hash, opts).run
 end

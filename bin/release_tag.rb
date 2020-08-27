@@ -21,7 +21,7 @@ post_review = StringIO.new
 ManageIQ::Release.repos_for(opts).each do |repo|
   next if repo.options.has_real_releases
 
-  release_tag = ManageIQ::Release::ReleaseTag.new(repo, opts.slice(:branch, :tag, :dry_run))
+  release_tag = ManageIQ::Release::ReleaseTag.new(repo, opts)
 
   puts ManageIQ::Release.header("Tagging #{repo.name}")
   release_tag.run

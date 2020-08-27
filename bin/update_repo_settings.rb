@@ -11,5 +11,5 @@ opts = Optimist.options do
 end
 
 ManageIQ::Release.each_repo(opts) do |repo|
-  ManageIQ::Release::UpdateRepoSettings.new(repo.github_repo, opts.slice(:dry_run)).run
+  ManageIQ::Release::UpdateRepoSettings.new(repo.github_repo, opts).run
 end

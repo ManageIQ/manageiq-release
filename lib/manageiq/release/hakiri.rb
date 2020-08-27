@@ -9,11 +9,10 @@ module ManageIQ
         }
       end
 
-      attr_reader :repo, :dry_run
+      attr_reader :repo
 
-      def initialize(repo, dry_run: false)
-        @repo    = repo
-        @dry_run = dry_run
+      def initialize(repo, **_)
+        @repo = repo
       end
 
       def badge_details
