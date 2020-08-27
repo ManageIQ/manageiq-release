@@ -7,13 +7,12 @@ require 'manageiq/release'
 require 'optimist'
 
 opts = Optimist.options do
-  opt :branch, "The target branch", :type => :string, :required => true
+  opt :branch, "The branch to destroy.", :type => :string, :required => true
+
+  ManageIQ::Release.common_options(self, :except => :dry_run)
 end
 
-repos = ManageIQ::Release::Repos["master"]
-repos.each do |repo|
-  puts ManageIQ::Release.header("Destroying #{repo.name}")
-
+ManageIQ::Release.each_repo(opts) do |repo|
   repo.chdir do
     system("git checkout master")
     system("git branch -D #{opts[:branch]}")

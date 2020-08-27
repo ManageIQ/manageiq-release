@@ -3,7 +3,7 @@ module ManageIQ
     class DestroyTag
       attr_reader :repo, :tag
 
-      def initialize(repo, tag)
+      def initialize(repo, tag:)
         @repo = repo
         @tag = tag
       end

@@ -7,16 +7,16 @@ require 'manageiq/release'
 require 'optimist'
 
 opts = Optimist.options do
-  opt :branch, "The new branch name", :type => :string, :required => true
-end
+  opt :branch, "The new branch name.", :type => :string, :required => true
 
-repos = ManageIQ::Release::Repos["master"]
+  ManageIQ::Release.common_options(self, :except => :dry_run) # TODO: Implement dry_run
+end
 
 review = StringIO.new
 post_review = StringIO.new
 
-repos.each do |repo|
-  next if repo.options["has_real_releases"]
+ManageIQ::Release.repos_for(opts).each do |repo|
+  next if repo.options.has_real_releases
 
   release_branch = ManageIQ::Release::ReleaseBranch.new(repo, opts.slice(:branch))
 

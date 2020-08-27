@@ -7,16 +7,14 @@ require 'manageiq/release'
 require 'optimist'
 
 opts = Optimist.options do
-  opt :branch,   "The target branch",           :type => :string,  :required => false
-  opt :checkout, "Also checkout target branch", :type => :boolean, :default => false
-end
+  opt :branch,   "The branch to fetch.",                   :type => :string,  :required => true
+  opt :checkout, "Checkout target branch after fetching.", :type => :boolean, :default => false
 
-repos = opts[:branch] ? ManageIQ::Release::Repos[opts[:branch]] : ManageIQ::Release::Repos.all_repos
-repos.each do |repo|
-  puts ManageIQ::Release.header(repo.name)
+  ManageIQ::Release.common_options(self, :except => :dry_run, :repo_set_default => nil)
+end
+opts[:repo_set] = opts[:branch] unless opts[:repo] || opts[:repo_set]
+
+ManageIQ::Release.each_repo(opts) do |repo|
   repo.fetch
-  repo.chdir do
-    repo.checkout(opts[:branch])
-  end if opts[:checkout] && opts[:branch] && !repo.options["has_real_releases"]
-  puts
+  repo.checkout(opts[:branch]) if opts[:checkout] && opts[:branch] && !repo.options.has_real_releases
 end

@@ -3,7 +3,7 @@ require 'active_support/core_ext/enumerable'
 
 module ManageIQ
   module Release
-    class Repos
+    class RepoSet
       def self.[](branch)
         all[branch]
       end

@@ -9,22 +9,23 @@ require 'travis'
 require 'optimist'
 
 opts = Optimist.options do
-  opt :branch, "The branch or release tag to check status for", :type => :string, :required => true
+  opt :ref, "The branch or release tag to check status for.", :type => :string, :required => true
+
+  ManageIQ::Release.common_options(self, :except => :dry_run, :repo_set_default => nil)
 end
+opts[:repo_set] = opts[:ref].split("-").first unless opts[:repo] || opts[:repo_set]
 
-branch = opts[:branch]
+travis_repos = ManageIQ::Release.repos_for(opts).collect do |repo|
+  next if repo.options.has_real_releases
 
-all_repos = ManageIQ::Release::Repos[branch.split(/-/).first]
-travis_repos = all_repos.collect do |github_repo|
-  next if github_repo.options["has_real_releases"]
-  repo = Travis::Repository.find("ManageIQ/#{github_repo.name}")
+  repo = Travis::Repository.find(repo.github_repo)
   begin
-    last_build = repo.last_on_branch(branch)
+    last_build = repo.last_on_branch(opts[:ref])
   rescue Travis::Client::NotFound
     # Ignore repo which doesn't have Travis enabled for that branch
     next
   end
-  { "Repo" => repo.name, "Status" => last_build.state, "Build ID" => last_build.number, "Date" => last_build.finished_at }
+  {"Repo" => repo.name, "Status" => last_build.state, "Build ID" => last_build.number, "Date" => last_build.finished_at}
 end.compact
 
 travis_repos.sort_by! { |v| [ v["Status"], v["Date"] ] }
