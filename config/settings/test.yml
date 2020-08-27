@@ -1,0 +1,15 @@
+---
+:git_mirror:
+  :branch_mirror_defaults:
+    jansa: j
+    master: k
+  :branch_mirror_overrides:
+    container-httpd:
+      jansa:
+      master:
+  :productization_name: foo
+  :remotes:
+    :downstream: git@github.com:miq-test
+  :repos_to_mirror:
+    container-httpd:
+      :downstream_repo_name: foo-container-httpd

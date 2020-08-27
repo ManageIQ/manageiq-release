@@ -6,41 +6,41 @@
   :remotes:
     :upstream: git@github.com:ManageIQ
   :repos_to_mirror:
-    manageiq-api: :upstream
-    manageiq-appliance-build: :upstream
-    manageiq-appliance: :upstream
-    manageiq-automation_engine: :upstream
-    manageiq-consumption: :upstream
-    manageiq-content: :upstream
-    manageiq-decorators: :upstream
-    manageiq-documentation: :upstream
-    manageiq-gems-pending: :upstream
-    manageiq-graphql: :upstream
-    manageiq-pods: :upstream
-    manageiq-providers-amazon: :upstream
-    manageiq-providers-ansible_tower: :upstream
-    manageiq-providers-azure: :upstream
-    manageiq-providers-azure_stack: :upstream
-    manageiq-providers-foreman: :upstream
-    manageiq-providers-google: :upstream
-    manageiq-providers-hawkular: :upstream
-    manageiq-providers-kubernetes: :upstream
-    manageiq-providers-kubevirt: :upstream
-    manageiq-providers-lenovo: :upstream
-    manageiq-providers-nuage: :upstream
-    manageiq-providers-openshift: :upstream
-    manageiq-providers-openstack: :upstream
-    manageiq-providers-ovirt: :upstream
-    manageiq-providers-redfish: :upstream
-    manageiq-providers-scvmm: :upstream
-    manageiq-providers-vmware: :upstream
-    manageiq-release: :upstream
-    manageiq-schema: :upstream
-    manageiq-ui-classic: :upstream
-    manageiq-ui-service: :upstream
-    manageiq-v2v: :upstream
-    manageiq: :upstream
-  :working_directory: ''
+    manageiq-api:
+    manageiq-appliance-build:
+    manageiq-appliance:
+    manageiq-automation_engine:
+    manageiq-consumption:
+    manageiq-content:
+    manageiq-decorators:
+    manageiq-documentation:
+    manageiq-gems-pending:
+    manageiq-graphql:
+    manageiq-pods:
+    manageiq-providers-amazon:
+    manageiq-providers-ansible_tower:
+    manageiq-providers-azure:
+    manageiq-providers-azure_stack:
+    manageiq-providers-foreman:
+    manageiq-providers-google:
+    manageiq-providers-hawkular:
+    manageiq-providers-kubernetes:
+    manageiq-providers-kubevirt:
+    manageiq-providers-lenovo:
+    manageiq-providers-nuage:
+    manageiq-providers-openshift:
+    manageiq-providers-openstack:
+    manageiq-providers-ovirt:
+    manageiq-providers-redfish:
+    manageiq-providers-scvmm:
+    manageiq-providers-vmware:
+    manageiq-release:
+    manageiq-schema:
+    manageiq-ui-classic:
+    manageiq-ui-service:
+    manageiq-v2v:
+    manageiq:
+  :working_directory: mirrors
 :manageiq_rubygems:
   :s3_access_key:
   :s3_secret_key:
