@@ -15,10 +15,6 @@ module ManageIQ
           end
       end
 
-      def self.all_repos
-        all.values.flatten.index_by(&:name).values
-      end
-
       def self.config
         @config ||= ManageIQ::Release.load_config_file("repos")
       end
