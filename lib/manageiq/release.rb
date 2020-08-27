@@ -1,4 +1,5 @@
 require 'pathname'
+require 'English'
 
 require 'manageiq/release/labels'
 require 'manageiq/release/repo'

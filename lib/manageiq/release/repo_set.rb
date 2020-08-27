@@ -11,7 +11,7 @@ module ManageIQ
       def self.all
         @all ||=
           config.each_with_object({}) do |(set_name, repos), h|
-            h[set_name] = repos.map { |name, options| Repo.new(name, options) }
+            h[set_name] = repos.map { |name, options| Repo.new(name, options) }.sort_by(&:github_repo)
           end
       end
 

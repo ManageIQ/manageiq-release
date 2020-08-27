@@ -1,5 +1,7 @@
 require 'pathname'
 
+require_relative "pull_request_blaster_outer/script_helpers"
+
 module ManageIQ
   module Release
     class PullRequestBlasterOuter
@@ -23,7 +25,7 @@ module ManageIQ
       def blast
         puts "+++ blasting #{repo.github_repo}..."
 
-        repo.git
+        repo.clean(output: false)
         repo.fetch(output: false)
 
         unless repo.remote_branch?("origin", base)
@@ -40,7 +42,11 @@ module ManageIQ
         elsif dry_run
           result = "Committed but is dry run"
         else
-          puts "Do you want to open a pull request on #{repo.github_repo} with the above changes? (Y/N)"
+          puts
+          puts "Successfully committed changes."
+          puts "If you'd like to make any manual changes go to #{repo.path}."
+          puts
+          puts "Do you want to open a pull request on #{repo.github_repo} with the above changes? (y/N)"
           answer = $stdin.gets.chomp
           if answer.upcase.start_with?("Y")
             fork_repo unless forked?
@@ -72,15 +78,14 @@ module ManageIQ
 
       def run_script
         repo.chdir do
-          parts = []
-          parts << "GITHUB_REPO=#{repo.github_repo}"
-          parts << "DRY_RUN=true" if dry_run
-          parts << script
-          cmd = parts.join(" ")
+          env = {"GITHUB_REPO" => repo.github_repo}
+          env["DRY_RUN"] = "true" if dry_run
 
-          unless system(cmd)
-            puts "!!! Script execution failed."
-            exit $?.exitstatus
+          Bundler.with_original_env do
+            unless system(env, script)
+              puts "!!! Script execution failed."
+              exit $?.exitstatus
+            end
           end
         end
       end
