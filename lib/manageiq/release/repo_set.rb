@@ -4,14 +4,14 @@ require 'active_support/core_ext/enumerable'
 module ManageIQ
   module Release
     class RepoSet
-      def self.[](branch)
-        all[branch]
+      def self.[](set_name)
+        all[set_name]
       end
 
       def self.all
         @all ||=
-          config.each_with_object({}) do |(branch, repos), h|
-            h[branch] = repos.map { |name, options| Repo.new(name, options) }
+          config.each_with_object({}) do |(set_name, repos), h|
+            h[set_name] = repos.map { |name, options| Repo.new(name, options) }
           end
       end
 
