@@ -13,8 +13,8 @@ module ManageIQ
       # In ManageIQ/manageiq-ui-service repo, run `gulp gettext-extract`
       # If there are material differences, push up to Transifex
       def update_message_catalogs
-        generate_message_catalog_for_manageiq
-        generate_message_catalog_for_manageiq_service_ui
+        update_message_catalog_for_manageiq
+        update_message_catalog_for_manageiq_service_ui
       end
 
       private
@@ -50,16 +50,20 @@ module ManageIQ
 
       def manageiq_message_catalog_file_needs_commit?
         needs_commit = false
-        diffs = git_diff_stats(manageiq_repo)
-        return false if diffs.length != 1
-        return false unless diffs.key?(manageiq_message_catalog_filename)
-        stats = diffs[manageiq_message_catalog_filename]
-        puts "+#{stats[:insertions]}, -#{stats[:deletions]} for #{manageiq_message_catalog_filename}"
+        Dir.chdir(manageiq_repo_path) do |dir|
+          diffs = git_diff_stats(manageiq_repo)
+          return false if diffs.length != 1
+          return false unless diffs.key?(manageiq_message_catalog_filename)
+          stats = diffs[manageiq_message_catalog_filename]
+          puts "+#{stats[:insertions]}, -#{stats[:deletions]} for #{manageiq_message_catalog_filename}"
 
-        # If the only changes are to POT-Creation-Date and PO-Revision-Date,
-        # then there are no substantive changes
-        # Hence why this code checks for precisely 2 insertions and deletions
-        (stats[:insertions] != 2) || (stats[:deletions] != 2)
+          # If the only changes are to POT-Creation-Date and PO-Revision-Date,
+          # then there are no substantive changes
+          # Hence why this code checks for precisely 2 insertions and deletions
+          needs_commit = (stats[:insertions] != 2) || (stats[:deletions] != 2)
+        end
+        puts "#{manageiq_message_catalog_filename} needs commit?: #{needs_commit ? 'YES' : 'NO'}"
+        needs_commit
       end
 
       def manageiq_repo_path
@@ -87,11 +91,20 @@ module ManageIQ
               puts "- resetting #{fname}"
               system("git checkout HEAD -- #{fname}")
             end
-
-            puts "*** Checking #{manageiq_message_catalog_filename} file ***"
-            puts "#{manageiq_message_catalog_filename} needs commit?: #{manageiq_message_catalog_file_needs_commit? ? 'YES' : 'NO'}"
           end
         end
+      end
+
+      def upload_message_catalog_for_manageiq
+        puts "Uploading #{manageiq_message_catalog_filename} to Transifex"
+        Dir.chdir(manageiq_repo_path) do |dir|
+          system("tx push --source")
+        end
+      end
+
+      def update_message_catalog_for_manageiq
+        generate_message_catalog_for_manageiq
+        upload_message_catalog_for_manageiq
       end
 
       # ManageIQ Service UI Section
@@ -105,13 +118,14 @@ module ManageIQ
       end
 
       def manageiq_service_ui_message_catalog_file_needs_commit?
-        needs_commit = false
-        diffs = git_diff_stats(manageiq_service_ui_repo)
-        return false if diffs.length != 1
-        return false unless diffs.key?(manageiq_service_ui_message_catalog_filename)
-        stats = diffs[manageiq_service_ui_message_catalog_filename]
-        puts "+#{stats[:insertions]}, -#{stats[:deletions]} for #{manageiq_service_ui_message_catalog_filename}"
-        return true
+        Dir.chdir(manageiq_service_ui_repo.path) do |dir|
+          diffs = git_diff_stats(manageiq_service_ui_repo)
+          return false if diffs.length != 1
+          return false unless diffs.key?(manageiq_service_ui_message_catalog_filename)
+          stats = diffs[manageiq_service_ui_message_catalog_filename]
+          puts "+#{stats[:insertions]}, -#{stats[:deletions]} for #{manageiq_service_ui_message_catalog_filename}"
+          return true
+        end
       end
 
       def generate_message_catalog_for_manageiq_service_ui
@@ -122,10 +136,20 @@ module ManageIQ
           Dir.chdir(manageiq_service_ui_repo.path) do |dir|
             execute "yarn install"
             execute "yarn gettext:extract"
-            puts "*** Checking #{manageiq_service_ui_message_catalog_filename} file ***"
-            puts "#{manageiq_service_ui_message_catalog_filename} needs commit?: #{manageiq_service_ui_message_catalog_file_needs_commit? ? 'YES' : 'NO'}"
           end
         end
+      end
+
+      def upload_message_catalog_for_manageiq_service_ui
+        puts "Uploading #{manageiq_service_ui_message_catalog_filename} to Transifex"
+        Dir.chdir(manageiq_service_ui_repo.path) do |dir|
+          system("tx push --source")
+        end
+      end
+
+      def update_message_catalog_for_manageiq_service_ui
+        generate_message_catalog_for_manageiq_service_ui
+        upload_message_catalog_for_manageiq_service_ui
       end
     end
   end
