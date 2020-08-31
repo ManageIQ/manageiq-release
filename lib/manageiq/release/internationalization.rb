@@ -109,7 +109,7 @@ module ManageIQ
             create_database_yml
 
             helper.execute "RAILS_ENV=i18n SKIP_TEST_RESET=true bin/setup"
-            helper.execute "bundle exec rake locale:update"
+            helper.execute "bundle exec rake locale:update_all"
 
             puts "*** Resetting changes to files other than message catalog ***"
             helper.git_diff_stats(repo).each do |fname, stats|
