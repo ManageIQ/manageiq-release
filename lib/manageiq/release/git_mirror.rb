@@ -17,18 +17,24 @@ module ManageIQ
       end
 
       def mirror_all
-        Settings.git_mirror.repos_to_mirror.each { |repo, remote_source| mirror(repo.to_s, remote_source) }
+        Settings.git_mirror.repos_to_mirror.each do |repo, options|
+          mirror(repo.to_s, default_repo_options.dup.merge!(options.to_h))
+        end
         !@errors_occurred
       end
 
-      def mirror(repo, remote_source)
-        with_repo(repo, remote_source) do
-          send("mirror_#{remote_source}_repo", repo)
+      def mirror(repo, options)
+        with_repo(repo, options) do
+          send("mirror_#{options.remote_source}_repo", repo)
         end
         !@errors_occurred
       end
 
       private
+
+      def default_repo_options
+        Config::Options.new(:remote_source => :upstream)
+      end
 
       def mirror_branches_for(repo)
         Settings.git_mirror.branch_mirror_defaults.to_h.merge(Settings.git_mirror.branch_mirror_overrides[repo].to_h || {}).each_with_object({}) { |(k, v), h| h[k.to_s] = v }
@@ -56,8 +62,8 @@ module ManageIQ
         @dry_run = ARGV.include?("--dry-run")
       end
 
-      def downstream_repo_name(repo)
-        repo.sub("manageiq", Settings.git_mirror.productization_name)
+      def downstream_repo_name(repo, options)
+        options.downstream_repo_name || repo.sub("manageiq", Settings.git_mirror.productization_name)
       end
 
       def system(*args)
@@ -75,12 +81,15 @@ module ManageIQ
         end
       end
 
-      def with_repo(repo, remote_source)
-        repo_name = downstream_repo_name(repo)
+      def with_repo(repo, options)
+        repo_name = downstream_repo_name(repo, options)
         puts "\n==== Mirroring #{repo_name} ====".bold.cyan
 
-        path = "#{Settings.git_mirror.working_directory}/#{repo_name}"
-        clone_repo(repo, repo_name, path, remote_source) unless File.directory?(path)
+        working_dir = Settings.git_mirror.working_directory
+        FileUtils.mkdir_p(working_dir)
+
+        path = "#{working_dir}/#{repo_name}"
+        clone_repo(repo, repo_name, path, options.remote_source) unless File.directory?(path)
 
         Dir.chdir(path) do
           puts "\n==== Fetching for #{repo_name} ====".bold.green
@@ -88,7 +97,7 @@ module ManageIQ
           #   tags prefer what is on upstream
           system("git fetch backup --prune --tags") if remote_exists?("backup")
           system("git fetch downstream --prune --tags")
-          system("git fetch upstream --prune --tags") if [:red_hat_cloudforms, :upstream].include?(remote_source)
+          system("git fetch upstream --prune --tags") if [:red_hat_cloudforms, :upstream].include?(options.remote_source)
 
           yield
         end
@@ -97,10 +106,21 @@ module ManageIQ
       end
 
       def clone_repo(upstream_repo, downstream_repo, path, remote_source)
-        system("git clone #{Settings.git_mirror.remotes[remote_source]}/#{upstream_repo}.git #{path} -o upstream")
+        upstream_remote = Settings.git_mirror.remotes[remote_source]
+        raise "remote '#{remote_source}'' not found in settings" if upstream_remote.nil?
+
+        system("git clone #{upstream_remote}/#{upstream_repo}.git #{path} -o upstream")
         Dir.chdir(path) do
-          system("git remote add downstream #{Settings.git_mirror.remotes.downstream}/#{downstream_repo}.git") unless remote_exists?("downstream")
-          system("git remote add backup #{Settings.git_mirror.remotes.backup}/#{downstream_repo}.git") if Settings.git_mirror.remotes.backup && !remote_exists?("backup")
+          unless remote_exists?("downstream")
+            downstream_remote = Settings.git_mirror.remotes.downstream
+            raise "remote 'downstream' not found in settings" if downstream_remote.nil?
+
+            system("git remote add downstream #{downstream_remote}/#{downstream_repo}.git")
+          end
+          unless remote_exists?("backup")
+            backup_remote = Settings.git_mirror.remotes.backup
+            system("git remote add backup #{backup_remote}/#{downstream_repo}.git") if backup_remote
+          end
         end
       end
 
@@ -124,7 +144,7 @@ module ManageIQ
       end
 
       def remote_branch?(branch)
-        !`git branch -r | grep #{branch}`.strip.empty?
+        !`git branch -r | grep "\\b#{branch}\\b"`.strip.empty?
       end
 
       def sync_branch(source_remote, source_name, dest_remote, dest_name, include_backup = true)
