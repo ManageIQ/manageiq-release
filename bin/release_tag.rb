@@ -9,6 +9,7 @@ require 'optimist'
 opts = Optimist.options do
   opt :tag,    "The new tag name.",       :type => :string, :required => true
   opt :branch, "The branch to tag from.", :type => :string
+  opt :skip,   "The repo(s) to skip.",    :type => :strings
 
   ManageIQ::Release.common_options(self, :repo_set_default => nil)
 end
@@ -24,6 +25,7 @@ repos = ManageIQ::Release.repos_for(opts)
 repos = repos.partition { |r| r.github_repo != "ManageIQ/manageiq" }.flatten
 
 repos.each do |repo|
+  next if Array(opts[:skip]).include?(repo.name)
   next if repo.options.has_real_releases
 
   release_tag = ManageIQ::Release::ReleaseTag.new(repo, opts)
