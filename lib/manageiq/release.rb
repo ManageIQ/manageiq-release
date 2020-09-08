@@ -64,7 +64,7 @@ module ManageIQ
       subset = Array(only).map(&:to_sym) - Array(except).map(&:to_sym)
 
       if subset.include?(:repo_set)
-        optimist.opt :repo_set, "The repo set to work with.", :default => repo_set_default, :short => "s"
+        optimist.opt :repo_set, "The repo set to work with.", :type => :string, :default => repo_set_default, :short => "s"
       end
       if subset.include?(:repo)
         msg = "Individual repo(s) to work with."
