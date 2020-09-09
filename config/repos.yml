@@ -1,6 +1,7 @@
 master:
   amazon_ssa_support:
   container-amazon-smartstate:
+    has_real_releases: true
   container-httpd:
     has_real_releases: true
   container-memcached:
