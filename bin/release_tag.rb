@@ -18,7 +18,12 @@ opts[:repo_set] = opts[:branch] unless opts[:repo] || opts[:repo_set]
 review = StringIO.new
 post_review = StringIO.new
 
-ManageIQ::Release.repos_for(opts).each do |repo|
+# Move manageiq repo to the end of the list.  The rake release script on manageiq
+#   depends on all of the other repos running their rake release scripts first.
+repos = ManageIQ::Release.repos_for(opts)
+repos = repos.partition { |r| r.github_repo != "ManageIQ/manageiq" }.flatten
+
+repos.each do |repo|
   next if repo.options.has_real_releases
 
   release_tag = ManageIQ::Release::ReleaseTag.new(repo, opts)
