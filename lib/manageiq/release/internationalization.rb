@@ -129,7 +129,7 @@ module ManageIQ
         def update_message_catalog
           helper.with_checked_out_repo(repo, branch) do
             generate_message_catalog
-            upload_message_catalog
+            upload_message_catalog unless dry_run
           end
         end
       end
@@ -190,7 +190,7 @@ module ManageIQ
         def update_message_catalog
           helper.with_checked_out_repo(repo, branch) do
             generate_message_catalog
-            upload_message_catalog
+            upload_message_catalog unless dry_run
           end
         end
       end
