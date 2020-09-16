@@ -4,7 +4,7 @@ module ManageIQ
 
       attr_reader :branch, :dry_run
 
-      def initialize(branch: nil, dry_run: true)
+      def initialize(branch: nil, dry_run: true, **_)
         @branch  = branch || 'master'
         @dry_run = dry_run
       end
@@ -23,7 +23,11 @@ module ManageIQ
         def execute(command, description = nil)
           description ||= "*** Running `#{command}` ***"
           puts description
-          system(command)
+          system!(command)
+        end
+
+        def system!(*args)
+          exit($?.exitstatus) unless system(*args)
         end
 
         def git_diff_stats(repo)
@@ -42,6 +46,7 @@ module ManageIQ
 
         def with_checked_out_repo(repo, branch)
           repo.fetch
+          # repo.clean
           repo.checkout(branch)
           repo.chdir { yield }
         end
@@ -114,16 +119,14 @@ module ManageIQ
             puts "*** Resetting changes to files other than message catalog ***"
             helper.git_diff_stats(repo).each do |fname, stats|
               next if fname.end_with?(message_catalog_filename)
-              puts "- resetting #{fname}"
-              system("git checkout HEAD -- #{fname}")
+              helper.execute("git checkout HEAD -- #{fname}", "- resetting #{fname}")
             end
           end
         end
 
         def upload_message_catalog
-          puts "Uploading #{message_catalog_filename} to Transifex"
           helper.create_tx_config(tx_config_content)
-          system("tx push --source")
+          helper.execute("tx push --source", "Uploading #{message_catalog_filename} to Transifex")
         end
 
         def update_message_catalog

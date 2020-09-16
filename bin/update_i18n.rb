@@ -11,4 +11,4 @@ opts = Optimist.options do
   opt :dry_run, "",                 :type => :boolean, :default => true
 end
 
-ManageIQ::Release::Internationalization.new(opts.slice(:branch, :dry_run)).update_message_catalogs
+ManageIQ::Release::Internationalization.new(**opts).update_message_catalogs
