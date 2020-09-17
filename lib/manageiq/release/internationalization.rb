@@ -69,26 +69,6 @@ module ManageIQ
           "#{locale_dir}/#{repo_name}.pot"
         end
 
-        def tx_config_content
-          <<~CONTENT
-            [main]
-            host = https://www.transifex.com
-
-            [#{repo_name}.#{repo_name}-#{branch}]
-            file_filter = #{locale_dir}/<lang>/#{repo_name}.po
-            source_file = #{message_catalog_filename}
-            source_lang = en
-            type = PO
-          CONTENT
-        end
-
-        def create_tx_config(tx_config_content)
-          return if File.exist?(".tx/config")
-          puts "*** Creating .tx/config ***"
-          Dir.mkdir(".tx") unless Dir.exist?(".tx")
-          File.write(".tx/config", tx_config_content)
-        end
-
         def with_checked_out_repo(repo, branch)
           repo.fetch
           # repo.clean
@@ -97,8 +77,7 @@ module ManageIQ
         end
 
         def upload_message_catalog
-          create_tx_config(tx_config_content)
-          execute("tx push --source", "Uploading #{message_catalog_filename} to Transifex")
+          execute("tx push --source", "Uploading #{message_catalog_filename} to Transifex") if File.exist?(".tx/config")
         end
 
         def update_message_catalog
