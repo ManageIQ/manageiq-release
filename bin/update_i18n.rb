@@ -8,7 +8,8 @@ require 'optimist'
 
 opts = Optimist.options do
   opt :branch,  "The target branch",:type => :string,  :required => false
-  opt :dry_run, "",                 :type => :boolean, :default => true
+
+  ManageIQ::Release.common_options(self, :only => :dry_run)
 end
 
 ManageIQ::Release::Internationalization.new(**opts).update_message_catalogs
