@@ -19,7 +19,22 @@ module ManageIQ
         end
       end
 
-      class Helper
+      class RepoBase
+        attr_reader :branch, :dry_run
+
+        def initialize(branch: nil, dry_run: true)
+          @branch  = branch || 'master'
+          @dry_run = dry_run
+        end
+
+        def repo
+          @repo ||= Repo.new(github_slug)
+        end
+
+        def github_slug
+          "ManageIQ/#{repo_name}"
+        end
+
         def execute(command, description = nil)
           description ||= "*** Running `#{command}` ***"
           puts description
@@ -37,6 +52,36 @@ module ManageIQ
           end
         end
 
+        def message_catalog_file_git_stats
+          diffs = git_diff_stats(repo)
+          return nil if diffs.length != 1
+          return nil unless diffs.key?(message_catalog_filename)
+          diffs[message_catalog_filename]
+        end
+
+        def message_catalog_file_needs_commit?
+          stats = message_catalog_file_git_stats
+          puts "+#{stats[:insertions]}, -#{stats[:deletions]} for #{message_catalog_filename}" if stats
+          stats
+        end
+
+        def message_catalog_filename
+          "#{locale_dir}/#{repo_name}.pot"
+        end
+
+        def tx_config_content
+          <<~CONTENT
+            [main]
+            host = https://www.transifex.com
+
+            [#{repo_name}.#{repo_name}-#{branch}]
+            file_filter = #{locale_dir}/<lang>/#{repo_name}.po
+            source_file = #{message_catalog_filename}
+            source_lang = en
+            type = PO
+          CONTENT
+        end
+
         def create_tx_config(tx_config_content)
           return if File.exist?(".tx/config")
           puts "*** Creating .tx/config ***"
@@ -50,53 +95,37 @@ module ManageIQ
           repo.checkout(branch)
           repo.chdir { yield }
         end
+
+        def upload_message_catalog
+          create_tx_config(tx_config_content)
+          execute("tx push --source", "Uploading #{message_catalog_filename} to Transifex")
+        end
+
+        def update_message_catalog
+          with_checked_out_repo(repo, branch) do
+            generate_message_catalog
+            upload_message_catalog unless dry_run
+          end
+        end
       end
 
-      class ManageIQ
-        attr_reader :branch, :dry_run, :helper
-
-        def initialize(branch: nil, dry_run: true)
-          @branch  = branch || 'master'
-          @dry_run = dry_run
-          @helper  = Helper.new
+      class ManageIQ < RepoBase
+        def repo_name
+          'manageiq'
         end
 
-        def repo
-          @repo ||= Repo.new('ManageIQ/manageiq')
-        end
-
-        def tx_config_content
-          <<~CONTENT
-            [main]
-            host = https://www.transifex.com
-
-            [manageiq.manageiq-#{branch}]
-            file_filter = locale/<lang>/manageiq.po
-            source_file = #{message_catalog_filename}
-            source_lang = en
-            type = PO
-          CONTENT
-        end
-
-        def message_catalog_filename
-          "locale/manageiq.pot"
+        def locale_dir
+          'locale'
         end
 
         def message_catalog_file_needs_commit?
-          needs_commit = false
-          diffs = helper.git_diff_stats(repo)
-          return false if diffs.length != 1
-          return false unless diffs.key?(message_catalog_filename)
-          stats = diffs[manageiq_message_catalog_filename]
-          puts "+#{stats[:insertions]}, -#{stats[:deletions]} for #{message_catalog_filename}"
+          stats = super
+          return false if stats.nil?
 
           # If the only changes are to POT-Creation-Date and PO-Revision-Date,
           # then there are no substantive changes
           # Hence why this code checks for precisely 2 insertions and deletions
-          needs_commit = (stats[:insertions] != 2) || (stats[:deletions] != 2)
-
-          puts "#{message_catalog_filename} needs commit?: #{needs_commit ? 'YES' : 'NO'}"
-          needs_commit
+          (stats[:insertions] != 2) || (stats[:deletions] != 2)
         end
 
         def create_database_yml
@@ -113,88 +142,30 @@ module ManageIQ
           Bundler.with_clean_env do
             create_database_yml
 
-            helper.execute "RAILS_ENV=i18n SKIP_TEST_RESET=true bin/setup"
-            helper.execute "bundle exec rake locale:update_all"
+            execute "RAILS_ENV=i18n SKIP_TEST_RESET=true bin/setup"
+            execute "bundle exec rake locale:update_all"
 
             puts "*** Resetting changes to files other than message catalog ***"
-            helper.git_diff_stats(repo).each do |fname, stats|
+            git_diff_stats(repo).each do |fname, stats|
               next if fname.end_with?(message_catalog_filename)
-              helper.execute("git checkout HEAD -- #{fname}", "- resetting #{fname}")
+              execute("git checkout HEAD -- #{fname}", "- resetting #{fname}")
             end
-          end
-        end
-
-        def upload_message_catalog
-          helper.create_tx_config(tx_config_content)
-          helper.execute("tx push --source", "Uploading #{message_catalog_filename} to Transifex")
-        end
-
-        def update_message_catalog
-          helper.with_checked_out_repo(repo, branch) do
-            generate_message_catalog
-            upload_message_catalog unless dry_run
           end
         end
       end
 
-      class ManageIQ_ServiceUI
-        attr_reader :branch, :dry_run
-
-        def initialize(branch: nil, dry_run: true)
-          @branch  = branch || 'master'
-          @dry_run = dry_run
+      class ManageIQ_ServiceUI < RepoBase
+        def repo_name
+          'manageiq-ui-service'
         end
 
-        def helper
-          @helper ||= Helper.new
-        end
-
-        def repo
-          @repo ||= Repo.new('ManageIQ/manageiq-ui-service')
-        end
-
-        def tx_config_content
-          <<~CONTENT
-            [main]
-            host = https://www.transifex.com
-
-            [manageiq-service-ui.manageiq-service-ui-#{branch}]
-            file_filter = client/gettext/po/<lang>/manageiq-ui-service.po
-            source_file = #{message_catalog_filename}
-            source_lang = en
-            type = PO
-          CONTENT
-        end
-
-        def message_catalog_filename
-          "client/gettext/po/manageiq-ui-service.pot"
-        end
-
-        def message_catalog_file_needs_commit?
-          diffs = helper.git_diff_stats(repo)
-          return false if diffs.length != 1
-          return false unless diffs.key?(message_catalog_filename)
-          stats = diffs[message_catalog_filename]
-          puts "+#{stats[:insertions]}, -#{stats[:deletions]} for #{message_catalog_filename}"
-          return true
+        def locale_dir
+          'client/gettext/po'
         end
 
         def generate_message_catalog
-          helper.execute "yarn install"
-          helper.execute "yarn gettext:extract"
-        end
-
-        def upload_message_catalog
-          puts "Uploading #{message_catalog_filename} to Transifex"
-          helper.create_tx_config(tx_config_content)
-          system("tx push --source")
-        end
-
-        def update_message_catalog
-          helper.with_checked_out_repo(repo, branch) do
-            generate_message_catalog
-            upload_message_catalog unless dry_run
-          end
+          execute "yarn install"
+          execute "yarn gettext:extract"
         end
       end
     end
