@@ -7,12 +7,14 @@ require 'manageiq/release'
 require 'optimist'
 
 opts = Optimist.options do
-  opt :title,  "The new milestone title.",    :type => :string, :required => true
-  opt :due_on, "The new milestone due date.", :type => :string, :required => true
+  opt :title,  "The milestone title.",            :type => :string, :required => true
+  opt :due_on, "The due date.",                   :type => :string
+  opt :close,  "Whether to close the milestone.", :default => false
 
   ManageIQ::Release.common_options(self)
 end
-Optimist.die(:due_on, "must be a date format") unless ManageIQ::Release::UpdateMilestone.valid_date?(opts[:due_on])
+Optimist.die(:due_on, "is required") unless opts[:close]
+Optimist.die(:due_on, "must be a date format") if opts[:due_on] && !ManageIQ::Release::UpdateMilestone.valid_date?(opts[:due_on])
 
 ManageIQ::Release.each_repo(opts) do |repo|
   ManageIQ::Release::UpdateMilestone.new(repo, opts).run

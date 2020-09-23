@@ -11,12 +11,15 @@ module ManageIQ
         ActiveSupport::TimeZone.new('Pacific Time (US & Canada)').parse(date) # LOL GitHub, TimeZones are hard
       end
 
-      attr_reader :repo, :title, :due_on, :dry_run
+      attr_reader :repo, :title, :due_on, :close, :dry_run
 
-      def initialize(repo, title:, due_on:, dry_run:, **_)
+      def initialize(repo, title:, due_on:, close:, dry_run:, **_)
+        raise ArgumentError, "due_on must be specified" if due_on.nil? && !close
+
         @repo    = repo
         @title   = title
-        @due_on  = self.class.parse_date(due_on)
+        @due_on  = self.class.parse_date(due_on) if due_on
+        @close   = close
         @dry_run = dry_run
       end
 
@@ -24,7 +27,9 @@ module ManageIQ
         return if repo.options.has_real_releases
 
         existing = github.list_milestones(github_repo, :state => :all).detect { |m| m.title.casecmp?(title) }
-        if existing
+        if close
+          close_milestone(existing) if existing
+        elsif existing
           update_milestone(existing)
         else
           create_milestone
@@ -55,6 +60,17 @@ module ManageIQ
           puts "** dry-run: github.create_milestone(#{github_repo.inspect}, #{title.inspect}, :due_on => #{due_on_str.inspect})"
         else
           github.create_milestone(github_repo, title, :due_on => due_on)
+        end
+      end
+
+      def close_milestone(existing)
+        milestone_number = existing.number
+        puts "Closing milestone #{title.inspect} (#{milestone_number})"
+
+        if dry_run
+          puts "** dry-run: github.update_milestone(#{github_repo.inspect}, #{milestone_number}, :state => 'closed')"
+        else
+          github.update_milestone(github_repo, milestone_number, :state => "closed")
         end
       end
 
