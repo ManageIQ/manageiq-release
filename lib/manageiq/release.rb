@@ -15,11 +15,11 @@ require 'manageiq/release/git_mirror'
 require 'manageiq/release/internationalization'
 require 'manageiq/release/pull_request_blaster_outer'
 require 'manageiq/release/release_branch'
-require 'manageiq/release/release_milestone'
 require 'manageiq/release/release_tag'
 require 'manageiq/release/rename_labels'
 require 'manageiq/release/update_branch_protection'
 require 'manageiq/release/update_labels'
+require 'manageiq/release/update_milestone'
 require 'manageiq/release/update_repo_settings'
 
 module ManageIQ

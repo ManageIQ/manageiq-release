@@ -2,7 +2,7 @@ require "active_support/core_ext/time"
 
 module ManageIQ
   module Release
-    class ReleaseMilestone
+    class UpdateMilestone
       def self.valid_date?(date)
         !!parse_date(date)
       end

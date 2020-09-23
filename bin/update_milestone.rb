@@ -12,8 +12,8 @@ opts = Optimist.options do
 
   ManageIQ::Release.common_options(self)
 end
-Optimist.die(:due_on, "must be a date format") unless ManageIQ::Release::ReleaseMilestone.valid_date?(opts[:due_on])
+Optimist.die(:due_on, "must be a date format") unless ManageIQ::Release::UpdateMilestone.valid_date?(opts[:due_on])
 
 ManageIQ::Release.each_repo(opts) do |repo|
-  ManageIQ::Release::ReleaseMilestone.new(repo, opts).run
+  ManageIQ::Release::UpdateMilestone.new(repo, opts).run
 end
