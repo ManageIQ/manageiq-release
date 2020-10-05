@@ -39,6 +39,11 @@ module ManageIQ
         retry
       end
 
+      def clean(output: true)
+        g = output ? git : git.capturing
+        g.clean("-x", "-d", "-f")
+      end
+
       def fetch(output: true)
         if output
           git.fetch(:all => true, :tags => true)

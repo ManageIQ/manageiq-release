@@ -1,0 +1,31 @@
+provider_plugins: &provider_plugins
+  manageiq-providers-amazon:
+  manageiq-providers-ansible_tower:
+  manageiq-providers-azure:
+  manageiq-providers-azure_stack:
+  manageiq-providers-foreman:
+  manageiq-providers-google:
+  manageiq-providers-ibm_cloud:
+  manageiq-providers-ibm_terraform:
+  manageiq-providers-kubernetes:
+  manageiq-providers-kubevirt:
+  manageiq-providers-lenovo:
+  manageiq-providers-nsxt:
+  manageiq-providers-nuage:
+  manageiq-providers-openshift:
+  manageiq-providers-openstack:
+  manageiq-providers-ovirt:
+  manageiq-providers-redfish:
+  manageiq-providers-scvmm:
+  manageiq-providers-vmware:
+plugins:
+  manageiq-api:
+  manageiq-automation_engine:
+  manageiq-consumption:
+  manageiq-content:
+  manageiq-decorators:
+  #manageiq-graphql:
+  manageiq-schema:
+  manageiq-ui-classic:
+  manageiq-v2v:
+  <<: *provider_plugins
