@@ -24,8 +24,10 @@ class ManageIQ::Release::Hacktoberfest
 
   def run
     if apply
+      add_hacktoberfest_topics
       good_first_issues.each { |issue| add_hacktoberfest_label(issue) }
     else
+      remove_hacktoberfest_topics
       hacktoberfest_issues.each { |issue| remove_hacktoberfest_label(issue) }
     end
   end
@@ -68,12 +70,62 @@ class ManageIQ::Release::Hacktoberfest
     end
   end
 
+  def add_hacktoberfest_topics
+    org_repos.each do |repo|
+      add_hacktoberfest_topic(repo)
+    end
+  end
+
+  def remove_hacktoberfest_topics
+    org_repos.each do |repo|
+      remove_hacktoberfest_topic(repo)
+    end
+  end
+
+  def add_hacktoberfest_topic(repo)
+    topic  = "hacktoberfest"
+    topics = topic_names(repo)
+    return if topics.include?(topic)
+
+    puts "Adding #{topic.inspect} topic to repo #{repo}"
+
+    topics << topic
+    if dry_run
+      puts "** dry_run: github.replace_all_topics(#{repo.inspect}, #{topics.inspect})"
+    else
+      github.replace_all_topics(repo, topics, :accept => "application/vnd.github.mercy-preview+json")
+    end
+  end
+
+  def remove_hacktoberfest_topic(repo)
+    topic  = "hacktoberfest"
+    topics = topic_names(repo)
+    return unless topics.include?(topic)
+
+    puts "Removing #{topic.inspect} topic from repo #{repo}"
+
+    topics.delete(topic)
+    if dry_run
+      puts "** dry_run: github.replace_all_topics(#{repo.inspect}, #{topics.inspect})"
+    else
+      github.replace_all_topics(repo, topics, :accept => "application/vnd.github.mercy-preview+json")
+    end
+  end
+
   def issue_id(issue)
     [issue_repo(issue), issue.number]
   end
 
   def issue_repo(issue)
     issue.repository_url.split("/").last(2).join("/")
+  end
+
+  def topic_names(repo)
+    github.topics(repo, :accept => "application/vnd.github.mercy-preview+json")[:names]
+  end
+
+  def org_repos
+    ManageIQ::Release.github_repo_names_for("ManageIQ")
   end
 
   def github
