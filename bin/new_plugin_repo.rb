@@ -10,7 +10,7 @@ opts = Optimist.options do
   ManageIQ::Release.common_options(self, :except => :repo_set)
 end
 
-repo = ManageIQ::Release.repo_for(opts[:repo])
+repo = ManageIQ::Release.repo_for(opts[:repo].first)
 labels = ManageIQ::Release::Labels[repo.github_repo]
 unless repo && labels
   STDERR.puts "ERROR: First update config/repos.yml and config/labels.yml with the new repo"
@@ -25,7 +25,7 @@ puts "\n** Updating Labels"
 ManageIQ::Release::UpdateLabels.new(repo.github_repo, opts).run
 
 puts "\n** Preparing Pull Request"
-ManageIQ::Release::PullRequestBlasterOuter.new(repo, opts).merge(
+ManageIQ::Release::PullRequestBlasterOuter.new(repo, opts.merge(
   :base    => "master",
   :head    => "new_plugin_repo",
   :script  => "scripts/pull_request_blaster_outer/new_plugin_repo.rb",
@@ -37,4 +37,5 @@ puts "******* MANUAL THINGS *******"
 puts "- https://codeclimate.com/github/#{repo.github_repo} => Repo Settings => GitHub => Pull Request Status Updates => Install"
 puts "- https://hakiri.io and follow the new project."
 puts "- https://gitter.im/ManageIQ#createroom and create a new room linked to the repository"
-puts "Add repo to the bot"
+puts "- Add repo to https://github.com/ManageIQ/manageiq-release/blob/master/config/repos.yml"
+puts "- Add repo to the bot"

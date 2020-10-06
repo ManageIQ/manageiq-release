@@ -31,6 +31,7 @@ master:
   manageiq-pods:
   manageiq-providers-amazon:
   manageiq-providers-ansible_tower:
+  manageiq-providers-autosde:
   manageiq-providers-azure:
   manageiq-providers-azure_stack:
   manageiq-providers-foreman:
