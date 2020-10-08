@@ -12,6 +12,7 @@ opts = Optimist.options do
 
   opt :blocker, "List 'blocker' PRs only.",          :type => :boolean, :default => false
   opt :open,    "Open all links in a browser.",      :type => :boolean, :default => false
+  opt :skip,    "The repo(s) to skip.",              :type => :strings
 
   ManageIQ::Release.common_options(self, :except => :dry_run, :repo_set_default => nil)
 end
@@ -19,12 +20,14 @@ end
 branch = opts[:branch]
 EXTRA_LABELS = ["blocker", "bugzilla needed", "#{branch}/conflict"]
 
-repo_query =
-  if opts[:repo] || opts[:repo_set]
-    ManageIQ::Release.repos_for(opts).map { |r| "repo:#{r.github_repo}" }.join(" ")
-  else
-    "org:ManageIQ"
-  end
+repo_query = ""
+if opts[:repo] || opts[:repo_set]
+  repo_query << " " << ManageIQ::Release.repos_for(opts).map { |r| "repo:#{r.github_repo}" }.join(" ")
+end
+if opts[:skip]
+  repo_query << " " << opts[:skip].map { |r| "-repo:#{r}" }.join(" ") << ""
+end
+repo_query = "org:ManageIQ" if repo_query.empty?
 
 query = "#{repo_query} is:merged label:#{branch}/yes"
 query << " label:blocker" if opts[:blocker]
