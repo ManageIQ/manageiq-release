@@ -12,13 +12,33 @@ opts = Optimist.options do
 
   opt :blocker, "List 'blocker' PRs only.",          :type => :boolean, :default => false
   opt :open,    "Open all links in a browser.",      :type => :boolean, :default => false
+  opt :skip,    "The repo(s) to skip.",              :type => :strings
+
+  ManageIQ::Release.common_options(self, :except => :dry_run, :repo_set_default => nil)
 end
 
 branch = opts[:branch]
 EXTRA_LABELS = ["blocker", "bugzilla needed", "#{branch}/conflict"]
 
-query = "user:ManageIQ is:merged label:#{branch}/yes"
+query = ""
+if opts[:repo] || opts[:repo_set]
+  repos = ManageIQ::Release.repos_for(opts)
+  Optimist.die "--repo or --repo-set not found" if repos.nil?
+
+  query << " " << repos.map { |r| "repo:#{r.github_repo}" }.join(" ")
+end
+if opts[:skip]
+  repos = opts[:skip].map { |r| ManageIQ::Release.repo_for(r) }
+
+  query << " " << repos.map { |r| "-repo:#{r.github_repo}" }.join(" ")
+end
+query = "org:ManageIQ" if query.empty?
+
+query << " is:merged label:#{branch}/yes"
 query << " label:blocker" if opts[:blocker]
+
+puts "Querying: #{query}"
+puts
 prs = ManageIQ::Release.github.search_issues(query)["items"]
 
 pr_list = []
@@ -37,6 +57,6 @@ end
 unless pr_list.empty?
   sorted_list = pr_list.sort_by { |v| [ v["Repo"], v["Date"] ] }
   table = sorted_list.tableize(:columns => ["Repo", "PR", "Label"])
-  puts table.tableize
+  puts table
   sorted_list.each { |pr| `open #{pr["Link"]}` } if opts[:open]
 end
