@@ -48,6 +48,6 @@ end
 unless pr_list.empty?
   sorted_list = pr_list.sort_by { |v| [ v["Repo"], v["Date"] ] }
   table = sorted_list.tableize(:columns => ["Repo", "PR", "Label"])
-  puts table.tableize
+  puts table
   sorted_list.each { |pr| `open #{pr["Link"]}` } if opts[:open]
 end
