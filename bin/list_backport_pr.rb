@@ -22,10 +22,15 @@ EXTRA_LABELS = ["blocker", "bugzilla needed", "#{branch}/conflict"]
 
 query = ""
 if opts[:repo] || opts[:repo_set]
-  query << " " << ManageIQ::Release.repos_for(opts).map { |r| "repo:#{r.github_repo}" }.join(" ")
+  repos = ManageIQ::Release.repos_for(opts)
+  Optimist.die "--repo or --repo-set not found" if repos.nil?
+
+  query << " " << repos.map { |r| "repo:#{r.github_repo}" }.join(" ")
 end
 if opts[:skip]
-  query << " " << opts[:skip].map { |r| "-repo:#{r}" }.join(" ") << ""
+  repos = opts[:skip].map { |r| ManageIQ::Release.repo_for(r) }
+
+  query << " " << repos.map { |r| "-repo:#{r.github_repo}" }.join(" ")
 end
 query = "org:ManageIQ" if query.empty?
 
