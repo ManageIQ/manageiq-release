@@ -20,17 +20,18 @@ end
 branch = opts[:branch]
 EXTRA_LABELS = ["blocker", "bugzilla needed", "#{branch}/conflict"]
 
-repo_query = ""
+query = ""
 if opts[:repo] || opts[:repo_set]
-  repo_query << " " << ManageIQ::Release.repos_for(opts).map { |r| "repo:#{r.github_repo}" }.join(" ")
+  query << " " << ManageIQ::Release.repos_for(opts).map { |r| "repo:#{r.github_repo}" }.join(" ")
 end
 if opts[:skip]
-  repo_query << " " << opts[:skip].map { |r| "-repo:#{r}" }.join(" ") << ""
+  query << " " << opts[:skip].map { |r| "-repo:#{r}" }.join(" ") << ""
 end
-repo_query = "org:ManageIQ" if repo_query.empty?
+query = "org:ManageIQ" if query.empty?
 
-query = "#{repo_query} is:merged label:#{branch}/yes"
+query << " is:merged label:#{branch}/yes"
 query << " label:blocker" if opts[:blocker]
+
 puts "Querying: #{query}"
 puts
 prs = ManageIQ::Release.github.search_issues(query)["items"]
