@@ -6,6 +6,7 @@ require 'bundler/setup'
 require 'manageiq/release'
 require 'more_core_extensions/core_ext/array/tableize'
 require 'travis'
+require 'travis/pro/auto_login'
 require 'optimist'
 
 opts = Optimist.options do
@@ -18,7 +19,7 @@ opts[:repo_set] = opts[:ref].split("-").first unless opts[:repo] || opts[:repo_s
 travis_repos = ManageIQ::Release.repos_for(opts).collect do |repo|
   next if repo.options.has_real_releases
 
-  repo = Travis::Repository.find(repo.github_repo)
+  repo = Travis::Pro::Repository.find(repo.github_repo)
   begin
     last_build = repo.last_on_branch(opts[:ref])
   rescue Travis::Client::NotFound
