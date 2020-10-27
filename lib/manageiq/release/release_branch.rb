@@ -42,8 +42,8 @@ module ManageIQ
 
       def edit_readme
         editing_file("README.md") do |contents|
-          contents.gsub!(/(travis-ci\.org.+?branch=)master\b/, "\\1#{branch}")
-          contents.gsub!(/(travis-ci\.org.+?\.svg)\)/, "\\1?branch=#{branch})")
+          contents.gsub!(/(travis-ci\.(?:org|com).+?branch=)master\b/, "\\1#{branch}")
+          contents.gsub!(/(travis-ci\.(?:org|com).+?\.svg)\)/, "\\1?branch=#{branch})")
           contents.gsub!(/(hakiri\.io.+?\/)master\b/, "\\1#{branch}")
           contents.gsub!(/(coveralls\.io.+?branch=)master\b/, "\\1#{branch}")
           contents.gsub!(/(buildstats\.info.+?branch=)master\b/, "\\1#{branch}")

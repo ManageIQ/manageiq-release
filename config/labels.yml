@@ -70,18 +70,25 @@ release: &release
   blocker: "000000"
   "bugzilla needed": "000000"
 
+release_kasparov: &release_kasparov
+  kasparov/yes: "000000"
+  kasparov/yes?: "000000"
+  kasparov/no: "000000"
+  kasparov/backported: "000000"
+  kasparov/conflict: "000000"
+
 release_jansa: &release_jansa
-  jansa/yes: "000000"
-  jansa/yes?: "000000"
-  jansa/no: "000000"
-  jansa/backported: "000000"
-  jansa/conflict: "000000"
+  jansa/yes: "555555"
+  jansa/yes?: "555555"
+  jansa/no: "555555"
+  jansa/backported: "555555"
+  jansa/conflict: "555555"
 
 release_ivanchuk: &release_ivanchuk
-  ivanchuk/yes: "555555"
-  ivanchuk/no: "555555"
-  ivanchuk/backported: "555555"
-  ivanchuk/conflict: "555555"
+  ivanchuk/yes: "dddddd"
+  ivanchuk/no: "dddddd"
+  ivanchuk/backported: "dddddd"
+  ivanchuk/conflict: "dddddd"
 
 release_hammer: &release_hammer
   hammer/yes: "dddddd"
@@ -121,6 +128,7 @@ feature_introduced_in_darga_or_prior: &feature_introduced_in_darga_or_prior
   <<: *release_hammer
   <<: *release_ivanchuk
   <<: *release_jansa
+  <<: *release_kasparov
 
 feature_introduced_in_euwe: &feature_introduced_in_euwe
   <<: *release_euwe
@@ -129,6 +137,7 @@ feature_introduced_in_euwe: &feature_introduced_in_euwe
   <<: *release_hammer
   <<: *release_ivanchuk
   <<: *release_jansa
+  <<: *release_kasparov
 
 feature_introduced_in_fine: &feature_introduced_in_fine
   <<: *release_fine
@@ -136,24 +145,32 @@ feature_introduced_in_fine: &feature_introduced_in_fine
   <<: *release_hammer
   <<: *release_ivanchuk
   <<: *release_jansa
+  <<: *release_kasparov
 
 feature_introduced_in_gaprindashvili: &feature_introduced_in_gaprindashvili
   <<: *release_gaprindashvili
   <<: *release_hammer
   <<: *release_ivanchuk
   <<: *release_jansa
+  <<: *release_kasparov
 
 feature_introduced_in_hammer: &feature_introduced_in_hammer
   <<: *release_hammer
   <<: *release_ivanchuk
   <<: *release_jansa
+  <<: *release_kasparov
 
 feature_introduced_in_ivanchuk: &feature_introduced_in_ivanchuk
   <<: *release_ivanchuk
   <<: *release_jansa
+  <<: *release_kasparov
 
 feature_introduced_in_jansa: &feature_introduced_in_jansa
   <<: *release_jansa
+  <<: *release_kasparov
+
+feature_introduced_in_kasparov: &feature_introduced_in_kasparov
+  <<: *release_kasparov
 
 #
 # Label Assignments
@@ -234,6 +251,11 @@ repos:
     <<: *feature_introduced_in_darga_or_prior
     <<: *provider_plugin
     <<: *release
+  ManageIQ/manageiq-providers-autosde:
+    <<: *common
+    <<: *feature_introduced_in_kasparov
+    <<: *provider_plugin
+    <<: *release
   ManageIQ/manageiq-providers-azure:
     <<: *common
     <<: *feature_introduced_in_darga_or_prior
@@ -256,12 +278,12 @@ repos:
     <<: *release
   ManageIQ/manageiq-providers-ibm_cloud:
     <<: *common
-#    <<: *feature_introduced_in_kasparov
+    <<: *feature_introduced_in_kasparov
     <<: *provider_plugin
     <<: *release
   ManageIQ/manageiq-providers-ibm_terraform:
     <<: *common
-#    <<: *feature_introduced_in_kasparov
+    <<: *feature_introduced_in_kasparov
     <<: *provider_plugin
     <<: *release
   ManageIQ/manageiq-providers-kubernetes:
@@ -281,7 +303,7 @@ repos:
     <<: *release
   ManageIQ/manageiq-providers-nsxt:
     <<: *common
-#    <<: *feature_introduced_in_kasparov
+    <<: *feature_introduced_in_kasparov
     <<: *provider_plugin
     <<: *release
   ManageIQ/manageiq-providers-nuage:
