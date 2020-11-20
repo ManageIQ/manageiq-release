@@ -119,6 +119,7 @@ kasparov:
   manageiq-ui-service:
   manageiq-v2v:
   ui-components:
+    has_real_releases: true
 jansa:
   amazon_ssa_support:
   container-amazon-smartstate:
