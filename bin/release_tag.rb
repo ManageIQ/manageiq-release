@@ -26,7 +26,7 @@ repos = repos.partition { |r| r.github_repo != "ManageIQ/manageiq" }.flatten
 
 repos.each do |repo|
   next if Array(opts[:skip]).include?(repo.name)
-  next if repo.options.has_real_releases
+  next if repo.options.has_real_releases || repo.options.skip_tag
 
   release_tag = ManageIQ::Release::ReleaseTag.new(repo, opts)
 
