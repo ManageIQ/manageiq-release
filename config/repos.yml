@@ -1,6 +1,7 @@
 master:
   amazon_ssa_support:
   container-amazon-smartstate:
+    skip_tag: true
   container-httpd:
     has_real_releases: true
   container-memcached:
@@ -58,10 +59,11 @@ master:
   manageiq-ui-service:
   manageiq-v2v:
   ui-components:
+    skip_tag: true
 kasparov:
   amazon_ssa_support:
   container-amazon-smartstate:
-    has_real_releases: true
+    skip_tag: true
   container-httpd:
     has_real_releases: true
   container-memcached:
@@ -119,10 +121,11 @@ kasparov:
   manageiq-ui-service:
   manageiq-v2v:
   ui-components:
+    skip_tag: true
 jansa:
   amazon_ssa_support:
   container-amazon-smartstate:
-    has_real_releases: true
+    skip_tag: true
   container-httpd:
     has_real_releases: true
   container-memcached:
@@ -176,11 +179,11 @@ jansa:
   manageiq-ui-service:
   manageiq-v2v:
   ui-components:
-    has_real_releases: true
+    skip_tag: true
 ivanchuk:
   amazon_ssa_support:
   container-amazon-smartstate:
-    has_real_releases: true
+    skip_tag: true
   container-httpd:
     has_real_releases: true
   container-memcached:
@@ -234,11 +237,11 @@ ivanchuk:
   manageiq-ui-service:
   manageiq-v2v:
   ui-components:
-    has_real_releases: true
+    skip_tag: true
 hammer:
   amazon_ssa_support:
   container-amazon-smartstate:
-    has_real_releases: true
+    skip_tag: true
   container-httpd:
     has_real_releases: true
   container-memcached:
@@ -290,7 +293,7 @@ hammer:
   manageiq-ui-service:
   manageiq-v2v:
   ui-components:
-    has_real_releases: true
+    skip_tag: true
 gaprindashvili:
   amazon_ssa_support:
   container-httpd:
@@ -340,7 +343,7 @@ gaprindashvili:
   manageiq-ui-service:
   manageiq-v2v:
   ui-components:
-    has_real_releases: true
+    skip_tag: true
 fine:
   manageiq:
     has_rake_release: true
