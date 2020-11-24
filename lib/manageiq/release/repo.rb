@@ -102,7 +102,9 @@ module ManageIQ
 
       def git_clone
         clone_source = options.clone_source || "git@github.com:#{github_repo}.git"
-        exit($CHILD_STATUS.exitstatus) unless system("git clone #{clone_source} #{path}")
+        args = ["clone", clone_source, path]
+        puts "+ git #{args.join(" ")}" if ENV["GIT_DEBUG"]
+        raise MiniGit::GitError.new(args, $?) unless system("git #{args.join(" ")}")
       end
     end
   end
