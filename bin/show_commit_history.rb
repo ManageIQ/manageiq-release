@@ -12,6 +12,7 @@ opts = Optimist.options do
   opt :from,    "The commit log 'from' ref", :type => :string,  :required => true
   opt :to,      "The commit log 'to' ref" ,  :type => :string,  :required => true
   opt :display, "How to display the history. Valid values are: #{DISPLAY_FORMATS.join(", ")}", :default => "commit"
+  opt :summary, "Display a summary of the repos.", :default => false
 
   opt :skip,   "The repos to skip", :default => ["manageiq-documentation"]
 
@@ -23,6 +24,8 @@ range = "#{opts[:from]}..#{opts[:to]}"
 github = ManageIQ::Release.github
 
 puts "Git commit log between #{opts[:from]} and #{opts[:to]}\n\n"
+
+repos_with_changes = []
 
 ManageIQ::Release.repos_for(opts).each do |repo|
   next if repo.options.has_real_releases
@@ -51,17 +54,31 @@ ManageIQ::Release.repos_for(opts).each do |repo|
       results[label] << pr
     end
 
+    changes_found = false
+
     results.each do |label, prs|
       next if prs.blank?
+      changes_found = true
 
       puts "\n## #{label.titleize}\n\n" if pr_label_display
       prs.each do |pr|
         puts "* #{pr.title} [[##{pr.number}]](#{pr.html_url})"
       end
     end
-  when "commit"
-    repo.git.git([{:no_pager => true}, :log, {:oneline => true, :decorate => true, :graph => true}], range)
-  end
 
+    repos_with_changes << repo if changes_found
+  when "commit"
+    output = repo.git.capturing.log({:oneline => true, :decorate => true, :graph => true}, range)
+    puts output
+    repos_with_changes << repo if output.present?
+  end
+end
+
+if opts[:summary] && repos_with_changes.any?
+  puts
+  puts "Here are the changes per affected repository in GitHub:"
+  repos_with_changes.each do |repo|
+    puts "* [#{repo.name}](https://github.com/#{repo.github_repo}/compare/#{opts[:from]}...#{opts[:to]})"
+  end
   puts
 end
