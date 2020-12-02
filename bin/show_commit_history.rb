@@ -21,14 +21,13 @@ end
 Optimist.die :display, "must be one of: #{DISPLAY_FORMATS.join(", ")}" unless DISPLAY_FORMATS.include?(opts[:display])
 
 range = "#{opts[:from]}..#{opts[:to]}"
-github = ManageIQ::Release.github
 
 puts "Git commit log between #{opts[:from]} and #{opts[:to]}\n\n"
 
 repos_with_changes = []
 
 ManageIQ::Release.repos_for(opts).each do |repo|
-  next if repo.options.has_real_releases
+  next if repo.options.has_real_releases || repo.options.skip_tag
   next if opts[:skip].include?(repo.name)
 
   puts ManageIQ::Release.header(repo.name)
@@ -36,6 +35,7 @@ ManageIQ::Release.repos_for(opts).each do |repo|
 
   case opts[:display]
   when "pr-label", "pr-title"
+    github ||= ManageIQ::Release.github
     pr_label_display = opts[:display] == "pr-label"
 
     results = {}
@@ -72,6 +72,7 @@ ManageIQ::Release.repos_for(opts).each do |repo|
     puts output
     repos_with_changes << repo if output.present?
   end
+  puts
 end
 
 if opts[:summary] && repos_with_changes.any?
