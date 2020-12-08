@@ -24,7 +24,7 @@ range = "#{opts[:from]}..#{opts[:to]}"
 
 puts "Git commit log between #{opts[:from]} and #{opts[:to]}\n\n"
 
-repos_with_changes = []
+repos_with_changes = {}
 
 ManageIQ::Release.repos_for(opts).each do |repo|
   next if repo.options.has_real_releases || repo.options.skip_tag
@@ -32,6 +32,16 @@ ManageIQ::Release.repos_for(opts).each do |repo|
 
   puts ManageIQ::Release.header(repo.name)
   repo.fetch(output: false)
+
+  begin
+    from = opts[:from]
+    from = repo.git.capturing.merge_base(*opts[:from].split(" ")[1..-1]).chomp if from.start_with?("merge-base")
+    to   = opts[:to]
+    to   = repo.git.capturing.merge_base(*opts[:to].split(" ")[1..-1]).chomp if to.start_with?("merge-base")
+    range = "#{from}..#{to}"
+  rescue MiniGit::GitError
+    next
+  end
 
   case opts[:display]
   when "pr-label", "pr-title"
@@ -66,11 +76,11 @@ ManageIQ::Release.repos_for(opts).each do |repo|
       end
     end
 
-    repos_with_changes << repo if changes_found
+    repos_with_changes[repo.name] = [repo, from, to] if changes_found
   when "commit"
     output = repo.git.capturing.log({:oneline => true, :decorate => true, :graph => true}, range)
     puts output
-    repos_with_changes << repo if output.present?
+    repos_with_changes[repo.name] = [repo, from, to] if output.present?
   end
   puts
 end
@@ -78,8 +88,8 @@ end
 if opts[:summary] && repos_with_changes.any?
   puts
   puts "Here are the changes per affected repository in GitHub:"
-  repos_with_changes.each do |repo|
-    puts "* [#{repo.name}](https://github.com/#{repo.github_repo}/compare/#{opts[:from]}...#{opts[:to]})"
+  repos_with_changes.each do |name, (repo, from, to)|
+    puts "* [#{name}](https://github.com/#{repo.github_repo}/compare/#{from}...#{to})"
   end
   puts
 end
