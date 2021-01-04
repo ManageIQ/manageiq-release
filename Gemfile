@@ -8,6 +8,7 @@ gem "aws-sdk-s3",           :require => false
 gem "builder",              :require => false
 gem "config",               :require => false
 gem "licensee",             :require => false
+gem "manageiq-style",       :require => false
 gem "minigit",              :require => false
 gem "more_core_extensions", :require => false
 gem "octokit", ">=4.7.0",   :require => false
