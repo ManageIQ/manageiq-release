@@ -10,4 +10,5 @@ topological-stable:
   RedHatInsights/topological_inventory-persister:
   RedHatInsights/topological_inventory-providers-common:
   RedHatInsights/topological_inventory-satellite:
+  RedHatInsights/topological_inventory-scheduler:
   RedHatInsights/topological_inventory-sync:
