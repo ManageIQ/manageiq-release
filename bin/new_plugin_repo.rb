@@ -23,6 +23,8 @@ puts "\n** Updating Branch Protection"
 ManageIQ::Release::UpdateBranchProtection.new(repo.github_repo, opts.merge(:branch => "master")).run
 puts "\n** Updating Labels"
 ManageIQ::Release::UpdateLabels.new(repo.github_repo, opts).run
+puts "\n** Updating Travis Settings"
+ManageIQ::Release::UpdateTravisSettings.new(repo.github_repo, opts.merge(:branch => "master")).run
 
 puts "\n** Preparing Pull Request"
 ManageIQ::Release::PullRequestBlasterOuter.new(repo, opts.merge(

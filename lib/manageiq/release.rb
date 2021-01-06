@@ -21,6 +21,7 @@ require 'manageiq/release/update_branch_protection'
 require 'manageiq/release/update_labels'
 require 'manageiq/release/update_milestone'
 require 'manageiq/release/update_repo_settings'
+require 'manageiq/release/update_travis_settings'
 
 module ManageIQ
   module Release
@@ -121,6 +122,14 @@ module ManageIQ
       @github_api_token = token
     end
 
+    def self.travis_api_token
+      @travis_api_token ||= ENV["TRAVIS_API_TOKEN"]
+    end
+
+    def self.travis_api_token=(token)
+      @travis_api_token = token
+    end
+
     #
     # Services
     #
@@ -142,6 +151,18 @@ module ManageIQ
         .list_repositories(org, :type => "sources")
         .reject { |r| r.fork? || r.archived? }
         .map { |r| "#{org}/#{r.name}" }
+    end
+
+    def self.travis
+      @travis ||= begin
+        raise "Missing Travis API Token" if travis_api_token.nil?
+
+        require 'travis/client'
+        ::Travis::Client.new(
+          :uri           => ::Travis::Client::COM_URI,
+          :access_token  => travis_api_token
+        )
+      end
     end
   end
 end
