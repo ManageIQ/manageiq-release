@@ -10,9 +10,10 @@ require 'optimist'
 opts = Optimist.options do
   opt :branch,  "The target branch to backport to.", :type => :string,  :required => true
 
-  opt :blocker, "List 'blocker' PRs only.",          :type => :boolean, :default => false
-  opt :open,    "Open all links in a browser.",      :type => :boolean, :default => false
-  opt :skip,    "The repo(s) to skip.",              :type => :strings
+  opt :blocker,  "List 'blocker' PRs only.",       :type => :boolean, :default => false
+  opt :open,     "Open all links in a browser.",   :type => :boolean, :default => false
+  opt :proposed, "List yes? PRs instead",          :type => :boolean, :default => false
+  opt :skip,     "The repo(s) to skip.",           :type => :strings
 
   ManageIQ::Release.common_options(self, :except => :dry_run, :repo_set_default => nil)
 end
@@ -34,7 +35,8 @@ if opts[:skip]
 end
 query = "org:ManageIQ" if query.empty?
 
-query << " is:merged label:#{branch}/yes"
+yes_label = opts[:proposed] ? "yes?" : "yes"
+query << " is:merged label:#{branch}/#{yes_label}"
 query << " label:blocker" if opts[:blocker]
 
 puts "Querying: #{query}"
