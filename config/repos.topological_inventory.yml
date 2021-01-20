@@ -4,6 +4,7 @@ topological-stable:
   RedHatInsights/topological_inventory-api:
   RedHatInsights/topological_inventory-azure:
   RedHatInsights/topological_inventory-core:
+  RedHatInsights/topological_inventory-google:
   RedHatInsights/topological_inventory-ingress_api:
   RedHatInsights/topological_inventory-openshift:
   RedHatInsights/topological_inventory-orchestrator:
