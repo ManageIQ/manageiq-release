@@ -2,7 +2,6 @@
 core: &core
   manageiq:
   manageiq-api:
-  manageiq-ui-classic:
   manageiq-automation_engine:
   manageiq-consumption:
   manageiq-content:
@@ -10,6 +9,7 @@ core: &core
   manageiq-gems-pending:
   manageiq-graphql:
   manageiq-schema:
+  manageiq-ui-classic:
   manageiq-ui-service:
   manageiq-v2v:
 providers: &providers
