@@ -37,6 +37,7 @@ gems:
   pg-pglogical:
   query_relation:
   vmware_web_service:
+  wim_parser:
 applications:
   dbus_api_service:
   miq_bot:

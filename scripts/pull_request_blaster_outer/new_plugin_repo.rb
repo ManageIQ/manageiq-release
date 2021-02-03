@@ -28,9 +28,17 @@ puts "\n** Updating README.md for CodeClimate badges..."
 b = readme.badges.detect do |b|
   b["description"] == ManageIQ::Release::CodeClimate.badge_name || b["description"] == "Code Climate"
 end
-b.update(code_climate.badge_details)
+if b
+  b.update(code_climate.badge_details)
+else
+  readme.badges << code_climate.badge_details
+end
 b = readme.badges.detect { |b| b["description"] == ManageIQ::Release::CodeClimate.coverage_badge_name }
-b.update(code_climate.coverage_badge_details)
+if b
+  b.update(code_climate.coverage_badge_details)
+else
+  readme.badges << code_climate.coverage_badge_details
+end
 readme.save!
 
 puts "\n** Sending Pull Request..."
