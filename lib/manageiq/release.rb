@@ -138,11 +138,14 @@ module ManageIQ
       @github ||= begin
         raise "Missing GitHub API Token" if github_api_token.nil?
 
-        require 'octokit'
-        Octokit::Client.new(
+        params = {
           :access_token  => github_api_token,
           :auto_paginate => true
-        )
+        }
+        params[:api_endpoint] = ENV["GITHUB_API_ENDPOINT"] if ENV["GITHUB_API_ENDPOINT"]
+
+        require 'octokit'
+        Octokit::Client.new(params)
       end
     end
 
