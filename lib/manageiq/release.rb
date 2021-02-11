@@ -66,20 +66,20 @@ module ManageIQ
       subset = Array(only).map(&:to_sym) - Array(except).map(&:to_sym)
 
       if subset.include?(:repo_set)
-        optimist.opt :repo_set, "The repo set to work with.", :type => :string, :default => repo_set_default, :short => "s"
+        optimist.opt :repo_set, "The repo set to work with", :type => :string, :default => repo_set_default, :short => "s"
       end
       if subset.include?(:repo)
-        msg = "Individual repo(s) to work with."
+        msg = "Individual repo(s) to work with"
         if subset.include?(:repo_set)
           sub_opts = {}
-          msg << " Overrides --repo-set."
+          msg << "; Overrides --repo-set"
         else
           sub_opts = {:required => true}
         end
         optimist.opt :repo, msg, sub_opts.merge(:type => :strings)
       end
       if subset.include?(:dry_run)
-        optimist.opt :dry_run, "Execute without making changes.", :default => false
+        optimist.opt :dry_run, "Execute without making changes", :default => false
       end
     end
 
