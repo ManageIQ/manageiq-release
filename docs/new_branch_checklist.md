@@ -123,7 +123,7 @@
 
 ### Build
 
-- [ ] Create a build machine for the new branch
+- [X] Create a build machine for the new branch
 - [ ] Create a yum repository for the next branch for master nightlies
 
 - [ ] Update docker hub autobuilds for manageiq-rpm_build container and container-amazon-smartstate
