@@ -74,19 +74,26 @@ release: &release
   blocker: "000000"
   "bugzilla needed": "000000"
 
+release_lasker: &release_lasker
+  lasker/yes: "000000"
+  lasker/yes?: "000000"
+  lasker/no: "000000"
+  lasker/backported: "000000"
+  lasker/conflict: "000000"
+
 release_kasparov: &release_kasparov
-  kasparov/yes: "000000"
-  kasparov/yes?: "000000"
-  kasparov/no: "000000"
-  kasparov/backported: "000000"
-  kasparov/conflict: "000000"
+  kasparov/yes: "555555"
+  kasparov/yes?: "555555"
+  kasparov/no: "555555"
+  kasparov/backported: "555555"
+  kasparov/conflict: "555555"
 
 release_jansa: &release_jansa
-  jansa/yes: "555555"
-  jansa/yes?: "555555"
-  jansa/no: "555555"
-  jansa/backported: "555555"
-  jansa/conflict: "555555"
+  jansa/yes: "dddddd"
+  jansa/yes?: "dddddd"
+  jansa/no: "dddddd"
+  jansa/backported: "dddddd"
+  jansa/conflict: "dddddd"
 
 release_ivanchuk: &release_ivanchuk
   ivanchuk/yes: "dddddd"
@@ -133,6 +140,7 @@ feature_introduced_in_darga_or_prior: &feature_introduced_in_darga_or_prior
   <<: *release_ivanchuk
   <<: *release_jansa
   <<: *release_kasparov
+  <<: *release_lasker
 
 feature_introduced_in_euwe: &feature_introduced_in_euwe
   <<: *release_euwe
@@ -142,6 +150,7 @@ feature_introduced_in_euwe: &feature_introduced_in_euwe
   <<: *release_ivanchuk
   <<: *release_jansa
   <<: *release_kasparov
+  <<: *release_lasker
 
 feature_introduced_in_fine: &feature_introduced_in_fine
   <<: *release_fine
@@ -150,6 +159,7 @@ feature_introduced_in_fine: &feature_introduced_in_fine
   <<: *release_ivanchuk
   <<: *release_jansa
   <<: *release_kasparov
+  <<: *release_lasker
 
 feature_introduced_in_gaprindashvili: &feature_introduced_in_gaprindashvili
   <<: *release_gaprindashvili
@@ -157,24 +167,32 @@ feature_introduced_in_gaprindashvili: &feature_introduced_in_gaprindashvili
   <<: *release_ivanchuk
   <<: *release_jansa
   <<: *release_kasparov
+  <<: *release_lasker
 
 feature_introduced_in_hammer: &feature_introduced_in_hammer
   <<: *release_hammer
   <<: *release_ivanchuk
   <<: *release_jansa
   <<: *release_kasparov
+  <<: *release_lasker
 
 feature_introduced_in_ivanchuk: &feature_introduced_in_ivanchuk
   <<: *release_ivanchuk
   <<: *release_jansa
   <<: *release_kasparov
+  <<: *release_lasker
 
 feature_introduced_in_jansa: &feature_introduced_in_jansa
   <<: *release_jansa
   <<: *release_kasparov
+  <<: *release_lasker
 
 feature_introduced_in_kasparov: &feature_introduced_in_kasparov
   <<: *release_kasparov
+  <<: *release_lasker
+
+feature_introduced_in_lasker: &feature_introduced_in_lasker
+  <<: *release_lasker
 
 #
 # Label Assignments
