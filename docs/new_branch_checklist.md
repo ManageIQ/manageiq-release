@@ -75,6 +75,8 @@
      - [X] Ensure config/options.yml rpm.version is `<branch#>.0.0`
      - [X] Commit and push the changes
    - [X] In `manageiq-rpm_build@master`
+     - [X] Build the manageiq-release RPM and upload it to the builds directory
+     - [X] Initial build of the RPM repo including the manageiq-release gem and other general dependencies
      - [X] Update Dockerfile
        - `<branch#>-<branch>` to `<nextbranch#>-<nextbranch>`
        - `manageiq-release-<branch#>` to `manageiq-release-<nextbranch#>`
