@@ -29,6 +29,7 @@ providers: &providers
   manageiq-providers-nuage:
   manageiq-providers-openshift:
   manageiq-providers-openstack:
+  manageiq-providers-oracle_cloud:
   manageiq-providers-ovirt:
   manageiq-providers-redfish:
   manageiq-providers-scvmm:
