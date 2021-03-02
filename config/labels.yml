@@ -343,6 +343,10 @@ repos:
     <<: *feature_introduced_in_darga_or_prior
     <<: *provider_plugin
     <<: *release
+  ManageIQ/manageiq-providers-oracle_cloud:
+    <<: *common
+    <<: *provider_plugin
+    <<: *release
   ManageIQ/manageiq-providers-ovirt:
     <<: *common
     <<: *feature_introduced_in_darga_or_prior
