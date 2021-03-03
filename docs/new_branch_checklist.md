@@ -146,3 +146,8 @@
 - [ ] ensure that httpd_configmap_generator is locked down to a specific version of httpd_configmap_generator
 
 - [ ] should we remove unused Ruby versions from .travis.yml on new branch?
+
+#### Downstream
+
+- [ ] Update options.yml with new branch and version
+- [ ] Update Gemfile overrides with the new branch
