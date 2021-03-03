@@ -94,6 +94,7 @@
      - [X] Update rpm_spec/changelog
        - Update `%changelog`
      - [X] Commit and push the changes
+     - [X] Build and push the new rpm_build container to dockerhub
    - [X] In `amazon_ssa_support@<branch>`
      - [X] Update Gemfile to change the ref for manageiq-gems-pending
      - [X] Commit and push the changes
