@@ -111,7 +111,8 @@
      - `bin/update_branch_protection.rb -b <branch>`
    - [ ] Update miq-bot
      - [ ] Add the new branch to each watched repo
-     - [ ] Update the unassignable and unremovable labels for the new branch
+     - [X] Update the unassignable and unremovable labels for the new branch
+   - [X] Update triage links in https://github.com/ManageIQ/guides/blob/master/bin/triage.yml
 
 6. Prepare for the next branch
 
