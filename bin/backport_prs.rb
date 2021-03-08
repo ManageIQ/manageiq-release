@@ -24,9 +24,25 @@ end
 
 repos = repos.index_by(&:github_repo)
 
-ManageIQ::Release::BackportPrs.search(branch, repos.keys).each do |github_repo, prs|
+conflicts = ManageIQ::Release::BackportPrs.search(repos.keys, "#{branch}/conflict")
+backports = ManageIQ::Release::BackportPrs.search(repos.keys, "#{branch}/yes")
+all_repos = (conflicts.keys | backports.keys).sort
+
+all_repos.each do |github_repo|
   puts ManageIQ::Release.header(github_repo)
 
+  if conflicts.include?(github_repo)
+    ManageIQ::Release::StringFormatting.enable
+    puts "A conflict label still exists on the following PRs.  Skipping.".red
+    puts
+    conflicts[github_repo].each do |pr|
+      puts "** #{github_repo}##{pr.number}".red
+    end
+    puts
+    next
+  end
+
   repo = repos[github_repo]
+  prs  = backports[github_repo]
   ManageIQ::Release::BackportPrs.new(repo, opts.merge(:prs => prs)).run
 end
