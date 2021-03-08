@@ -13,6 +13,7 @@ opts = Optimist.options do
   opt :blocker,  "List 'blocker' PRs only.",       :type => :boolean, :default => false
   opt :open,     "Open all links in a browser.",   :type => :boolean, :default => false
   opt :proposed, "List yes? PRs instead",          :type => :boolean, :default => false
+  opt :conflict, "List conflict PRs instead",      :type => :boolean, :default => false
   opt :skip,     "The repo(s) to skip.",           :type => :strings
 
   ManageIQ::Release.common_options(self, :except => :dry_run, :repo_set_default => nil)
@@ -35,8 +36,15 @@ if opts[:skip]
 end
 query = "org:ManageIQ" if query.empty?
 
-yes_label = opts[:proposed] ? "yes?" : "yes"
-query << " is:merged label:#{branch}/#{yes_label}"
+sublabel =
+  if opts[:conflict]
+    "conflict"
+  elsif opts[:proposed]
+    "yes?"
+  else
+    "yes"
+  end
+query << " is:merged label:#{branch}/#{sublabel}"
 query << " label:blocker" if opts[:blocker]
 
 puts "Querying: #{query}"
