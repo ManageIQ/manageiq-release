@@ -10,6 +10,8 @@ require 'manageiq/release/license'
 require 'manageiq/release/readme_badges'
 require 'manageiq/release/travis'
 
+require 'manageiq/release/string_formatting'
+
 require 'manageiq/release/destroy_tag'
 require 'manageiq/release/git_mirror'
 require 'manageiq/release/internationalization'
