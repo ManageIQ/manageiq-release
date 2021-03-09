@@ -1,9 +1,12 @@
 module ManageIQ
   module Release
     class BackportPrs
-      def self.search(repo_names, backport_label)
-        query = repo_names.map { |r| "repo:#{r}" }.join(" ")
-        query << " is:merged label:#{backport_label}"
+      def self.search(repo_names, backport_labels)
+        query = "is:merged "
+        query << repo_names.map { |r| "repo:#{r}" }.join(" ")
+        Array(backport_labels).each do |l|
+          query << " label:#{l}"
+        end
 
         ManageIQ::Release
           .github
