@@ -13,7 +13,7 @@ opts = Optimist.options do
 
   banner ""
   banner "Commands:"
-  opt :list, "List PRs for the specified labels and exit.", :type => :string
+  opt :list, "List PRs for the specified labels and exit.", :type => :strings
 
   ManageIQ::Release.common_options(self, :repo_set_default => nil)
 end
@@ -28,7 +28,7 @@ end
 repos = repos.index_by(&:github_repo)
 
 def list_prs(branch, repos, opts)
-  labels  = opts[:list].split(",").map(&:strip).map { |l| l.start_with?(branch) ? l : "#{branch}/#{l}" }
+  labels  = opts[:list].map { |l| l.start_with?(branch) ? l : "#{branch}/#{l}" }
   all_prs = ManageIQ::Release::BackportPrs.search(repos.keys, labels)
 
   table = all_prs.flat_map do |_github_repo, prs|
