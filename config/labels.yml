@@ -37,8 +37,8 @@ common: &common
   wontfix: "eeeeee"
 
 semver: &semver
-  "needs major version": "6a92bc"
-  "needs minor version": "6a92bc"
+  "semver/major": "6a92bc"
+  "semver/minor": "6a92bc"
 
 provider_plugin: &provider_plugin
   events: "5319e7"
