@@ -80,7 +80,6 @@ module ManageIQ
             in order to resolve this.
           BODY
 
-          remove_label(pr_number, "#{branch}/yes")
           add_label(pr_number, "#{branch}/conflict")
 
           false
