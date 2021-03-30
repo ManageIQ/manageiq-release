@@ -107,92 +107,24 @@ release_hammer: &release_hammer
   hammer/backported: "dddddd"
   hammer/conflict: "dddddd"
 
-release_gaprindashvili: &release_gaprindashvili
-  gaprindashvili/yes: "dddddd"
-  gaprindashvili/no: "dddddd"
-  gaprindashvili/backported: "dddddd"
-  gaprindashvili/conflict: "dddddd"
+repo_introduced_in_lasker: &repo_introduced_in_lasker
+  <<: *release_lasker
 
-release_fine: &release_fine
-  fine/yes: "dddddd"
-  fine/no: "dddddd"
-  fine/backported: "dddddd"
-  fine/conflict: "dddddd"
+repo_introduced_in_kasparov: &repo_introduced_in_kasparov
+  <<: *release_kasparov
+  <<: *repo_introduced_in_lasker
 
-release_euwe: &release_euwe
-  euwe/yes: "dddddd"
-  euwe/no: "dddddd"
-  euwe/backported: "dddddd"
-  euwe/conflict: "dddddd"
+repo_introduced_in_jansa: &repo_introduced_in_jansa
+  <<: *release_jansa
+  <<: *repo_introduced_in_kasparov
 
-release_darga: &release_darga
-  darga/yes: "dddddd"
-  darga/no: "dddddd"
-  darga/backported: "dddddd"
-  darga/conflict: "dddddd"
+repo_introduced_in_ivanchuk: &repo_introduced_in_ivanchuk
+  <<: *release_ivanchuk
+  <<: *repo_introduced_in_jansa
 
-feature_introduced_in_darga_or_prior: &feature_introduced_in_darga_or_prior
-  <<: *release_darga
-  <<: *release_euwe
-  <<: *release_fine
-  <<: *release_gaprindashvili
+repo_introduced_in_hammer_or_prior: &repo_introduced_in_hammer_or_prior
   <<: *release_hammer
-  <<: *release_ivanchuk
-  <<: *release_jansa
-  <<: *release_kasparov
-  <<: *release_lasker
-
-feature_introduced_in_euwe: &feature_introduced_in_euwe
-  <<: *release_euwe
-  <<: *release_fine
-  <<: *release_gaprindashvili
-  <<: *release_hammer
-  <<: *release_ivanchuk
-  <<: *release_jansa
-  <<: *release_kasparov
-  <<: *release_lasker
-
-feature_introduced_in_fine: &feature_introduced_in_fine
-  <<: *release_fine
-  <<: *release_gaprindashvili
-  <<: *release_hammer
-  <<: *release_ivanchuk
-  <<: *release_jansa
-  <<: *release_kasparov
-  <<: *release_lasker
-
-feature_introduced_in_gaprindashvili: &feature_introduced_in_gaprindashvili
-  <<: *release_gaprindashvili
-  <<: *release_hammer
-  <<: *release_ivanchuk
-  <<: *release_jansa
-  <<: *release_kasparov
-  <<: *release_lasker
-
-feature_introduced_in_hammer: &feature_introduced_in_hammer
-  <<: *release_hammer
-  <<: *release_ivanchuk
-  <<: *release_jansa
-  <<: *release_kasparov
-  <<: *release_lasker
-
-feature_introduced_in_ivanchuk: &feature_introduced_in_ivanchuk
-  <<: *release_ivanchuk
-  <<: *release_jansa
-  <<: *release_kasparov
-  <<: *release_lasker
-
-feature_introduced_in_jansa: &feature_introduced_in_jansa
-  <<: *release_jansa
-  <<: *release_kasparov
-  <<: *release_lasker
-
-feature_introduced_in_kasparov: &feature_introduced_in_kasparov
-  <<: *release_kasparov
-  <<: *release_lasker
-
-feature_introduced_in_lasker: &feature_introduced_in_lasker
-  <<: *release_lasker
+  <<: *repo_introduced_in_ivanchuk
 
 #
 # Label Assignments
@@ -211,136 +143,136 @@ orgs:
 repos:
   ManageIQ/container-amazon-smartstate:
     <<: *common
-    <<: *feature_introduced_in_hammer
+    <<: *repo_introduced_in_hammer_or_prior
     <<: *release
   ManageIQ/manageiq:
     <<: *common
-    <<: *feature_introduced_in_darga_or_prior
+    <<: *repo_introduced_in_hammer_or_prior
     <<: *provider_types
     <<: *release
     <<: *v2v
   ManageIQ/manageiq-api:
     <<: *common
-    <<: *feature_introduced_in_darga_or_prior
+    <<: *repo_introduced_in_hammer_or_prior
     <<: *provider_types
     <<: *release
     <<: *semver
   ManageIQ/manageiq-appliance:
     <<: *common
-    <<: *feature_introduced_in_darga_or_prior
+    <<: *repo_introduced_in_hammer_or_prior
     <<: *release
   ManageIQ/manageiq-appliance-build:
     <<: *common
-    <<: *feature_introduced_in_darga_or_prior
+    <<: *repo_introduced_in_hammer_or_prior
     <<: *release
   ManageIQ/manageiq-automation_engine:
     <<: *common
-    <<: *feature_introduced_in_darga_or_prior
+    <<: *repo_introduced_in_hammer_or_prior
     <<: *release
     <<: *v2v
   ManageIQ/manageiq-consumption:
     <<: *common
-    <<: *feature_introduced_in_gaprindashvili
+    <<: *repo_introduced_in_hammer_or_prior
     <<: *release
   ManageIQ/manageiq-content:
     <<: *common
-    <<: *feature_introduced_in_darga_or_prior
+    <<: *repo_introduced_in_hammer_or_prior
     <<: *provider_types
     <<: *release
     <<: *v2v
   ManageIQ/manageiq-documentation:
-    <<: *feature_introduced_in_darga_or_prior
+    <<: *repo_introduced_in_hammer_or_prior
     <<: *release
   ManageIQ/manageiq-gems-pending:
     <<: *common
-    <<: *feature_introduced_in_darga_or_prior
+    <<: *repo_introduced_in_hammer_or_prior
     <<: *release
   ManageIQ/manageiq-graphql:
     <<: *common
-    <<: *feature_introduced_in_hammer
+    <<: *repo_introduced_in_hammer_or_prior
     <<: *release
   ManageIQ/manageiq-pods:
     <<: *common
-    <<: *feature_introduced_in_fine
+    <<: *repo_introduced_in_hammer_or_prior
     <<: *release
   ManageIQ/manageiq-providers-amazon:
     <<: *common
-    <<: *feature_introduced_in_darga_or_prior
+    <<: *repo_introduced_in_hammer_or_prior
     <<: *provider_plugin
     <<: *release
   ManageIQ/manageiq-providers-ansible_tower:
     <<: *common
-    <<: *feature_introduced_in_darga_or_prior
+    <<: *repo_introduced_in_hammer_or_prior
     <<: *provider_plugin
     <<: *release
   ManageIQ/manageiq-providers-autosde:
     <<: *common
-    <<: *feature_introduced_in_kasparov
+    <<: *repo_introduced_in_kasparov
     <<: *provider_plugin
     <<: *release
   ManageIQ/manageiq-providers-azure:
     <<: *common
-    <<: *feature_introduced_in_darga_or_prior
+    <<: *repo_introduced_in_hammer_or_prior
     <<: *provider_plugin
     <<: *release
   ManageIQ/manageiq-providers-azure_stack:
     <<: *common
-    <<: *feature_introduced_in_ivanchuk
+    <<: *repo_introduced_in_ivanchuk
     <<: *provider_plugin
     <<: *release
   ManageIQ/manageiq-providers-foreman:
     <<: *common
-    <<: *feature_introduced_in_darga_or_prior
+    <<: *repo_introduced_in_hammer_or_prior
     <<: *provider_plugin
     <<: *release
   ManageIQ/manageiq-providers-google:
     <<: *common
-    <<: *feature_introduced_in_darga_or_prior
+    <<: *repo_introduced_in_hammer_or_prior
     <<: *provider_plugin
     <<: *release
   ManageIQ/manageiq-providers-ibm_cloud:
     <<: *common
-    <<: *feature_introduced_in_kasparov
+    <<: *repo_introduced_in_kasparov
     <<: *provider_plugin
     <<: *release
   ManageIQ/manageiq-providers-ibm_terraform:
     <<: *common
-    <<: *feature_introduced_in_kasparov
+    <<: *repo_introduced_in_kasparov
     <<: *provider_plugin
     <<: *release
   ManageIQ/manageiq-providers-kubernetes:
     <<: *common
-    <<: *feature_introduced_in_darga_or_prior
+    <<: *repo_introduced_in_hammer_or_prior
     <<: *provider_plugin
     <<: *release
   ManageIQ/manageiq-providers-kubevirt:
     <<: *common
-    <<: *feature_introduced_in_hammer
+    <<: *repo_introduced_in_hammer_or_prior
     <<: *provider_plugin
     <<: *release
   ManageIQ/manageiq-providers-lenovo:
     <<: *common
-    <<: *feature_introduced_in_fine
+    <<: *repo_introduced_in_hammer_or_prior
     <<: *provider_plugin
     <<: *release
   ManageIQ/manageiq-providers-nsxt:
     <<: *common
-    <<: *feature_introduced_in_kasparov
+    <<: *repo_introduced_in_kasparov
     <<: *provider_plugin
     <<: *release
   ManageIQ/manageiq-providers-nuage:
     <<: *common
-    <<: *feature_introduced_in_euwe
+    <<: *repo_introduced_in_hammer_or_prior
     <<: *provider_plugin
     <<: *release
   ManageIQ/manageiq-providers-openshift:
     <<: *common
-    <<: *feature_introduced_in_darga_or_prior
+    <<: *repo_introduced_in_hammer_or_prior
     <<: *provider_plugin
     <<: *release
   ManageIQ/manageiq-providers-openstack:
     <<: *common
-    <<: *feature_introduced_in_darga_or_prior
+    <<: *repo_introduced_in_hammer_or_prior
     <<: *provider_plugin
     <<: *release
   ManageIQ/manageiq-providers-oracle_cloud:
@@ -349,48 +281,48 @@ repos:
     <<: *release
   ManageIQ/manageiq-providers-ovirt:
     <<: *common
-    <<: *feature_introduced_in_darga_or_prior
+    <<: *repo_introduced_in_hammer_or_prior
     <<: *provider_plugin
     <<: *release
   ManageIQ/manageiq-providers-redfish:
     <<: *common
-    <<: *feature_introduced_in_hammer
+    <<: *repo_introduced_in_hammer_or_prior
     <<: *provider_plugin
     <<: *release
   ManageIQ/manageiq-providers-scvmm:
     <<: *common
-    <<: *feature_introduced_in_darga_or_prior
+    <<: *repo_introduced_in_hammer_or_prior
     <<: *provider_plugin
     <<: *release
   ManageIQ/manageiq-providers-vmware:
     <<: *common
-    <<: *feature_introduced_in_darga_or_prior
+    <<: *repo_introduced_in_hammer_or_prior
     <<: *provider_plugin
     <<: *release
   ManageIQ/manageiq-rpm_build:
     <<: *common
-    <<: *feature_introduced_in_jansa
+    <<: *repo_introduced_in_jansa
     <<: *release
   ManageIQ/manageiq-schema:
     <<: *common
-    <<: *feature_introduced_in_darga_or_prior
+    <<: *repo_introduced_in_hammer_or_prior
     <<: *provider_types
     <<: *release
     <<: *v2v
   ManageIQ/manageiq-ui-classic:
     <<: *common
-    <<: *feature_introduced_in_darga_or_prior
+    <<: *repo_introduced_in_hammer_or_prior
     <<: *release
     <<: *ux
     <<: *v2v
   ManageIQ/manageiq-ui-service:
     <<: *common
-    <<: *feature_introduced_in_darga_or_prior
+    <<: *repo_introduced_in_hammer_or_prior
     <<: *release
     <<: *ux
   ManageIQ/manageiq-v2v:
     <<: *common
-    <<: *feature_introduced_in_gaprindashvili
+    <<: *repo_introduced_in_hammer_or_prior
     <<: *release
     <<: *ux
     <<: *v2v
@@ -417,10 +349,6 @@ repos:
   ManageIQ/manageiq-appliance_console:
     <<: *common
     <<: *release
-    # Starting with gaprindashvili, there are no more backports, so this backport list is hardcoded
-    <<: *release_darga
-    <<: *release_euwe
-    <<: *release_fine
     <<: *semver
   ManageIQ/manageiq-messaging:
     <<: *common
@@ -428,10 +356,6 @@ repos:
   ManageIQ/manageiq-smartstate:
     <<: *common
     <<: *release
-    # Starting with gaprindashvili, there are no more backports, so this backport list is hardcoded
-    <<: *release_darga
-    <<: *release_euwe
-    <<: *release_fine
     <<: *semver
   ManageIQ/ui-components:
     <<: *common
