@@ -27,8 +27,8 @@ module ManageIQ
       end
 
       def run
-        repo.checkout(branch)
         repo.fetch
+        repo.checkout(branch)
         backport_prs
       end
 
