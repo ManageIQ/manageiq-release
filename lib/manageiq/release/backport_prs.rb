@@ -55,10 +55,10 @@ module ManageIQ
       end
 
       def backport_pr(pr_number, pr_author)
-        if cherry_pick(merge_commit_sha(pr_number))
-          push_backport_commit
+        success, failure_diff = cherry_pick(merge_commit_sha(pr_number))
 
-          add_comment(pr_number, <<~BODY)
+        if success
+          message = <<~BODY
             Backported to `#{branch}` in commit #{backport_commit_sha}.
 
             ```text
@@ -66,20 +66,30 @@ module ManageIQ
             ```
           BODY
 
+          push_backport_commit
+          add_comment(pr_number, message)
           remove_label(pr_number, "#{branch}/yes")
           add_label(pr_number, "#{branch}/backported")
 
           true
         else
-          add_comment(pr_number, <<~BODY)
+          message = <<~BODY
             @#{pr_author} A conflict occurred during the backport of this pull request to `#{branch}`.
 
             If this pull request is based on another pull request that has not been \
             marked for backport, add the appropriate labels to the other pull request. \
             Otherwise, please create a new pull request direct to the `#{branch}` branch \
             in order to resolve this.
-          BODY
 
+            Conflict details:
+
+            ```diff
+            #{failure_diff}
+            ```
+          BODY
+          message = "#{message[0, 65_530]}\n```\n" if message.size > 65_535
+
+          add_comment(pr_number, message)
           add_label(pr_number, "#{branch}/conflict")
 
           false
@@ -100,10 +110,11 @@ module ManageIQ
 
       def cherry_pick(sha)
         repo.git.cherry_pick("-m1", "-x", sha)
-        true
+        return true, nil
       rescue MiniGit::GitError
+        diff = repo.git.capturing.diff.chomp
         repo.git.cherry_pick("--abort")
-        false
+        return false, diff
       end
 
       def push_backport_commit
