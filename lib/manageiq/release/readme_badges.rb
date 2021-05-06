@@ -1,3 +1,5 @@
+require "active_support/core_ext/object/deep_dup"
+
 module ManageIQ
   module Release
     class ReadmeBadges
@@ -41,7 +43,7 @@ module ManageIQ
       def reload_badges(lines)
         lines ||= content.lines
         @badges = extract_badges(lines)
-        @original_badges = @badges.dup
+        @original_badges = @badges.deep_dup
         @original_badge_indexes = @badges.map { |b| b["index"] }
       end
 
