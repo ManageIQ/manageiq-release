@@ -235,6 +235,11 @@ repos:
     <<: *repo_introduced_in_kasparov
     <<: *provider_plugin
     <<: *release
+  ManageIQ/manageiq-providers-ibm_power_vc:
+    <<: *common
+    # <<: *repo_introduced_in_morphy
+    <<: *provider_plugin
+    <<: *release
   ManageIQ/manageiq-providers-ibm_terraform:
     <<: *common
     <<: *repo_introduced_in_kasparov

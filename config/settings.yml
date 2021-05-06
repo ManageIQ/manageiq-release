@@ -19,14 +19,18 @@
     manageiq-pods:
     manageiq-providers-amazon:
     manageiq-providers-ansible_tower:
+    manageiq-providers-autosde:
     manageiq-providers-azure:
     manageiq-providers-azure_stack:
     manageiq-providers-foreman:
     manageiq-providers-google:
-    manageiq-providers-hawkular:
+    manageiq-providers-ibm_cloud:
+    manageiq-providers-ibm_power_vc:
+    manageiq-providers-ibm_terraform:
     manageiq-providers-kubernetes:
     manageiq-providers-kubevirt:
     manageiq-providers-lenovo:
+    manageiq-providers-nsxt:
     manageiq-providers-nuage:
     manageiq-providers-openshift:
     manageiq-providers-openstack:
