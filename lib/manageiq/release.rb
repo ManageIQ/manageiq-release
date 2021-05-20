@@ -92,8 +92,9 @@ module ManageIQ
     # Logging helpers
     #
 
-    HEADER = ("=" * 80).freeze
-    SEPARATOR = ("*" * 80).freeze
+    HEADER_SIZE = 80
+    HEADER      = ("=" * HEADER_SIZE).freeze
+    SEPARATOR   = ("*" * HEADER_SIZE).freeze
 
     def self.header(title)
       title = " #{title} "
@@ -103,6 +104,15 @@ module ManageIQ
 
     def self.separator
       SEPARATOR
+    end
+
+    def self.progress_bar(total = 100)
+      require "progressbar"
+      ProgressBar.create(
+        :format => "%j%% |%B| %E",
+        :length => HEADER_SIZE,
+        :total  => total
+      )
     end
 
     #
