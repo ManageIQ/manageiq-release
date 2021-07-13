@@ -16,6 +16,8 @@ opts = Optimist.options do
 end
 opts[:repo_set] = opts[:ref].split("-").first unless opts[:repo] || opts[:repo_set]
 
+ManageIQ::Release::StringFormatting.enable
+
 travis_repos = ManageIQ::Release.repos_for(opts).collect do |repo|
   next if repo.options.has_real_releases
 
@@ -26,8 +28,22 @@ travis_repos = ManageIQ::Release.repos_for(opts).collect do |repo|
     # Ignore repo which doesn't have Travis enabled for that branch
     next
   end
-  {"Repo" => repo.name, "Status" => last_build.state, "Build ID" => last_build.number, "Date" => last_build.finished_at}
+
+  status, status_sort =
+    case last_build.state
+    when "errored", "failed"
+      [last_build.state.red, 0]
+    when "created", "started"
+      [last_build.state.yellow, 1]
+    when "passed"
+      [last_build.state.green, 2]
+    else
+      [last_build.state, 3]
+    end
+
+  last_build_url = "https://travis-ci.com/github/#{last_build.repository.slug}/builds/#{last_build.id}"
+  {"Repo" => repo.name, "Status" => status, "Status Sort" => status_sort, "Date" => last_build.finished_at, "URL" => last_build_url}
 end.compact
 
-travis_repos.sort_by! { |v| [ v["Status"], v["Date"] ] }
-puts travis_repos.tableize(:columns => ["Repo", "Status", "Build ID", "Date"])
+travis_repos.sort_by! { |v| [ v["Status Sort"], v["Date"] ] }
+puts travis_repos.tableize(:columns => ["Repo", "Status", "Date", "URL"])
