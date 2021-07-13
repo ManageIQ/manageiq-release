@@ -28,7 +28,7 @@ module ManageIQ
       private
 
       def system!(*args)
-        exit($CHILD_STATUS.exitstatus) unless system(*args)
+        exit($?.exitstatus) unless system(*args)
       end
 
       def rake_release
