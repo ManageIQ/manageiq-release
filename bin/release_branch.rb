@@ -7,10 +7,12 @@ require 'manageiq/release'
 require 'optimist'
 
 opts = Optimist.options do
-  opt :branch, "The new branch name.", :type => :string, :required => true
+  opt :branch,        "The new branch name.",                                   :type => :string, :required => true
+  opt :source_branch, "The source branch from which to create the new branch.", :default => "master"
 
-  ManageIQ::Release.common_options(self, :except => :dry_run) # TODO: Implement dry_run
+  ManageIQ::Release.common_options(self, :except => :dry_run, :repo_set_default => nil) # TODO: Implement dry_run
 end
+opts[:repo_set] = opts[:branch] unless opts[:repo] || opts[:repo_set]
 
 review = StringIO.new
 post_review = StringIO.new
