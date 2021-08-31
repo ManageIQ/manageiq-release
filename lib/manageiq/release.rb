@@ -93,17 +93,15 @@ module ManageIQ
     #
 
     HEADER_SIZE = 80
-    HEADER      = ("=" * HEADER_SIZE).freeze
-    SEPARATOR   = ("*" * HEADER_SIZE).freeze
 
     def self.header(title)
       title = " #{title} "
-      start = (HEADER.length / 2) - (title.length / 2)
-      HEADER.dup.tap { |h| h[start, title.length] = title }
+      start = (HEADER_SIZE / 2) - (title.length / 2)
+      separator("=").tap { |h| h[start, title.length] = title }
     end
 
-    def self.separator
-      SEPARATOR
+    def self.separator(char = "*")
+      char * HEADER_SIZE
     end
 
     def self.progress_bar(total = 100)

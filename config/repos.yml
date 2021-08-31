@@ -1,6 +1,8 @@
 master:
   amazon_ssa_support:
+    has_rake_release_new_branch: true
   container-amazon-smartstate:
+    has_rake_release_new_branch: true
     skip_tag: true
   container-httpd:
     has_real_releases: true
@@ -16,9 +18,13 @@ master:
     has_real_releases: true
   manageiq:
     has_rake_release: true
+    has_rake_release_new_branch: true
+    has_rake_release_new_branch_master: true
   manageiq-api:
   manageiq-appliance:
   manageiq-appliance-build:
+    has_rake_release_new_branch: true
+    has_rake_release_new_branch_master: true
   manageiq-appliance_console:
     has_real_releases: true
   manageiq-automation_engine:
@@ -27,10 +33,15 @@ master:
     has_rake_release: true
   manageiq-decorators:
   manageiq-documentation:
+    has_rake_release_new_branch: true
+    has_rake_release_new_branch_master: true
   manageiq-gems-pending:
   manageiq-graphql:
   manageiq-pods:
+    has_rake_release_new_branch: true
+    has_rake_release_new_branch_master: true
   manageiq-providers-amazon:
+    has_rake_release_new_branch: true
   manageiq-providers-ansible_tower:
   manageiq-providers-autosde:
   manageiq-providers-azure:
@@ -54,6 +65,8 @@ master:
   manageiq-providers-vmware:
   manageiq-rpm_build:
     has_rake_release: true
+    has_rake_release_new_branch: true
+    has_rake_release_new_branch_master: true
   manageiq-schema:
   manageiq-smartstate:
     has_real_releases: true
@@ -64,7 +77,9 @@ master:
     skip_tag: true
 morphy:
   amazon_ssa_support:
+    has_rake_release_new_branch: true
   container-amazon-smartstate:
+    has_rake_release_new_branch: true
     skip_tag: true
   container-httpd:
     has_real_releases: true
@@ -80,9 +95,13 @@ morphy:
     has_real_releases: true
   manageiq:
     has_rake_release: true
+    has_rake_release_new_branch: true
+    has_rake_release_new_branch_master: true
   manageiq-api:
   manageiq-appliance:
   manageiq-appliance-build:
+    has_rake_release_new_branch: true
+    has_rake_release_new_branch_master: true
   manageiq-appliance_console:
     has_real_releases: true
   manageiq-automation_engine:
@@ -91,10 +110,15 @@ morphy:
     has_rake_release: true
   manageiq-decorators:
   manageiq-documentation:
+    has_rake_release_new_branch: true
+    has_rake_release_new_branch_master: true
   manageiq-gems-pending:
   manageiq-graphql:
   manageiq-pods:
+    has_rake_release_new_branch: true
+    has_rake_release_new_branch_master: true
   manageiq-providers-amazon:
+    has_rake_release_new_branch: true
   manageiq-providers-ansible_tower:
   manageiq-providers-autosde:
   manageiq-providers-azure:
@@ -116,6 +140,8 @@ morphy:
   manageiq-providers-vmware:
   manageiq-rpm_build:
     has_rake_release: true
+    has_rake_release_new_branch: true
+    has_rake_release_new_branch_master: true
   manageiq-schema:
   manageiq-smartstate:
     has_real_releases: true
