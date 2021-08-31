@@ -152,6 +152,10 @@ orgs:
       <<: *common
 
 repos:
+  ManageIQ/amazon_ssa_support:
+    <<: *common
+    <<: *repo_introduced_in_hammer_or_prior
+    <<: *release
   ManageIQ/container-amazon-smartstate:
     <<: *common
     <<: *repo_introduced_in_hammer_or_prior
@@ -191,6 +195,10 @@ repos:
     <<: *provider_types
     <<: *release
     <<: *v2v
+  ManageIQ/manageiq-decorators:
+    <<: *common
+    <<: *repo_introduced_in_ivanchuk
+    <<: *release
   ManageIQ/manageiq-documentation:
     <<: *repo_introduced_in_hammer_or_prior
     <<: *release
