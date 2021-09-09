@@ -43,18 +43,16 @@ module ManageIQ
             handle_already_on_branch(pr)
 
             puts "The commit already exists on the branch. Skipping.".yellow
-          else
-            success = backport_pr(pr)
+          elsif backport_pr(pr)
             puts
-
-            if success
-              repo.git.log("-1")
-              puts
-            else
-              puts "A conflict was encountered during backport.".red
-              puts "Stopping backports for #{github_repo}.".red
-              break
-            end
+            repo.git.log("-1")
+            puts
+          else
+            puts
+            puts "A conflict was encountered during backport.".red
+            puts "Stopping backports for #{github_repo}.".red
+            break
+          end
           end
         end
         puts
