@@ -39,16 +39,25 @@ module ManageIQ
           puts
           puts "** #{pr.html_url}".cyan.bold
 
-          success = backportable?(pr) && backport_pr(pr.number, pr.user.login)
-          puts
+          pr_number = pr.number
+          pr_author = pr.user.login
 
-          if success
-            repo.git.log("-1")
-            puts
+          if already_on_branch?(pr_number)
+            handle_already_on_branch(pr_number)
+
+            puts "The commit already exists on the branch. Skipping.".yellow
           else
-            puts "A conflict was encountered during backport.".red
-            puts "Stopping backports for #{github_repo}.".red
-            break
+            success = backportable?(pr) && backport_pr(pr_number, pr_author)
+            puts
+
+            if success
+              repo.git.log("-1")
+              puts
+            else
+              puts "A conflict was encountered during backport.".red
+              puts "Stopping backports for #{github_repo}.".red
+              break
+            end
           end
         end
         puts
@@ -96,12 +105,28 @@ module ManageIQ
         end
       end
 
+      def handle_already_on_branch(pr_number)
+        message = <<~BODY
+          Skipping backport to `#{branch}`, because it is already in the branch.
+        BODY
+
+        add_comment(pr_number, message)
+        remove_label(pr_number, "#{branch}/yes")
+
+        true
+      end
+
+      def already_on_branch?(pr_number)
+        repo.git.capturing.branch("--contains", merge_commit_sha(pr_number), branch).present?
+      end
+
       def backportable?(pr)
         pr.labels.none? { |l| l.name == "#{branch}/conflict" }
       end
 
       def merge_commit_sha(pr_number)
-        github.pull_request(github_repo, pr_number).merge_commit_sha
+        @merge_commit_shas ||= {}
+        @merge_commit_shas[pr_number] ||= github.pull_request(github_repo, pr_number).merge_commit_sha
       end
 
       def backport_commit_sha
