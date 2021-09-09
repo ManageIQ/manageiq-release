@@ -37,17 +37,17 @@ module ManageIQ
       def backport_prs
         prs.each do |pr|
           puts
-          puts "** #{github_repo}##{pr.number}".cyan
-          puts
+          puts "** #{pr.html_url}".cyan.bold
 
-          success = backport_pr(pr.number, pr.user.login)
+          success = backportable?(pr) && backport_pr(pr.number, pr.user.login)
           puts
 
           if success
             repo.git.log("-1")
             puts
           else
-            puts "A conflict occurred during backport. Stopping backports for #{github_repo}.".red
+            puts "A conflict was encountered during backport.".red
+            puts "Stopping backports for #{github_repo}.".red
             break
           end
         end
@@ -94,6 +94,10 @@ module ManageIQ
 
           false
         end
+      end
+
+      def backportable?(pr)
+        pr.labels.none? { |l| l.name == "#{branch}/conflict" }
       end
 
       def merge_commit_sha(pr_number)
