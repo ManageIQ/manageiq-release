@@ -53,7 +53,6 @@ module ManageIQ
             puts "Stopping backports for #{github_repo}.".red
             break
           end
-          end
         end
         puts
       end
