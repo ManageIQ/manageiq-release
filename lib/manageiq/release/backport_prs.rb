@@ -39,32 +39,27 @@ module ManageIQ
           puts
           puts "** #{pr.html_url}".cyan.bold
 
-          pr_number = pr.number
-          pr_author = pr.user.login
-
-          if already_on_branch?(pr_number)
-            handle_already_on_branch(pr_number)
+          if already_on_branch?(pr)
+            handle_already_on_branch(pr)
 
             puts "The commit already exists on the branch. Skipping.".yellow
-          else
-            success = backportable?(pr) && backport_pr(pr_number, pr_author)
+          elsif backport_pr(pr)
             puts
-
-            if success
-              repo.git.log("-1")
-              puts
-            else
-              puts "A conflict was encountered during backport.".red
-              puts "Stopping backports for #{github_repo}.".red
-              break
-            end
+            repo.git.log("-1")
+            puts
+          else
+            puts
+            puts "A conflict was encountered during backport.".red
+            puts "Stopping backports for #{github_repo}.".red
+            break
+          end
           end
         end
         puts
       end
 
-      def backport_pr(pr_number, pr_author)
-        success, failure_diff = cherry_pick(merge_commit_sha(pr_number))
+      def backport_pr(pr)
+        success, failure_diff = cherry_pick(merge_commit_sha(pr.number))
 
         if success
           message = <<~BODY
@@ -76,52 +71,56 @@ module ManageIQ
           BODY
 
           push_backport_commit
-          add_comment(pr_number, message)
-          remove_label(pr_number, "#{branch}/yes")
-          add_label(pr_number, "#{branch}/backported")
+          add_comment(pr.number, message)
+          remove_label(pr.number, "#{branch}/yes")
+          remove_label(pr.number, "#{branch}/conflict")
+          add_label(pr.number, "#{branch}/backported")
 
           true
         else
-          message = <<~BODY
-            @#{pr_author} A conflict occurred during the backport of this pull request to `#{branch}`.
+          unless labeled_conflict?(pr)
+            message = <<~BODY
+              @#{pr.user.login} A conflict occurred during the backport of this pull request to `#{branch}`.
 
-            If this pull request is based on another pull request that has not been \
-            marked for backport, add the appropriate labels to the other pull request. \
-            Otherwise, please create a new pull request direct to the `#{branch}` branch \
-            in order to resolve this.
+              If this pull request is based on another pull request that has not been \
+              marked for backport, add the appropriate labels to the other pull request. \
+              Otherwise, please create a new pull request direct to the `#{branch}` branch \
+              in order to resolve this.
 
-            Conflict details:
+              Conflict details:
 
-            ```diff
-            #{failure_diff}
-            ```
-          BODY
-          message = "#{message[0, 65_530]}\n```\n" if message.size > 65_535
+              ```diff
+              #{failure_diff}
+              ```
+            BODY
+            message = "#{message[0, 65_530]}\n```\n" if message.size > 65_535
 
-          add_comment(pr_number, message)
-          add_label(pr_number, "#{branch}/conflict")
+            add_comment(pr.number, message)
+            add_label(pr.number, "#{branch}/conflict")
+          end
 
           false
         end
       end
 
-      def handle_already_on_branch(pr_number)
+      def handle_already_on_branch(pr)
         message = <<~BODY
           Skipping backport to `#{branch}`, because it is already in the branch.
         BODY
 
-        add_comment(pr_number, message)
-        remove_label(pr_number, "#{branch}/yes")
+        add_comment(pr.number, message)
+        remove_label(pr.number, "#{branch}/yes")
+        remove_label(pr.number, "#{branch}/conflict")
 
         true
       end
 
-      def already_on_branch?(pr_number)
-        repo.git.capturing.branch("--contains", merge_commit_sha(pr_number), branch).present?
+      def already_on_branch?(pr)
+        repo.git.capturing.branch("--contains", merge_commit_sha(pr.number), branch).present?
       end
 
-      def backportable?(pr)
-        pr.labels.none? { |l| l.name == "#{branch}/conflict" }
+      def labeled_conflict?(pr)
+        pr.labels.any? { |l| l.name == "#{branch}/conflict" }
       end
 
       def merge_commit_sha(pr_number)
@@ -169,6 +168,8 @@ module ManageIQ
         else
           github.remove_label(github_repo, pr_number, label)
         end
+      rescue Octokit::NotFound
+        # Ignore labels that are not found, because we want them removed anyway
       end
 
       def add_label(pr_number, label)
