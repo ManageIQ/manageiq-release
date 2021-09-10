@@ -126,6 +126,7 @@ morphy:
   manageiq-providers-foreman:
   manageiq-providers-google:
   manageiq-providers-ibm_cloud:
+  manageiq-providers-ibm_power_vc:
   manageiq-providers-ibm_terraform:
   manageiq-providers-kubernetes:
   manageiq-providers-kubevirt:
@@ -134,6 +135,7 @@ morphy:
   manageiq-providers-nuage:
   manageiq-providers-openshift:
   manageiq-providers-openstack:
+  manageiq-providers-oracle_cloud:
   manageiq-providers-ovirt:
   manageiq-providers-redfish:
   manageiq-providers-scvmm:
