@@ -48,11 +48,40 @@ def list_prs(branch, repos, opts)
 end
 
 def backport_prs(branch, repos, opts)
+  stats = {
+    :success  => [],
+    :skipped  => [],
+    :conflict => []
+  }
+
   backports = ManageIQ::Release::BackportPrs.search(repos.keys, "#{branch}/yes").sort!
   backports.each do |github_repo, prs|
     puts ManageIQ::Release.header(github_repo)
-    ManageIQ::Release::BackportPrs.new(repos[github_repo], opts.merge(:prs => prs)).run
+
+    backport_prs = ManageIQ::Release::BackportPrs.new(repos[github_repo], opts.merge(:prs => prs))
+    backport_prs.run
+    stats.each_key { |k| stats[k].concat(backport_prs.stats[k]) }
   end
+
+  puts
+  puts "Summary:"
+  puts
+  if stats[:success].any?
+    puts "The following PRs were successfully backported:"
+    puts stats[:success].map { |n| ("* #{n}") }
+    puts
+  end
+  if stats[:skipped].any?
+    puts "The following PRs were skipped:"
+    puts stats[:skipped].map { |n| ("* #{n}") }
+    puts
+  end
+  if stats[:conflict].any?
+    puts "The following PRs had conflicts:"
+    puts stats[:conflict].map { |n| ("* #{n}") }
+    puts
+  end
+  puts
 end
 
 if opts[:list]
