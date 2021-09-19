@@ -15,7 +15,7 @@ module ManageIQ
           .group_by { |pr| pr.repository_url.split("/").last(2).join("/") }
       end
 
-      attr_reader :repo, :branch, :prs, :dry_run
+      attr_reader :repo, :branch, :prs, :stats, :dry_run
 
       def initialize(repo, branch:, prs:, dry_run: false, **_)
         StringFormatting.enable
@@ -24,6 +24,12 @@ module ManageIQ
         @branch  = branch
         @prs     = prs
         @dry_run = dry_run
+
+        @stats = {
+          :skipped  => [],
+          :success  => [],
+          :conflict => []
+        }
       end
 
       def run
@@ -40,14 +46,20 @@ module ManageIQ
           puts "** #{pr.html_url}".cyan.bold
 
           if already_on_branch?(pr)
+            @stats[:skipped] << pr.html_url
+
             handle_already_on_branch(pr)
 
             puts "The commit already exists on the branch. Skipping.".yellow
           elsif backport_pr(pr)
+            @stats[:success] << pr.html_url
+
             puts
             repo.git.log("-1")
             puts
           else
+            @stats[:conflict] << pr.html_url
+
             puts
             puts "A conflict was encountered during backport.".red
             puts "Stopping backports for #{github_repo}.".red
