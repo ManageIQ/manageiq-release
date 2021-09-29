@@ -21,6 +21,7 @@ providers: &providers
   manageiq-providers-foreman:
   manageiq-providers-google:
   manageiq-providers-ibm_cloud:
+  manageiq-providers-ibm_power_hmc:
   manageiq-providers-ibm_power_vc:
   manageiq-providers-ibm_terraform:
   manageiq-providers-kubernetes:
