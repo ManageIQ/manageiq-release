@@ -4,6 +4,7 @@ plugin 'bundler-inject'
 require File.join(Bundler::Plugin.index.load_paths("bundler-inject")[0], "bundler-inject") rescue nil
 
 gem "activesupport",        :require => false
+gem "actionview",           :require => false
 gem "aws-sdk-s3",           :require => false
 gem "builder",              :require => false
 gem "config",               :require => false
