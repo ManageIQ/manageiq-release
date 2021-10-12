@@ -146,7 +146,6 @@ orgs:
     except:
     - ManageIQ/integration_tests
     - ManageIQ/integration_tests_playbooks
-    - ManageIQ/miq_tools_services
     - ManageIQ/polisher
     labels:
       <<: *common
