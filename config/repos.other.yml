@@ -26,7 +26,6 @@ gems:
   manageiq-style:
   memory_buffer:
   mime-types-redirector:
-  miq_tools_services:
   more_core_extensions:
   net_app_manageability:
   optimist:
