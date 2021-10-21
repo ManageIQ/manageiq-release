@@ -28,6 +28,10 @@ module ManageIQ
         Config::Options.new(:remote_source => :upstream)
       end
 
+      def backup_remote_defined?
+        !!Settings.git_mirror.remotes.backup
+      end
+
       def mirror_branches_for(repo)
         Settings.git_mirror.branch_mirror_defaults.to_h.merge(Settings.git_mirror.branch_mirror_overrides[repo].to_h || {}).each_with_object({}) { |(k, v), h| h[k.to_s] = v }
       end
@@ -41,12 +45,12 @@ module ManageIQ
       def mirror_upstream_repo(repo)
         mirror_remote_refs("upstream", "downstream")
         mirror_branches(repo, "upstream", "downstream")
-        mirror_remote_refs("downstream", "backup") if Settings.git_mirror.remotes.backup
+        mirror_remote_refs("downstream", "backup") if backup_remote_defined?
       end
 
       def mirror_downstream_repo(repo)
         mirror_branches(repo, "downstream", "downstream")
-        mirror_remote_refs("downstream", "backup") if Settings.git_mirror.remotes.backup
+        mirror_remote_refs("downstream", "backup") if backup_remote_defined?
       end
 
       def dry_run?
@@ -87,7 +91,7 @@ module ManageIQ
           puts "\n==== Fetching for #{repo_name} ====".bold.green
           # Enforce an order for remote fetching to ensure that moved
           #   tags prefer what is on upstream
-          system("git fetch backup --prune --tags") if remote_exists?("backup")
+          system("git fetch backup --prune --tags") if backup_remote_defined? && remote_exists?("backup")
           system("git fetch downstream --prune --tags")
           system("git fetch upstream --prune --tags") if [:red_hat_cloudforms, :upstream].include?(options.remote_source)
 
@@ -109,9 +113,9 @@ module ManageIQ
 
             system("git remote add downstream #{downstream_remote}/#{downstream_repo}.git")
           end
-          unless remote_exists?("backup")
+          if backup_remote_defined? && !remote_exists?("backup")
             backup_remote = Settings.git_mirror.remotes.backup
-            system("git remote add backup #{backup_remote}/#{downstream_repo}.git") if backup_remote
+            system("git remote add backup #{backup_remote}/#{downstream_repo}.git")
           end
         end
       end
@@ -139,7 +143,7 @@ module ManageIQ
         !`git branch -r | grep "\\b#{branch}\\b"`.strip.empty?
       end
 
-      def sync_branch(source_remote, source_name, dest_remote, dest_name, include_backup = true)
+      def sync_branch(source_remote, source_name, dest_remote, dest_name)
         return unless dest_remote && dest_name
 
         source_fq_name = "#{source_remote}/#{source_name}"
@@ -160,7 +164,7 @@ module ManageIQ
           system("git pull --rebase=preserve #{source_remote} #{source_name}") &&
           system("git push -f #{dest_remote} #{dest_name}")
 
-        if include_backup
+        if backup_remote_defined?
           if success && remote_exists?("backup")
             success = system("git push -f backup #{dest_name}")
           else
