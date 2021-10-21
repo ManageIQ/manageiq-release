@@ -55,7 +55,7 @@ module ManageIQ
       end
 
       def downstream_repo_name(repo, options)
-        options.downstream_repo_name || repo.sub("manageiq", Settings.git_mirror.productization_name)
+        options.downstream_repo_name || repo.sub(/^manageiq/, Settings.git_mirror.productization_name)
       end
 
       def system(*args)
