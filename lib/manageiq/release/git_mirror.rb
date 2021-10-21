@@ -41,12 +41,12 @@ module ManageIQ
       def mirror_upstream_repo(repo)
         mirror_remote_refs("upstream", "downstream")
         mirror_branches(repo, "upstream", "downstream")
-        mirror_remote_refs("downstream", "backup")
+        mirror_remote_refs("downstream", "backup") if Settings.git_mirror.remotes.backup
       end
 
       def mirror_downstream_repo(repo)
         mirror_branches(repo, "downstream", "downstream")
-        mirror_remote_refs("downstream", "backup")
+        mirror_remote_refs("downstream", "backup") if Settings.git_mirror.remotes.backup
       end
 
       def dry_run?
