@@ -10,8 +10,6 @@ master:
     has_real_releases: true
   container-postgresql:
     has_real_releases: true
-  container-ruby:
-    has_real_releases: true
   dbus_api_service:
     has_real_releases: true
   httpd_configmap_generator:
@@ -88,8 +86,6 @@ morphy:
     has_real_releases: true
   container-postgresql:
     has_real_releases: true
-  container-ruby:
-    has_real_releases: true
   dbus_api_service:
     has_real_releases: true
   httpd_configmap_generator:
@@ -163,8 +159,6 @@ lasker:
     has_real_releases: true
   container-postgresql:
     has_real_releases: true
-  container-ruby:
-    has_real_releases: true
   dbus_api_service:
     has_real_releases: true
   httpd_configmap_generator:
@@ -225,8 +219,6 @@ kasparov:
     has_real_releases: true
   container-postgresql:
     has_real_releases: true
-  container-ruby:
-    has_real_releases: true
   dbus_api_service:
     has_real_releases: true
   httpd_configmap_generator:
@@ -286,8 +278,6 @@ jansa:
   container-memcached:
     has_real_releases: true
   container-postgresql:
-    has_real_releases: true
-  container-ruby:
     has_real_releases: true
   dbus_api_service:
     has_real_releases: true
