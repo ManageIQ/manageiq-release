@@ -22,7 +22,13 @@ def merge_pull_request(github_repo, pr_number, dry_run:, **_)
   if dry_run
     puts "** dry-run: github.merge_pull_request(#{github_repo.inspect}, #{pr_number.inspect})"
   else
-    ManageIQ::Release.github.merge_pull_request(github_repo, pr_number)
+    begin
+      ManageIQ::Release.github.merge_pull_request(github_repo, pr_number)
+    rescue Octokit::MethodNotAllowed => err
+      raise unless err.to_s.include?("Pull Request is not mergeable")
+
+      puts "** WARN: Pull Request is not mergeable"
+    end
   end
 end
 
