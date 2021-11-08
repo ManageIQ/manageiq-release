@@ -107,12 +107,14 @@ release_jansa: &release_jansa
 
 release_ivanchuk: &release_ivanchuk
   ivanchuk/yes: "dddddd"
+  ivanchuk/yes?: "dddddd"
   ivanchuk/no: "dddddd"
   ivanchuk/backported: "dddddd"
   ivanchuk/conflict: "dddddd"
 
 release_hammer: &release_hammer
   hammer/yes: "dddddd"
+  hammer/yes?: "dddddd"
   hammer/no: "dddddd"
   hammer/backported: "dddddd"
   hammer/conflict: "dddddd"
