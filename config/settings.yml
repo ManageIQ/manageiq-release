@@ -15,7 +15,7 @@
     manageiq-decorators:
     manageiq-documentation:
     manageiq-gems-pending:
-    manageiq-graphql:
+    manageiq-graphql: # Keep for mirroring until we don't need old versions
     manageiq-pods:
     manageiq-providers-amazon:
     manageiq-providers-ansible_tower:
@@ -44,7 +44,7 @@
     manageiq-schema:
     manageiq-ui-classic:
     manageiq-ui-service:
-    manageiq-v2v:
+    manageiq-v2v: # Keep for mirroring until we don't need old versions
     manageiq:
   :working_directory: mirrors
 :manageiq_rubygems:

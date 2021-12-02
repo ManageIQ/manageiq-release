@@ -7,11 +7,9 @@ core: &core
   manageiq-content:
   manageiq-decorators:
   manageiq-gems-pending:
-  manageiq-graphql:
   manageiq-schema:
   manageiq-ui-classic:
   manageiq-ui-service:
-  manageiq-v2v:
 providers: &providers
   manageiq-providers-amazon:
   manageiq-providers-ansible_tower:
