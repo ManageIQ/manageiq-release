@@ -66,9 +66,6 @@ ux: &ux
   ux/review: "cc317c"
   ux/approved: "0e8a16"
 
-v2v: &v2v
-  v2v: "5319e7"
-
 #
 # Release label definitions
 #
@@ -169,7 +166,6 @@ repos:
     <<: *repo_introduced_in_hammer_or_prior
     <<: *provider_types
     <<: *release
-    <<: *v2v
   ManageIQ/manageiq-api:
     <<: *common
     <<: *repo_introduced_in_hammer_or_prior
@@ -188,7 +184,6 @@ repos:
     <<: *common
     <<: *repo_introduced_in_hammer_or_prior
     <<: *release
-    <<: *v2v
   ManageIQ/manageiq-consumption:
     <<: *common
     <<: *repo_introduced_in_hammer_or_prior
@@ -198,7 +193,6 @@ repos:
     <<: *repo_introduced_in_hammer_or_prior
     <<: *provider_types
     <<: *release
-    <<: *v2v
   ManageIQ/manageiq-decorators:
     <<: *common
     <<: *repo_introduced_in_ivanchuk
@@ -207,10 +201,6 @@ repos:
     <<: *repo_introduced_in_hammer_or_prior
     <<: *release
   ManageIQ/manageiq-gems-pending:
-    <<: *common
-    <<: *repo_introduced_in_hammer_or_prior
-    <<: *release
-  ManageIQ/manageiq-graphql:
     <<: *common
     <<: *repo_introduced_in_hammer_or_prior
     <<: *release
@@ -342,24 +332,16 @@ repos:
     <<: *repo_introduced_in_hammer_or_prior
     <<: *provider_types
     <<: *release
-    <<: *v2v
   ManageIQ/manageiq-ui-classic:
     <<: *common
     <<: *repo_introduced_in_hammer_or_prior
     <<: *release
     <<: *ux
-    <<: *v2v
   ManageIQ/manageiq-ui-service:
     <<: *common
     <<: *repo_introduced_in_hammer_or_prior
     <<: *release
     <<: *ux
-  ManageIQ/manageiq-v2v:
-    <<: *common
-    <<: *repo_introduced_in_hammer_or_prior
-    <<: *release
-    <<: *ux
-    <<: *v2v
   #
   # Released gems and packages
   #

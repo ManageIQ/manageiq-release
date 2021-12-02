@@ -36,7 +36,6 @@ master:
     has_rake_release_new_branch: true
     has_rake_release_new_branch_master: true
   manageiq-gems-pending:
-  manageiq-graphql:
   manageiq-pods:
     has_rake_release_new_branch: true
     has_rake_release_new_branch_master: true
@@ -73,7 +72,6 @@ master:
     has_real_releases: true
   manageiq-ui-classic:
   manageiq-ui-service:
-  manageiq-v2v:
   ui-components:
     skip_tag: true
 morphy:
