@@ -45,9 +45,9 @@ module ManageIQ
 
       def tagged_release
         if dry_run
-          puts "** dry-run: git tag #{tag}"
+          puts "** dry-run: git tag #{tag} -m \"Release #{tag}\""
         else
-          repo.git.tag(tag)
+          repo.git.tag(tag, "-m", "Release #{tag}")
         end
       end
     end
