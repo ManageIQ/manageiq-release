@@ -18,6 +18,7 @@ providers: &providers
   manageiq-providers-azure_stack:
   manageiq-providers-foreman:
   manageiq-providers-google:
+  manageiq-providers-ibm_cic:
   manageiq-providers-ibm_cloud:
   manageiq-providers-ibm_power_hmc:
   manageiq-providers-ibm_power_vc:
