@@ -243,6 +243,11 @@ repos:
     <<: *repo_introduced_in_hammer_or_prior
     <<: *provider_plugin
     <<: *release
+  ManageIQ/manageiq-providers-ibm_cic:
+    <<: *common
+    # <<: *repo_introduced_in_najdorf
+    <<: *provider_plugin
+    <<: *release
   ManageIQ/manageiq-providers-ibm_cloud:
     <<: *common
     <<: *repo_introduced_in_kasparov
