@@ -1,4 +1,4 @@
-#!/bin/env ruby
+#!/usr/bin/env ruby
 
 # Usage: SPACES_KEY=my_key SPACES_SECRET=my_secret VAGRANT_USERNAME=my_user VAGRANT_PASSWORD=my_password bin/sync_vagrant_builds.rb
 
