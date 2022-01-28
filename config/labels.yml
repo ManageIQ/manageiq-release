@@ -2,6 +2,11 @@
 # Label definitions
 #
 
+whitesource: &whitesource
+  "configuration error": "ee0701"
+  "security fix": "ee0701"
+  "security vulnerability": "ee0701"
+
 common: &common
   bug: "ee0701"
   "bug/sporadic test failure": "ee0701"
@@ -38,6 +43,7 @@ common: &common
   verified: "0e8a16"
   wip: "eeeeee"
   wontfix: "eeeeee"
+  <<: *whitesource
 
 semver: &semver
   "semver/major": "6a92bc"
