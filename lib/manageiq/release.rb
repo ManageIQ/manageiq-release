@@ -94,10 +94,10 @@ module ManageIQ
 
     HEADER_SIZE = 80
 
-    def self.header(title)
+    def self.header(title, char = "=")
       title = " #{title} "
       start = (HEADER_SIZE / 2) - (title.length / 2)
-      separator("=").tap { |h| h[start, title.length] = title }
+      separator(char).tap { |h| h[start, title.length] = title }
     end
 
     def self.separator(char = "*")

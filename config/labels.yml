@@ -80,19 +80,26 @@ release: &release
   blocker: "000000"
   "bugzilla needed": "000000"
 
+release_najdorf: &release_najdorf
+  najdorf/yes: "000000"
+  najdorf/yes?: "000000"
+  najdorf/no: "000000"
+  najdorf/backported: "000000"
+  najdorf/conflict: "000000"
+
 release_morphy: &release_morphy
-  morphy/yes: "000000"
-  morphy/yes?: "000000"
-  morphy/no: "000000"
-  morphy/backported: "000000"
-  morphy/conflict: "000000"
+  morphy/yes: "555555"
+  morphy/yes?: "555555"
+  morphy/no: "555555"
+  morphy/backported: "555555"
+  morphy/conflict: "555555"
 
 release_lasker: &release_lasker
-  lasker/yes: "555555"
-  lasker/yes?: "555555"
-  lasker/no: "555555"
-  lasker/backported: "555555"
-  lasker/conflict: "555555"
+  lasker/yes: "dddddd"
+  lasker/yes?: "dddddd"
+  lasker/no: "dddddd"
+  lasker/backported: "dddddd"
+  lasker/conflict: "dddddd"
 
 release_kasparov: &release_kasparov
   kasparov/yes: "dddddd"
@@ -122,8 +129,12 @@ release_hammer: &release_hammer
   hammer/backported: "dddddd"
   hammer/conflict: "dddddd"
 
+repo_introduced_in_najdorf: &repo_introduced_in_najdorf
+  <<: *release_najdorf
+
 repo_introduced_in_morphy: &repo_introduced_in_morphy
   <<: *release_morphy
+  <<: *repo_introduced_in_najdorf
 
 repo_introduced_in_lasker: &repo_introduced_in_lasker
   <<: *release_lasker
@@ -251,7 +262,7 @@ repos:
     <<: *release
   ManageIQ/manageiq-providers-ibm_cic:
     <<: *common
-    # <<: *repo_introduced_in_najdorf
+    <<: *repo_introduced_in_najdorf
     <<: *provider_plugin
     <<: *release
   ManageIQ/manageiq-providers-ibm_cloud:
@@ -261,7 +272,7 @@ repos:
     <<: *release
   ManageIQ/manageiq-providers-ibm_power_hmc:
     <<: *common
-    # <<: *repo_introduced_in_najdorf
+    <<: *repo_introduced_in_najdorf
     <<: *provider_plugin
     <<: *release
   ManageIQ/manageiq-providers-ibm_power_vc:

@@ -49,6 +49,7 @@ module ManageIQ
 
       def checkout(branch, source = "origin/#{branch}")
         git.reset(:hard => true)
+        git.clean("-xdf")
         git.checkout("-B", branch, source)
       end
 
