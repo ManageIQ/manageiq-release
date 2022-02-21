@@ -3,10 +3,10 @@ require 'pathname'
 module ManageIQ
   module Release
     class PullRequestBlasterOuter
-      attr_reader :repo, :base, :head, :script, :dry_run, :message
+      attr_reader :repo, :base, :head, :script, :dry_run, :message, :title
 
       ROOT_DIR = Pathname.new(__dir__).join("..", "..", "..").freeze
-      def initialize(repo, base:, head:, script:, dry_run:, message:, **_)
+      def initialize(repo, base:, head:, script:, dry_run:, message:, title: nil, **_)
         @repo    = repo
         @base    = base
         @head    = head
@@ -18,6 +18,7 @@ module ManageIQ
         end
         @dry_run = dry_run
         @message = message
+        @title   = (title || message)[0, 72]
       end
 
       def blast
@@ -121,7 +122,7 @@ module ManageIQ
       end
 
       def open_pull_request
-        pr = github.create_pull_request(repo.github_repo, base, pr_head, message[0, 72], message[0, 72])
+        pr = github.create_pull_request(repo.github_repo, base, pr_head, title, title)
         pr.html_url
       rescue => err
         raise unless err.message.include?("A pull request already exists")

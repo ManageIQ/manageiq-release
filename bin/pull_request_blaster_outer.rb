@@ -10,7 +10,8 @@ opts = Optimist.options do
   opt :base,    "The target branch for the changes.",                         :type => :string, :required => true
   opt :head,    "The name of the branch to create on your fork.",             :type => :string, :required => true
   opt :script,  "The path to the script that will update the desired files.", :type => :string, :required => true
-  opt :message, "The commit message and PR title for this change.",           :type => :string, :required => true
+  opt :message, "The commit message for this change.",                        :type => :string, :required => true
+  opt :title,   "The PR title for this change. (default is --message)",       :type => :string
 
   ManageIQ::Release.common_options(self)
 end
