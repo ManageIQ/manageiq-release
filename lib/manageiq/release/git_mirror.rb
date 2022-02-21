@@ -161,7 +161,7 @@ module ManageIQ
 
         success =
           system("git checkout -B #{dest_name} #{start_point}") &&
-          system("git pull --rebase=preserve #{source_remote} #{source_name}") &&
+          system("git pull --rebase=merges #{source_remote} #{source_name}") &&
           system("git push -f #{dest_remote} #{dest_name}")
 
         if backup_remote_defined?
