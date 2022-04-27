@@ -23,8 +23,6 @@ puts "\n** Updating Branch Protection"
 ManageIQ::Release::UpdateBranchProtection.new(repo.github_repo, opts.merge(:branch => "master")).run
 puts "\n** Updating Labels"
 ManageIQ::Release::UpdateLabels.new(repo.github_repo, opts).run
-puts "\n** Updating Travis Settings"
-ManageIQ::Release::UpdateTravisSettings.new(repo.github_repo, opts.merge(:branch => "master")).run
 puts "\n** Reserve rubygems entry"
 ManageIQ::Release::RubygemsStub.new(repo.name, opts).run
 
@@ -39,7 +37,5 @@ ManageIQ::Release::PullRequestBlasterOuter.new(repo, opts.merge(
 puts
 puts "******* MANUAL THINGS *******"
 puts "- https://codeclimate.com/github/#{repo.github_repo} => Repo Settings => GitHub => Pull Request Status Updates => Install"
-puts "- https://hakiri.io and follow the new project."
 puts "- https://gitter.im/ManageIQ#createroom and create a new room linked to the repository"
-puts "- Add repo to https://github.com/ManageIQ/manageiq-release/blob/master/config/repos.yml"
 puts "- Add repo to the bot"

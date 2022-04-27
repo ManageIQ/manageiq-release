@@ -26,7 +26,6 @@ require 'manageiq/release/update_branch_protection'
 require 'manageiq/release/update_labels'
 require 'manageiq/release/update_milestone'
 require 'manageiq/release/update_repo_settings'
-require 'manageiq/release/update_travis_settings'
 
 module ManageIQ
   module Release
