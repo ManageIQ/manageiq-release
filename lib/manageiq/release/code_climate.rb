@@ -15,14 +15,14 @@ module ManageIQ
       end
 
       def self.badge_name
-        "Maintainability"
+        "Code Climate"
       end
 
-      def self.badge_details(repo, token)
+      def self.badge_details(repo)
         {
           "description" => badge_name,
-          "image"       => "https://api.codeclimate.com/v1/badges/#{token}/maintainability",
-          "url"         => "https://codeclimate.com/github/#{repo.github_repo}/maintainability"
+          "image"       => "https://codeclimate.com/github/#{repo.github_repo}.svg",
+          "url"         => "https://codeclimate.com/github/#{repo.github_repo}"
         }
       end
 
@@ -30,11 +30,11 @@ module ManageIQ
         "Test Coverage"
       end
 
-      def self.coverage_badge_details(repo, token)
+      def self.coverage_badge_details(repo)
         {
           "description" => coverage_badge_name,
-          "image"       => "https://api.codeclimate.com/v1/badges/#{token}/test_coverage",
-          "url"         => "https://codeclimate.com/github/#{repo.github_repo}/test_coverage"
+          "image"       => "https://codeclimate.com/github/#{repo.github_repo}/badges/coverage.svg",
+          "url"         => "https://codeclimate.com/github/#{repo.github_repo}/coverage"
         }
       end
 
@@ -54,26 +54,12 @@ module ManageIQ
         ensure_enabled
       end
 
-      def badge_token
-        ensure_enabled
-        @response.fetch_path("data", 0, "attributes", "badge_token")
-      end
-
       def badge_details
-        self.class.badge_details(repo, badge_token)
+        self.class.badge_details(repo)
       end
 
       def coverage_badge_details
-        self.class.coverage_badge_details(repo, badge_token)
-      end
-
-      def test_reporter_id
-        ensure_enabled
-        @response.fetch_path("data", 0, "attributes", "test_reporter_id")
-      end
-
-      def set_travis_test_reporter_id
-        Travis.new(repo, dry_run: dry_run).set_env("CC_TEST_REPORTER_ID" => test_reporter_id)
+        self.class.coverage_badge_details(repo)
       end
 
       private

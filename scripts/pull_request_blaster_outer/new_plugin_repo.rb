@@ -17,17 +17,11 @@ readme = ManageIQ::Release::ReadmeBadges.new(repo, opts)
 travis = ManageIQ::Release::Travis.new(repo, opts)
 code_climate = ManageIQ::Release::CodeClimate.new(repo, opts)
 
-puts "\n** Enabling Travis..."
-travis.enable
 puts "\n** Enabling CodeClimate..."
 code_climate.enable
-puts "\n** Enabling Travis / CodeClimate test reporter integration..."
-code_climate.set_travis_test_reporter_id
 
 puts "\n** Updating README.md for CodeClimate badges..."
-b = readme.badges.detect do |b|
-  b["description"] == ManageIQ::Release::CodeClimate.badge_name || b["description"] == "Code Climate"
-end
+b = readme.badges.detect { |b| b["description"] == ManageIQ::Release::CodeClimate.badge_name || b["description"] == "Maintainability" }
 if b
   b.update(code_climate.badge_details)
 else
