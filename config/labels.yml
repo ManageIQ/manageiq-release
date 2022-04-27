@@ -250,6 +250,11 @@ repos:
     <<: *repo_introduced_in_ivanchuk
     <<: *provider_plugin
     <<: *release
+  ManageIQ/manageiq-providers-cisco_intersight:
+    <<: *common
+    # <<: *repo_introduced_in_oparin
+    <<: *provider_plugin
+    <<: *release
   ManageIQ/manageiq-providers-foreman:
     <<: *common
     <<: *repo_introduced_in_hammer_or_prior
