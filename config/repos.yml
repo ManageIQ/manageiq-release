@@ -119,6 +119,7 @@ najdorf:
   manageiq-providers-autosde:
   manageiq-providers-azure:
   manageiq-providers-azure_stack:
+  manageiq-providers-cisco_intersight:
   manageiq-providers-foreman:
   manageiq-providers-google:
   manageiq-providers-ibm_cic:
