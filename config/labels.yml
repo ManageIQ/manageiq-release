@@ -252,7 +252,7 @@ repos:
     <<: *release
   ManageIQ/manageiq-providers-cisco_intersight:
     <<: *common
-    # <<: *repo_introduced_in_oparin
+    <<: *repo_introduced_in_najdorf
     <<: *provider_plugin
     <<: *release
   ManageIQ/manageiq-providers-foreman:
