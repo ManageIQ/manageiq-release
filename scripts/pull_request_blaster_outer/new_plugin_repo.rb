@@ -14,11 +14,13 @@ repo = ManageIQ::Release::Repo.new(ENV["GITHUB_REPO"])
 opts = {:dry_run => ENV["DRY_RUN"]}
 
 readme = ManageIQ::Release::ReadmeBadges.new(repo, opts)
-travis = ManageIQ::Release::Travis.new(repo, opts)
 code_climate = ManageIQ::Release::CodeClimate.new(repo, opts)
 
 puts "\n** Enabling CodeClimate..."
 code_climate.enable
+
+puts "\n** Creating GitHub repository secret..."
+code_climate.create_repo_secret
 
 puts "\n** Updating README.md for CodeClimate badges..."
 b = readme.badges.detect { |b| b["description"] == ManageIQ::Release::CodeClimate.badge_name || b["description"] == "Maintainability" }

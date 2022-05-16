@@ -62,6 +62,15 @@ module ManageIQ
         self.class.coverage_badge_details(repo)
       end
 
+      def test_reporter_id
+        ensure_enabled
+        @response.fetch_path("data", 0, "attributes", "test_reporter_id")
+      end
+
+      def create_repo_secret
+        Github.create_or_update_repository_secret(repo.github_repo, "CC_TEST_REPORTER_ID", test_reporter_id)
+      end
+
       private
 
       def ensure_enabled
