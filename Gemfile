@@ -12,7 +12,7 @@ gem "licensee",             :require => false
 gem "manageiq-style",       :require => false
 gem "minigit",              :require => false
 gem "more_core_extensions", :require => false
-gem "octokit", ">=4.7.0",   :require => false
+gem "octokit", ">=4.23.0",  :require => false
 gem "optimist",             :require => false
 gem "progressbar",          :require => false
 gem "rbnacl",               :require => false

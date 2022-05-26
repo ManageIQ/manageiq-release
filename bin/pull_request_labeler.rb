@@ -38,10 +38,6 @@ def remove_labels(github_repo, pr_number, labels:, dry_run:, **_)
 end
 
 def remove_label(github_repo, pr_number, label:, dry_run:, **_)
-  # Temporary HACK until https://github.com/octokit/octokit.rb/pull/1297 is merged and released
-  require "erb"
-  label = ERB::Util.url_encode(label)
-
   if dry_run
     puts "** dry_run: github.remove_label(#{github_repo.inspect}, #{pr_number.inspect}, #{label.inspect})"
   else
