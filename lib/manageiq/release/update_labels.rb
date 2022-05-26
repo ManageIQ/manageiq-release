@@ -45,10 +45,6 @@ module ManageIQ
       def update(label, color)
         puts "Updating #{label.inspect} to #{color.inspect}"
 
-        # Temporary HACK until https://github.com/octokit/octokit.rb/pull/1297 is merged and released
-        require "erb"
-        label = ERB::Util.url_encode(label)
-
         if dry_run
           puts "** dry-run: github.update_label(#{repo.inspect}, #{label.inspect}, :color => #{color.inspect})"
         else
