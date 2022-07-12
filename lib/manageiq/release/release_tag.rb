@@ -37,8 +37,13 @@ module ManageIQ
           puts "** dry-run: RELEASE_VERSION=#{tag} bundle exec rake release"
         else
           Bundler.with_clean_env do
-            system!("bundle check || bundle update", :chdir => repo.path)
-            system!({"RELEASE_VERSION" => tag}, "bundle exec rake release", :chdir => repo.path)
+            repo.chdir do
+              # Ensure that spec/manageiq is symlinked
+              FileUtils.ln_sf(repo.path.join("../manageiq").expand_path, repo.path.join("spec/manageiq"))
+
+              system!("bundle check || bundle update")
+              system!({"RELEASE_VERSION" => tag}, "bundle exec rake release")
+            end
           end
         end
       end

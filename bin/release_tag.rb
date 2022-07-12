@@ -24,6 +24,13 @@ post_review = StringIO.new
 repos = ManageIQ::Release.repos_for(opts)
 repos = repos.partition { |r| r.github_repo != "ManageIQ/manageiq" }.flatten
 
+# However, the other plugins require that manageiq is at the right checkout in
+#   order to run their rake release scripts
+manageiq_repo = repos.last
+puts ManageIQ::Release.header("Checking out #{manageiq_repo.name}")
+manageiq_repo.fetch
+manageiq_repo.checkout(opts[:branch])
+
 repos.each do |repo|
   next if Array(opts[:skip]).include?(repo.name)
   next if repo.options.has_real_releases || repo.options.skip_tag
