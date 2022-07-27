@@ -240,6 +240,11 @@ repos:
     <<: *repo_introduced_in_kasparov
     <<: *provider_plugin
     <<: *release
+  ManageIQ/manageiq-providers-awx:
+    <<: *common
+    #<<: *repo_introduced_in_oparin
+    <<: *provider_plugin
+    <<: *release
   ManageIQ/manageiq-providers-azure:
     <<: *common
     <<: *repo_introduced_in_hammer_or_prior
@@ -333,6 +338,11 @@ repos:
   ManageIQ/manageiq-providers-ovirt:
     <<: *common
     <<: *repo_introduced_in_hammer_or_prior
+    <<: *provider_plugin
+    <<: *release
+  ManageIQ/manageiq-providers-red_hat_virtualization:
+    <<: *common
+    #<<: *repo_introduced_in_oparin
     <<: *provider_plugin
     <<: *release
   ManageIQ/manageiq-providers-redfish:
