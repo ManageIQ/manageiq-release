@@ -80,19 +80,26 @@ release: &release
   blocker: "000000"
   "bugzilla needed": "000000"
 
+release_oparin: &release_oparin
+  oparin/yes: "000000"
+  oparin/yes?: "000000"
+  oparin/no: "000000"
+  oparin/backported: "000000"
+  oparin/conflict: "000000"
+
 release_najdorf: &release_najdorf
-  najdorf/yes: "000000"
-  najdorf/yes?: "000000"
-  najdorf/no: "000000"
-  najdorf/backported: "000000"
-  najdorf/conflict: "000000"
+  najdorf/yes: "555555"
+  najdorf/yes?: "555555"
+  najdorf/no: "555555"
+  najdorf/backported: "555555"
+  najdorf/conflict: "555555"
 
 release_morphy: &release_morphy
-  morphy/yes: "555555"
-  morphy/yes?: "555555"
-  morphy/no: "555555"
-  morphy/backported: "555555"
-  morphy/conflict: "555555"
+  morphy/yes: "dddddd"
+  morphy/yes?: "dddddd"
+  morphy/no: "dddddd"
+  morphy/backported: "dddddd"
+  morphy/conflict: "dddddd"
 
 release_lasker: &release_lasker
   lasker/yes: "dddddd"
@@ -129,8 +136,12 @@ release_hammer: &release_hammer
   hammer/backported: "dddddd"
   hammer/conflict: "dddddd"
 
+repo_introduced_in_oparin: &repo_introduced_in_oparin
+  <<: *release_oparin
+
 repo_introduced_in_najdorf: &repo_introduced_in_najdorf
   <<: *release_najdorf
+  <<: *repo_introduced_in_oparin
 
 repo_introduced_in_morphy: &repo_introduced_in_morphy
   <<: *release_morphy
@@ -242,7 +253,7 @@ repos:
     <<: *release
   ManageIQ/manageiq-providers-awx:
     <<: *common
-    #<<: *repo_introduced_in_oparin
+    <<: *repo_introduced_in_oparin
     <<: *provider_plugin
     <<: *release
   ManageIQ/manageiq-providers-azure:
@@ -342,7 +353,7 @@ repos:
     <<: *release
   ManageIQ/manageiq-providers-red_hat_virtualization:
     <<: *common
-    #<<: *repo_introduced_in_oparin
+    <<: *repo_introduced_in_oparin
     <<: *provider_plugin
     <<: *release
   ManageIQ/manageiq-providers-redfish:
