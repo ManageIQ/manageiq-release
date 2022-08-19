@@ -15,10 +15,15 @@ opts = Optimist.options do
 end
 opts[:repo_set] = opts[:branch] unless opts[:repo] || opts[:repo_set]
 
+repos = ManageIQ::Release.repos_for(opts)
+Optimist.die(:branch, "not found in config/repos*.yml") if repos.nil?
+
+Optimist.die(:branch, "not found in config/labels.yml") unless ManageIQ::Release::Labels.config.key?("release_#{opts[:branch]}")
+
 review = StringIO.new
 post_review = StringIO.new
 
-ManageIQ::Release.repos_for(opts).each do |repo|
+repos.each do |repo|
   next if repo.options.has_real_releases
 
   release_branch = ManageIQ::Release::ReleaseBranch.new(repo, opts)
