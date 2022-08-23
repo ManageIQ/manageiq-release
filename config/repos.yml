@@ -76,6 +76,84 @@ master:
   manageiq-ui-service:
   ui-components:
     skip_tag: true
+oparin:
+  amazon_ssa_support:
+    has_rake_release_new_branch: true
+  container-amazon-smartstate:
+    has_rake_release_new_branch: true
+    skip_tag: true
+  container-httpd:
+    has_real_releases: true
+  container-memcached:
+    has_real_releases: true
+  container-postgresql:
+    has_real_releases: true
+  dbus_api_service:
+    has_real_releases: true
+  httpd_configmap_generator:
+    has_real_releases: true
+  manageiq:
+    has_rake_release: true
+    has_rake_release_new_branch: true
+    has_rake_release_new_branch_master: true
+  manageiq-api:
+  manageiq-appliance:
+  manageiq-appliance-build:
+    has_rake_release_new_branch: true
+    has_rake_release_new_branch_master: true
+  manageiq-appliance_console:
+    has_real_releases: true
+  manageiq-automation_engine:
+  manageiq-consumption:
+  manageiq-content:
+    has_rake_release: true
+  manageiq-decorators:
+  manageiq-documentation:
+    has_rake_release_new_branch: true
+    has_rake_release_new_branch_master: true
+  manageiq-gems-pending:
+  manageiq-pods:
+    has_rake_release_new_branch: true
+    has_rake_release_new_branch_master: true
+  manageiq-providers-amazon:
+    has_rake_release_new_branch: true
+  manageiq-providers-ansible_tower:
+  manageiq-providers-autosde:
+  manageiq-providers-awx:
+  manageiq-providers-azure:
+  manageiq-providers-azure_stack:
+  manageiq-providers-cisco_intersight:
+  manageiq-providers-foreman:
+  manageiq-providers-google:
+  manageiq-providers-ibm_cic:
+  manageiq-providers-ibm_cloud:
+  manageiq-providers-ibm_power_hmc:
+  manageiq-providers-ibm_power_vc:
+  manageiq-providers-ibm_terraform:
+  manageiq-providers-kubernetes:
+  manageiq-providers-kubevirt:
+  manageiq-providers-lenovo:
+  manageiq-providers-nsxt:
+  manageiq-providers-nuage:
+  manageiq-providers-openshift:
+  manageiq-providers-openstack:
+  manageiq-providers-oracle_cloud:
+  manageiq-providers-ovirt:
+  manageiq-providers-red_hat_virtualization:
+  manageiq-providers-redfish:
+  manageiq-providers-scvmm:
+  manageiq-providers-vmware:
+  manageiq-rpm_build:
+    has_rake_release: true
+    has_rake_release_new_branch: true
+    has_rake_release_new_branch_master: true
+  manageiq-schema:
+  manageiq-smartstate:
+    has_real_releases: true
+  manageiq-ui-classic:
+  manageiq-ui-service:
+  ui-components:
+    skip_tag: true
 najdorf:
   amazon_ssa_support:
     has_rake_release_new_branch: true
