@@ -18,8 +18,10 @@ sorted_versions = versions.sort {|x, y| Gem::Version.new(x) <=> Gem::Version.new
 
 changed = false
 
+content = File.read(ci).gsub(/^\s*on:/, "\"on\":")
+
 require "yaml"
-yaml = YAML.load_file(ci)
+yaml = YAML.load(content)
 
 require "more_core_extensions/core_ext/hash"
 if yaml.fetch_path("jobs", "ci", "strategy", "matrix", "ruby-version") && yaml.fetch_path("jobs", "ci", "strategy", "matrix", "ruby-version") != sorted_versions
