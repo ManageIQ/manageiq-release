@@ -18,10 +18,8 @@ sorted_versions = versions.sort {|x, y| Gem::Version.new(x) <=> Gem::Version.new
 
 changed = false
 
-content = File.read(ci).gsub(/^\s*on:/, "\"on\":")
-
 require "yaml"
-yaml = YAML.load(content)
+yaml = YAML.load_file(ci)
 
 require "more_core_extensions/core_ext/hash"
 if yaml.fetch_path("jobs", "ci", "strategy", "matrix", "ruby-version") && yaml.fetch_path("jobs", "ci", "strategy", "matrix", "ruby-version") != sorted_versions
@@ -39,6 +37,9 @@ if includes.kind_of?(Array)
 end
 
 if changed
-  File.write(ci, YAML.dump(yaml))
+  ci_yaml = YAML.dump(yaml)
+  ci_yaml.gsub!(/^true:/, "on:") # YAML replaces on: with true:
+
+  File.write(ci, ci_yaml)
   puts "Wrote updated ci.yaml at: #{ci}"
 end
