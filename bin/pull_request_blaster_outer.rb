@@ -17,8 +17,8 @@ opts = Optimist.options do
 end
 
 results = {}
-ManageIQ::Release.each_repo(opts) do |repo|
-  results[repo.github_repo] = ManageIQ::Release::PullRequestBlasterOuter.new(repo, opts).blast
+ManageIQ::Release.each_repo(**opts) do |repo|
+  results[repo.github_repo] = ManageIQ::Release::PullRequestBlasterOuter.new(repo, **opts).blast
 end
 
 require 'pp'
