@@ -45,6 +45,30 @@ def untar(io, destination)
   end
 end
 
+def assemble_index_html(specs_hash)
+<<-HTML
+<html>
+  <body>
+    <p>Thanks for visiting rubygems.manageiq.org, we are serving the following gems:</p>
+    <ul>
+      #{index_html_body(specs_hash)}
+    </ul>
+  </body>
+</html>
+HTML
+end
+
+def index_html_body(specs_hash)
+  array = specs_hash.each_with_object([]) do |(k, v), a|
+    a << "      <li><b>#{k}:</b>"
+    a << "        <ul>"
+    v.sort.each { |i| a << "          <li>v#{i}</li>"}
+    a << "        </ul>"
+    a << "      </li>"
+  end << ""
+  array.join("\n").strip
+end
+
 require 'tmpdir'
 Dir.mktmpdir do |tmpdir|
   puts "Created tempdir at #{tmpdir}"
@@ -86,6 +110,14 @@ Dir.mktmpdir do |tmpdir|
   Zlib::GzipWriter.open(File.join(tmpdir, "index.tgz")) do |gz|
     gz.write(tarfile.string)
   end
+
+  puts "Updating index.html"
+  specs_hash = Marshal.load(File.read(File.join(tmpdir, "specs.4.8"))).each_with_object({}) do |i, h|
+    name = i[0]
+    h[name] ||= []
+    h[name] << i[1]
+  end
+  File.write(File.join(tmpdir, "index.html"), assemble_index_html(specs_hash))
 
   puts "Uploading files:"
   Dir.glob(File.join(tmpdir, "**/*")).sort.each do |file|
