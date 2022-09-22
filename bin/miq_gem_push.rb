@@ -111,14 +111,6 @@ Dir.mktmpdir do |tmpdir|
     gz.write(tarfile.string)
   end
 
-  puts "Updating index.html"
-  specs_hash = Marshal.load(File.read(File.join(tmpdir, "specs.4.8"))).each_with_object({}) do |i, h|
-    name = i[0]
-    h[name] ||= []
-    h[name] << i[1]
-  end
-  File.write(File.join(tmpdir, "index.html"), assemble_index_html(specs_hash))
-
   puts "Uploading files:"
   Dir.glob(File.join(tmpdir, "**/*")).sort.each do |file|
     next if File.directory?(file)
@@ -129,6 +121,20 @@ Dir.mktmpdir do |tmpdir|
       client.put_object(:bucket => Settings.manageiq_rubygems.s3_bucket, :key => destination_name, :body => content, :acl => "public-read")
     end
   end
+
+  puts "Updating index.html"
+  specs_hash = Marshal.load(File.read(File.join(tmpdir, "specs.4.8"))).each_with_object({}) do |i, h|
+    name = i[0]
+    h[name] ||= []
+    h[name] << i[1]
+  end
+  client.put_object(
+    :acl          => "public-read",
+    :body         => assemble_index_html(specs_hash),
+    :bucket       => Settings.manageiq_rubygems.s3_bucket,
+    :content_type => "text/html",
+    :key          => "index.html",
+  )
 
   puts "Complete!"
 end
