@@ -421,6 +421,10 @@ repos:
     <<: *common
     <<: *release
     <<: *semver
+  ManageIQ/rbvmomi2:
+    <<: *common
+    <<: *release
+    <<: *semver
   ManageIQ/ui-components:
     <<: *common
     <<: *semver
