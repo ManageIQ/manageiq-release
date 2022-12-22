@@ -15,6 +15,7 @@ gem "more_core_extensions", :require => false
 gem "octokit", ">=4.23.0",  :require => false
 gem "optimist",             :require => false
 gem "progressbar",          :require => false
+gem "psych", ">=3",         :require => false
 gem "rbnacl",               :require => false
 gem "rest-client",          :require => false
 gem "travis",               :require => false
