@@ -22,7 +22,8 @@ end
 
 github = ManageIQ::Release.github
 
-ManageIQ::Release.github_repo_names_for("ManageIQ").each do |repo_name|
+repos = (ManageIQ::Release.github_repo_names_for("ManageIQ") << "ManageIQ/rbvmomi2").sort
+repos.each do |repo_name|
   puts ManageIQ::Release.header(repo_name)
 
   disabled_workflows = github.workflows(repo_name)[:workflows].select { |w| w.state == "disabled_inactivity" }
