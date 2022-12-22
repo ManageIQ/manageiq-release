@@ -109,7 +109,7 @@ module ManageIQ
 
         def create_database_yml
           puts "*** Creating config/database.yml ***"
-          database_config = YAML.load_file("config/database.pg.yml")
+          database_config = YAML.unsafe_load_file("config/database.pg.yml")
           unless database_config.key?('i18n')
             database_config['i18n'] = database_config['test'].dup
             database_config['i18n']['database'] = "vmdb_i18n"

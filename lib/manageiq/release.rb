@@ -123,7 +123,7 @@ module ManageIQ
 
     def self.load_config_file(prefix)
       config_files_for(prefix).each_with_object({}) do |f, h|
-        h.merge!(YAML.load_file(f))
+        h.merge!(YAML.unsafe_load_file(f))
       end
     end
 
