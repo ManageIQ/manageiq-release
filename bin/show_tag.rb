@@ -28,6 +28,6 @@ def show_tag(repo, tag)
   [repo.name, sha, message]
 end
 
-repos = ManageIQ::Release.repos_for(opts).reject { |repo| repo.options.has_real_releases }
+repos = ManageIQ::Release.repos_for(**opts).reject { |repo| repo.options.has_real_releases }
 table = [HEADER] + repos.collect { |repo| show_tag(repo, opts[:tag]) }
 puts table.tableize(:max_width => 75)

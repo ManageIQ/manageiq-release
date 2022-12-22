@@ -26,7 +26,7 @@ puts "Git commit log between #{opts[:from]} and #{opts[:to]}\n\n"
 
 repos_with_changes = []
 
-ManageIQ::Release.repos_for(opts).each do |repo|
+ManageIQ::Release.repos_for(**opts).each do |repo|
   next if repo.options.has_real_releases || repo.options.skip_tag
   next if opts[:skip].include?(repo.name)
 

@@ -13,10 +13,10 @@ opts = Optimist.options do
 end
 opts[:repo_set] = opts[:branch] unless opts[:repo] || opts[:repo_set]
 
-ManageIQ::Release.repos_for(opts).each do |repo|
+ManageIQ::Release.repos_for(**opts).each do |repo|
   next if opts[:branch] != "master" && repo.options.has_real_releases
 
   puts ManageIQ::Release.header(repo.name)
-  ManageIQ::Release::UpdateBranchProtection.new(repo.github_repo, opts).run
+  ManageIQ::Release::UpdateBranchProtection.new(repo.github_repo, **opts).run
   puts
 end

@@ -17,7 +17,7 @@ opts[:repo_set] = opts[:ref].split("-").first unless opts[:repo] || opts[:repo_s
 
 puts "Restarting Travis builds for #{opts[:ref]}:"
 
-ManageIQ::Release.repos_for(opts).collect do |repo|
+ManageIQ::Release.repos_for(**opts).collect do |repo|
   next if repo.options.has_real_releases
 
   repo = Travis::Pro::Repository.find(repo.github_repo)
