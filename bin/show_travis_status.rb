@@ -21,7 +21,7 @@ ManageIQ::Release::StringFormatting.enable
 
 date_helper = Class.new { include ActionView::Helpers::DateHelper }.new
 
-travis_repos = ManageIQ::Release.repos_for(opts).collect do |repo|
+travis_repos = ManageIQ::Release.repos_for(**opts).collect do |repo|
   next if repo.options.has_real_releases
 
   repo = Travis::Pro::Repository.find(repo.github_repo)

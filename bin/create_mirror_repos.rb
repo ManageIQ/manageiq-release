@@ -26,7 +26,7 @@ def github
   ManageIQ::Release.github
 end
 
-ManageIQ::Release.repos_for(opts).each do |repo|
+ManageIQ::Release.repos_for(**opts).each do |repo|
   upstream_name = repo.github_repo.split("/").last
   next if repo.options.has_real_releases && !upstream_name.start_with?("container-")
 
@@ -39,6 +39,6 @@ ManageIQ::Release.repos_for(opts).each do |repo|
       "#{opts[:prefix]}-#{upstream_name}"
     end
 
-  create_repo(opts[:org], mirror_name, opts)
+  create_repo(opts[:org], mirror_name, **opts)
   puts
 end

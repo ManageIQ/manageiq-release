@@ -20,9 +20,9 @@ end
 branch = opts[:branch]
 opts[:repo_set] = branch unless opts[:repo] || opts[:repo_set]
 
-repos = ManageIQ::Release.repos_for(opts)
+repos = ManageIQ::Release.repos_for(**opts)
 if opts[:skip]&.any?
-  to_skip = opts[:skip].map { |r| ManageIQ::Release.repo_for(s).github_repo }.to_set
+  to_skip = opts[:skip].map { |r| ManageIQ::Release.repo_for(r).github_repo }.to_set
   repos.reject! { |r| to_skip.include?(r.github_repo) }
 end
 repos = repos.index_by(&:github_repo)

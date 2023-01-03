@@ -21,7 +21,7 @@ post_review = StringIO.new
 
 # Move manageiq repo to the end of the list.  The rake release script on manageiq
 #   depends on all of the other repos running their rake release scripts first.
-repos = ManageIQ::Release.repos_for(opts)
+repos = ManageIQ::Release.repos_for(**opts)
 repos = repos.partition { |r| r.github_repo != "ManageIQ/manageiq" }.flatten
 
 # However, the other plugins require that manageiq is at the right checkout in
@@ -35,7 +35,7 @@ repos.each do |repo|
   next if Array(opts[:skip]).include?(repo.name)
   next if repo.options.has_real_releases || repo.options.skip_tag
 
-  release_tag = ManageIQ::Release::ReleaseTag.new(repo, opts)
+  release_tag = ManageIQ::Release::ReleaseTag.new(repo, **opts)
 
   puts ManageIQ::Release.header("Tagging #{repo.name}")
   release_tag.run

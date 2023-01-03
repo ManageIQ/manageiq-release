@@ -10,4 +10,4 @@ opts = Optimist.options do
   ManageIQ::Release.common_options(self, :only => :repo_set)
 end
 
-puts ManageIQ::Release.repos_for(opts).collect(&:name)
+puts ManageIQ::Release.repos_for(**opts).collect(&:name)
