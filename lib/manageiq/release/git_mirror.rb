@@ -10,12 +10,14 @@ module ManageIQ
 
       def mirror_all
         Settings.git_mirror.repos_to_mirror.each do |repo, options|
-          mirror(repo.to_s, default_repo_options.dup.merge!(options.to_h))
+          mirror(repo, options)
         end
         !@errors_occurred
       end
 
       def mirror(repo, options)
+        repo = repo.to_s
+        options = default_repo_options.dup.merge!(options.to_h)
         with_repo(repo, options) do
           send("mirror_#{options.remote_source}_repo", repo)
         end
