@@ -43,14 +43,14 @@ module ManageIQ
       end
 
       def mirror_upstream_repo(repo)
-        mirror_remote_refs("upstream", "downstream")
+        mirror_remote_refs(repo, "upstream", "downstream")
         mirror_branches(repo, "upstream", "downstream")
-        mirror_remote_refs("downstream", "backup") if backup_remote_defined?
+        mirror_remote_refs(repo, "downstream", "backup") if backup_remote_defined?
       end
 
       def mirror_downstream_repo(repo)
         mirror_branches(repo, "downstream", "downstream")
-        mirror_remote_refs("downstream", "backup") if backup_remote_defined?
+        mirror_remote_refs(repo, "downstream", "backup") if backup_remote_defined?
       end
 
       def dry_run?
@@ -120,12 +120,12 @@ module ManageIQ
         end
       end
 
-      def remote_refs(remote)
+      def remote_refs(repo, remote)
         return unless remote_exists?(remote)
 
         `git ls-remote #{remote} | grep "heads"`.split("\n").collect do |line|
           branch = line.split("/").last
-          next if remote == "upstream" && !upstream_branch?(branch)
+          next if remote == "upstream" && !upstream_branch?(repo, branch)
           "#{remote}/#{branch}:refs/heads/#{branch}"
         end.compact.join(" ")
       end
@@ -135,8 +135,8 @@ module ManageIQ
         $? == 0
       end
 
-      def upstream_branch?(branch)
-        (Settings.git_mirror.branch_mirror_defaults.keys.collect(&:to_s) + ["master"]).include?(branch)
+      def upstream_branch?(repo, branch)
+        (mirror_branches_for(repo).keys.collect(&:to_s) + ["master"]).include?(branch)
       end
 
       def remote_branch?(branch)
@@ -175,20 +175,20 @@ module ManageIQ
         success
       end
 
-      def mirror_remote_refs(source_remote, dest_remote)
+      def mirror_remote_refs(repo, source_remote, dest_remote)
         puts "\n==== Mirroring #{source_remote} to #{dest_remote} ====".bold.green
         unless remote_exists?(dest_remote)
           puts "! Skipping mirror of #{source_remote} to #{dest_remote} since #{dest_remote} does not exist".yellow
           return
         end
 
-        refs = remote_refs(source_remote)
+        refs = remote_refs(repo, source_remote)
         if refs.to_s.strip.empty?
           puts "! Skipping mirror of #{source_remote} to #{dest_remote} since there are no refs to mirror".yellow
           return
         end
 
-        system("git push #{dest_remote} #{remote_refs(source_remote)}") &&
+        system("git push #{dest_remote} #{refs}") &&
           system("git push -f #{dest_remote} --tags")
       end
     end
