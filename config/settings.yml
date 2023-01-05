@@ -2,10 +2,19 @@
 :git_mirror:
   :branch_mirror_defaults: {}
   :branch_mirror_overrides:
-    # The following repos don't have release branches, so don't mirror master to the ##.y branch
+    # container repos don't follow branch naming conventions, so don't mirror master to a release branch
+    # and also include any container-specific branches directly
+    container-httpd:
+      master:
+    container-memcached:
+      master:
+    container-postgresql:
+      master:
+      10-el8:
+    # The following repos don't have release branches, so don't mirror master to a release branch
     manageiq-release:
       master:
-    # The following repos have been removed as a plugin starting with najdorf, so don't mirror master to 14.y or later
+    # The following repos have been removed as a plugin starting with najdorf, so don't mirror master to a najdorf+ release branch
     manageiq-graphql:
       master:
     manageiq-v2v:
@@ -14,6 +23,9 @@
   :remotes:
     :upstream: git@github.com:ManageIQ
   :repos_to_mirror:
+    container-httpd:
+    container-memcached:
+    container-postgresql:
     manageiq-api:
     manageiq-appliance-build:
     manageiq-appliance:
