@@ -9,15 +9,13 @@ module ManageIQ
       end
 
       def mirror_all
-        Settings.git_mirror.repos_to_mirror.each do |repo, options|
-          mirror(repo, options)
-        end
+        Settings.git_mirror.repos_to_mirror.keys.each { |repo| mirror(repo) }
         !@errors_occurred
       end
 
-      def mirror(repo, options)
+      def mirror(repo)
         repo = repo.to_s
-        options = default_repo_options.dup.merge!(options.to_h)
+        options = default_repo_options.dup.merge!(Settings.git_mirror.repos_to_mirror[repo].to_h)
         with_repo(repo, options) do
           send("mirror_#{options.remote_source}_repo", repo)
         end
