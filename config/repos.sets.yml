@@ -36,7 +36,6 @@ providers: &providers
   manageiq-providers-ovirt:
   manageiq-providers-red_hat_virtualization:
   manageiq-providers-redfish:
-  manageiq-providers-scvmm:
   manageiq-providers-vmware:
 all:
   <<: *core
