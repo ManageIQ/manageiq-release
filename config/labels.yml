@@ -80,19 +80,26 @@ release: &release
   blocker: "000000"
   "bugzilla needed": "000000"
 
+release_petrosian: &release_petrosian
+  petrosian/yes: "000000"
+  petrosian/yes?: "000000"
+  petrosian/no: "000000"
+  petrosian/backported: "000000"
+  petrosian/conflict: "000000"
+
 release_oparin: &release_oparin
-  oparin/yes: "000000"
-  oparin/yes?: "000000"
-  oparin/no: "000000"
-  oparin/backported: "000000"
-  oparin/conflict: "000000"
+  oparin/yes: "555555"
+  oparin/yes?: "555555"
+  oparin/no: "555555"
+  oparin/backported: "555555"
+  oparin/conflict: "555555"
 
 release_najdorf: &release_najdorf
-  najdorf/yes: "555555"
-  najdorf/yes?: "555555"
-  najdorf/no: "555555"
-  najdorf/backported: "555555"
-  najdorf/conflict: "555555"
+  najdorf/yes: "dddddd"
+  najdorf/yes?: "dddddd"
+  najdorf/no: "dddddd"
+  najdorf/backported: "dddddd"
+  najdorf/conflict: "dddddd"
 
 release_morphy: &release_morphy
   morphy/yes: "dddddd"
@@ -136,8 +143,12 @@ release_hammer: &release_hammer
   hammer/backported: "dddddd"
   hammer/conflict: "dddddd"
 
+repo_introduced_in_petrosian: &repo_introduced_in_petrosian
+  <<: *release_petrosian
+
 repo_introduced_in_oparin: &repo_introduced_in_oparin
   <<: *release_oparin
+  <<: *repo_introduced_in_petrosian
 
 repo_introduced_in_najdorf: &repo_introduced_in_najdorf
   <<: *release_najdorf
