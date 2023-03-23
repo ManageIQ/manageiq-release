@@ -382,6 +382,11 @@ repos:
     <<: *repo_introduced_in_hammer_or_prior
     <<: *provider_plugin
     <<: *release
+  ManageIQ/manageiq-providers-workflows:
+    <<: *common
+    <<: *repo_introduced_in_petrosian
+    <<: *provider_plugin
+    <<: *release
   ManageIQ/manageiq-rpm_build:
     <<: *common
     <<: *repo_introduced_in_jansa
@@ -410,6 +415,9 @@ repos:
   ManageIQ/dbus_api_service:
     <<: *common
     <<: *release
+    <<: *semver
+  ManageIQ/floe:
+    <<: *common
     <<: *semver
   ManageIQ/httpd_configmap_generator:
     <<: *common
