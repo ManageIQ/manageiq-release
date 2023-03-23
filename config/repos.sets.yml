@@ -37,6 +37,7 @@ providers: &providers
   manageiq-providers-red_hat_virtualization:
   manageiq-providers-redfish:
   manageiq-providers-vmware:
+  manageiq-providers-workflows:
 all:
   <<: *core
   <<: *providers

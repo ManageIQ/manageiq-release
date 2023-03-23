@@ -64,6 +64,7 @@
     manageiq-providers-red_hat_virtualization:
     manageiq-providers-redfish:
     manageiq-providers-vmware:
+    manageiq-providers-workflows:
     manageiq-release:
     manageiq-schema:
     manageiq-ui-classic:

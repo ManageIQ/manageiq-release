@@ -64,6 +64,7 @@ master:
   manageiq-providers-red_hat_virtualization:
   manageiq-providers-redfish:
   manageiq-providers-vmware:
+  manageiq-providers-workflows:
   manageiq-rpm_build:
     has_rake_release: true
     has_rake_release_new_branch: true
