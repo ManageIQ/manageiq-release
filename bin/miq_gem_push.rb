@@ -15,12 +15,11 @@ require 'zlib'
 gems_to_push = ARGV
 raise "Please specify at least one gem" if gems_to_push.empty?
 
-client = Aws::S3::Client.new(
-  :access_key_id     => Settings.manageiq_rubygems.s3_access_key,
-  :secret_access_key => Settings.manageiq_rubygems.s3_secret_key,
-  :region            => "us-east-1",
-  :endpoint          => Settings.manageiq_rubygems.s3_endpoint
-)
+client = Aws::S3::Resource.new(
+  :credentials => Aws::Credentials.new(Settings.manageiq_rubygems.s3_access_key, Settings.manageiq_rubygems.s3_secret_key),
+  :region      => Settings.manageiq_rubygems.s3_region,
+  :endpoint    => Settings.manageiq_rubygems.s3_endpoint
+).client
 
 def ungzip(gzip)
   reader = Zlib::GzipReader.new(gzip)
