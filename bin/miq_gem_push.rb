@@ -1,16 +1,21 @@
 #!/usr/bin/env ruby
 
-$LOAD_PATH << File.expand_path("../lib", __dir__)
+require "bundler/inline"
+gemfile do
+  source "https://rubygems.org"
+  gem "multi_repo", require: "multi_repo/cli", path: File.expand_path("~/dev/multi_repo")
+  gem "aws-sdk-s3"
+  gem "config"
+  gem "more_core_extensions"
+end
 
-require 'bundler/setup'
-require 'manageiq/release'
-require 'manageiq/release/settings'
-
-require 'aws-sdk-s3'
 require 'fileutils'
 require 'rubygems'
 require 'rubygems/package'
 require 'zlib'
+
+MultiRepo.root_dir = Pathname.new(__dir__).join("..").expand_path
+Config.load_and_set_settings(MultiRepo.config_dir.join("settings.yml").to_s, MultiRepo.config_dir.join("settings.local.yml").to_s)
 
 gems_to_push = ARGV
 raise "Please specify at least one gem" if gems_to_push.empty?
