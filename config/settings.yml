@@ -76,5 +76,6 @@
 :manageiq_rubygems:
   :s3_access_key:
   :s3_secret_key:
-  :s3_endpoint: https://nyc3.digitaloceanspaces.com
+  :s3_endpoint: https://s3.us-east.cloud-object-storage.appdomain.cloud
   :s3_bucket: rubygems-manageiq-org
+  :s3_region: us-east
