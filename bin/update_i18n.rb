@@ -1,15 +1,17 @@
 #!/usr/bin/env ruby
 
-$LOAD_PATH << File.expand_path("../lib", __dir__)
+require "bundler/inline"
+gemfile do
+  source "https://rubygems.org"
+  gem "multi_repo", require: "multi_repo/cli", path: File.expand_path("~/dev/multi_repo")
+end
 
-require 'bundler/setup'
-require 'manageiq/release'
-require 'optimist'
+require "yaml"
 
 opts = Optimist.options do
   opt :branch,  "The target branch",:type => :string,  :required => false
 
-  ManageIQ::Release.common_options(self, :only => :dry_run)
+  MultiRepo::CLI.common_options(self, :only => :dry_run)
 end
 
 class Internationalization
@@ -39,7 +41,7 @@ class Internationalization
     end
 
     def repo
-      @repo ||= Repo.new(github_slug)
+      @repo ||= MultiRepo::Repo.new(github_slug)
     end
 
     def github_slug
@@ -57,7 +59,7 @@ class Internationalization
     end
 
     def git_diff_stats(repo)
-      repo.git.capturing.diff(:numstat => true).split("\n").each_with_object({}) do |diff, stats|
+      repo.git.client.capturing.diff(:numstat => true).split("\n").each_with_object({}) do |diff, stats|
         insertions, deletions, fname = diff.split("\s")
         stats[fname] = {:insertions => insertions.to_i, :deletions => deletions.to_i }
       end
@@ -81,9 +83,9 @@ class Internationalization
     end
 
     def with_checked_out_repo(repo, branch)
-      repo.fetch
+      repo.git.fetch
       # repo.clean
-      repo.checkout(branch)
+      repo.git.hard_checkout(branch)
       repo.chdir { yield }
     end
 
