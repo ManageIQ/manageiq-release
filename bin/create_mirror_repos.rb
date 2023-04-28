@@ -10,7 +10,7 @@ opts = Optimist.options do
   opt :org,    "The target GitHub org",          :type => :string, :required => true
   opt :prefix, "The repo prefix in the new org", :default => "manageiq"
 
-  MultiRepo.common_options(self)
+  MultiRepo::CLI.common_options(self)
 end
 
 def create_repo(org, name, dry_run:, **_)
@@ -26,11 +26,11 @@ def github
   MultiRepo::Service.Github.client
 end
 
-MultiRepo.repos_for(**opts).each do |repo|
+MultiRepo::CLI.repos_for(**opts).each do |repo|
   upstream_name = repo.short_name
   next if repo.options.has_real_releases && !upstream_name.start_with?("container-")
 
-  puts MultiRepo.header(repo.name)
+  puts MultiRepo::CLI.header(repo.name)
 
   mirror_name =
     if upstream_name.start_with?("manageiq")
