@@ -27,6 +27,7 @@ gems:
   memory_buffer:
   mime-types-redirector:
   more_core_extensions:
+  multi_repo:
   net_app_manageability:
   optimist:
   ovirt:

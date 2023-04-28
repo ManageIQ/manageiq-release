@@ -440,6 +440,9 @@ repos:
     <<: *common
     <<: *release
     <<: *semver
+  ManageIQ/multi_repo:
+    <<: *common
+    <<: *semver
   ManageIQ/rbvmomi2:
     <<: *common
     <<: *release
