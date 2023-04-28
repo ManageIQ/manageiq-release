@@ -34,8 +34,8 @@ end
 puts "\n** Preparing Pull Request"
 MultiRepo::Helpers::PullRequestBlasterOuter.new(repo, **opts.merge(
   :base    => "master",
-  :head    => "new_plugin_repo",
-  :script  => "scripts/pull_request_blaster_outer/new_plugin_repo.rb",
+  :head    => "new_repo",
+  :script  => "scripts/pull_request_blaster_outer/new_repo.rb",
   :message => "Prepare new repository"
 )).blast
 
