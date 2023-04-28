@@ -8,33 +8,31 @@ end
 
 opts = Optimist.options do
   opt :plugin, "Whether or not this is a ManageIQ plugin", :type => :boolean, :required => true
+  opt :repo_set, "The repo_set this repo should belong to", :type => :string, :default => "master"
 
   MultiRepo::CLI.common_options(self, :except => :repo_set)
 end
 
-repo_name = opts[:repo].first
-repo = MultiRepo::CLI.repo_for(repo_name)
-
-has_repo = !opts[:plugin] || MultiRepo::RepoSet.config["master"].include?(repo_name)
-has_labels = MultiRepo::Labels.config["repos"][repo.name]
-unless has_repo && has_labels
-  STDERR.puts "ERROR: First update config/repos.yml and config/labels.yml with the new repo"
+repo = MultiRepo::CLI.repos_for(**opts).first
+labels = MultiRepo::Labels.config["repos"][opts[:repo].first]
+unless repo && labels
+  STDERR.puts "ERROR: First update config for repos and labels with the new repo"
   exit 1
 end
 
 puts "\n** Updating Repo Settings"
-MultiRepo::Helper::UpdateRepoSettings.new(repo.name, **opts).run
+MultiRepo::Helpers::UpdateRepoSettings.new(repo.name, **opts).run
 puts "\n** Updating Branch Protection"
-MultiRepo::Helper::UpdateBranchProtection.new(repo.name, **opts.merge(:branch => "master")).run
+MultiRepo::Helpers::UpdateBranchProtection.new(repo.name, **opts.merge(:branch => "master")).run
 puts "\n** Updating Labels"
-MultiRepo::Helper::UpdateLabels.new(repo.name, **opts).run
-puts "\n** Reserve rubygems entry"
+MultiRepo::Helpers::UpdateLabels.new(repo.name, **opts).run
 if opts[:plugin]
-  MultiRepo::Helper::RubygemsStub.new(repo.name, **opts).run
+  puts "\n** Reserve rubygems entry"
+  MultiRepo::Helpers::RubygemsStub.new(repo.name, **opts).run
 end
 
 puts "\n** Preparing Pull Request"
-MultiRepo::Helper::PullRequestBlasterOuter.new(repo, **opts.merge(
+MultiRepo::Helpers::PullRequestBlasterOuter.new(repo, **opts.merge(
   :base    => "master",
   :head    => "new_plugin_repo",
   :script  => "scripts/pull_request_blaster_outer/new_plugin_repo.rb",
@@ -43,10 +41,14 @@ MultiRepo::Helper::PullRequestBlasterOuter.new(repo, **opts.merge(
 
 puts
 puts "******* MANUAL THINGS *******"
-puts "- Add repo to repos.sets.yml if this is a new core or provider plugin"
-puts "- Add repo to mirror settings"
+if opts[:plugin]
+  puts "- Add repo to repos.sets.yml if this is a new core or provider plugin"
+  puts "- Add repo to mirror settings"
+  puts "- https://gitter.im/ManageIQ#createroom and create a new room linked to the repository"
+end
 puts "- https://codeclimate.com/github/#{repo.name} => Repo Settings => GitHub => Pull Request Status Updates => Install"
 puts "  - Ensure that CC_TEST_REPORTER_ID is set in the repo settings"
-puts "- https://gitter.im/ManageIQ#createroom and create a new room linked to the repository"
 puts "- Add repo to the bot"
-puts "  - Also add repo to the bot settings"
+if opts[:plugin]
+  puts "  - Also add repo to the bot settings list of plugins"
+end
