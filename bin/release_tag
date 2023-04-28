@@ -1,0 +1,119 @@
+#!/usr/bin/env ruby
+
+require "bundler/inline"
+gemfile do
+  source "https://rubygems.org"
+  gem "multi_repo", require: "multi_repo/cli"
+end
+
+opts = Optimist.options do
+  opt :tag,    "The new tag name.",       :type => :string, :required => true
+  opt :branch, "The branch to tag from.", :type => :string
+  opt :skip,   "The repo(s) to skip.",    :type => :strings
+
+  MultiRepo::CLI.common_options(self, :repo_set_default => nil)
+end
+opts[:branch] ||= opts[:tag].split("-").first
+opts[:repo_set] = opts[:branch] unless opts[:repo] || opts[:repo_set]
+
+class ReleaseTag
+  attr_reader :repo, :branch, :tag, :dry_run
+
+  def initialize(repo, branch:, tag:, dry_run: false, **_)
+    @repo    = repo
+    @branch  = branch
+    @tag     = tag
+    @dry_run = dry_run
+  end
+
+  def run
+    repo.git.fetch
+    repo.git.hard_checkout(branch)
+    repo.config.has_rake_release ? rake_release : tagged_release
+  end
+
+  def review
+    repo.git.client.capturing.log("-5", :graph => true, :pretty => "format:\%h -\%d \%s (\%cr) <\%an>")
+  end
+
+  def post_review
+    # TODO: Automate this with some questions at tag time
+    "pushd #{repo.path}; OVERRIDE=true git push origin #{branch} #{tag}; popd"
+  end
+
+  private
+
+  def system!(*args)
+    exit($?.exitstatus) unless system(*args)
+  end
+
+  def rake_release
+    if dry_run
+      puts "** dry-run: bundle check || bundle update".light_black
+      puts "** dry-run: RELEASE_VERSION=#{tag} bundle exec rake release".light_black
+    else
+      Bundler.with_clean_env do
+        repo.chdir do
+          # Ensure that spec/manageiq is symlinked
+          FileUtils.ln_sf(repo.path.join("../manageiq").expand_path, repo.path.join("spec/manageiq"))
+
+          system!("bundle check || bundle update")
+          system!({"RELEASE_VERSION" => tag}, "bundle exec rake release")
+        end
+      end
+    end
+  end
+
+  def tagged_release
+    if dry_run
+      puts "** dry-run: git tag #{tag} -m \"Release #{tag}\"".light_black
+    else
+      repo.git.client.tag(tag, "-m", "Release #{tag}")
+    end
+  end
+end
+
+
+review = StringIO.new
+post_review = StringIO.new
+
+# Move manageiq repo to the end of the list.  The rake release script on manageiq
+#   depends on all of the other repos running their rake release scripts first.
+repos = MultiRepo::CLI.repos_for(**opts)
+repos = repos.partition { |r| r.name != "ManageIQ/manageiq" }.flatten
+
+# However, the other plugins require that manageiq is at the right checkout in
+#   order to run their rake release scripts
+manageiq_repo = repos.last
+puts MultiRepo::CLI.header("Checking out #{manageiq_repo.name}")
+manageiq_repo.git.fetch
+manageiq_repo.git.hard_checkout(opts[:branch])
+
+repos.each do |repo|
+  next if Array(opts[:skip]).include?(repo.name)
+  next if repo.config.has_real_releases || repo.config.skip_tag
+
+  release_tag = ReleaseTag.new(repo, **opts)
+
+  puts MultiRepo::CLI.header("Tagging #{repo.name}")
+  release_tag.run
+  puts
+
+  review.puts MultiRepo::CLI.header(repo.name)
+  review.puts release_tag.review
+  review.puts
+  post_review.puts release_tag.post_review
+end
+
+puts
+puts MultiRepo::CLI.separator
+puts
+puts "Review the following:"
+puts
+puts review.string
+puts
+puts "If the tags are all correct,"
+puts "  run the following script to push all of the new tags"
+puts
+puts post_review.string
+puts

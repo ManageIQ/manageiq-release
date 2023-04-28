@@ -1,0 +1,54 @@
+#!/usr/bin/env ruby
+
+require "bundler/inline"
+gemfile do
+  source "https://rubygems.org"
+  gem "multi_repo", require: "multi_repo/cli"
+end
+
+opts = Optimist.options do
+  opt :plugin, "Whether or not this is a ManageIQ plugin", :type => :boolean, :required => true
+  opt :repo_set, "The repo_set this repo should belong to", :type => :string, :default => "master"
+
+  MultiRepo::CLI.common_options(self, :except => :repo_set)
+end
+
+repo = MultiRepo::CLI.repos_for(**opts).first
+labels = MultiRepo::Labels.config["repos"][opts[:repo].first]
+unless repo && labels
+  STDERR.puts "ERROR: First update config for repos and labels with the new repo"
+  exit 1
+end
+
+puts "\n** Updating Repo Settings"
+MultiRepo::Helpers::UpdateRepoSettings.new(repo.name, **opts).run
+puts "\n** Updating Branch Protection"
+MultiRepo::Helpers::UpdateBranchProtection.new(repo.name, **opts.merge(:branch => "master")).run
+puts "\n** Updating Labels"
+MultiRepo::Helpers::UpdateLabels.new(repo.name, **opts).run
+if opts[:plugin]
+  puts "\n** Reserve rubygems entry"
+  MultiRepo::Helpers::RubygemsStub.new(repo.name, **opts).run
+end
+
+puts "\n** Preparing Pull Request"
+MultiRepo::Helpers::PullRequestBlasterOuter.new(repo, **opts.merge(
+  :base    => "master",
+  :head    => "new_repo",
+  :script  => "scripts/pull_request_blaster_outer/new_repo.rb",
+  :message => "Prepare new repository"
+)).blast
+
+puts
+puts "******* MANUAL THINGS *******"
+if opts[:plugin]
+  puts "- Add repo to repos.sets.yml if this is a new core or provider plugin"
+  puts "- Add repo to mirror settings"
+  puts "- https://gitter.im/ManageIQ#createroom and create a new room linked to the repository"
+end
+puts "- https://codeclimate.com/github/#{repo.name} => Repo Settings => GitHub => Pull Request Status Updates => Install"
+puts "  - Ensure that CC_TEST_REPORTER_ID is set in the repo settings"
+puts "- Add repo to the bot"
+if opts[:plugin]
+  puts "  - Also add repo to the bot settings list of plugins"
+end

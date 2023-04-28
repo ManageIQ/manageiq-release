@@ -7,14 +7,17 @@ if missing.any?
   exit 1
 end
 
-$: << File.expand_path("../../lib", __dir__)
-require "manageiq-release"
+require "bundler/inline"
+gemfile do
+  source "https://rubygems.org"
+  gem "multi_repo", require: "multi_repo/cli"
+end
 
-repo = ManageIQ::Release::Repo.new(ENV["GITHUB_REPO"])
 opts = {:dry_run => ENV["DRY_RUN"]}
+repo = MultiRepo::CLI.repo_for(ENV["GITHUB_REPO"], **opts)
 
-readme = ManageIQ::Release::ReadmeBadges.new(repo, opts)
-code_climate = ManageIQ::Release::CodeClimate.new(repo, opts)
+readme = MultiRepo::Helpers::ReadmeBadges.new(repo, **opts)
+code_climate = MultiRepo::Service::CodeClimate.new(repo, **opts)
 
 puts "\n** Enabling CodeClimate..."
 code_climate.enable
@@ -23,13 +26,13 @@ puts "\n** Creating GitHub repository secret..."
 code_climate.create_repo_secret
 
 puts "\n** Updating README.md for CodeClimate badges..."
-b = readme.badges.detect { |b| b["description"] == ManageIQ::Release::CodeClimate.badge_name || b["description"] == "Maintainability" }
+b = readme.badges.detect { |b| b["description"] == MultiRepo::Service::CodeClimate.badge_name || b["description"] == "Maintainability" }
 if b
   b.update(code_climate.badge_details)
 else
   readme.badges << code_climate.badge_details
 end
-b = readme.badges.detect { |b| b["description"] == ManageIQ::Release::CodeClimate.coverage_badge_name }
+b = readme.badges.detect { |b| b["description"] == MultiRepo::Service::CodeClimate.coverage_badge_name }
 if b
   b.update(code_climate.coverage_badge_details)
 else
