@@ -6,6 +6,8 @@ gemfile do
   gem "multi_repo", require: "multi_repo/cli"
 end
 
+require "fileutils"
+
 opts = Optimist.options do
   opt :branch,        "The new branch name.",                                   :type => :string, :required => true
   opt :next_branch,   "The next branch name.",                                  :type => :string, :required => true
@@ -18,7 +20,7 @@ opts[:repo_set] = opts[:branch] unless opts[:repo] || opts[:repo_set]
 repos = MultiRepo::CLI.repos_for(**opts)
 Optimist.die(:branch, "not found in config/repos*.yml") if repos.nil?
 
-Optimist.die(:branch, "not found in config/labels.yml") unless MultiRepo::CLI::Labels.config.key?("release_#{opts[:branch]}")
+Optimist.die(:branch, "not found in config/labels.yml") unless MultiRepo::Labels.config.key?("release_#{opts[:branch]}")
 
 class ReleaseBranch
   attr_reader :repo, :branch, :next_branch, :source_branch, :dry_run
@@ -29,8 +31,8 @@ class ReleaseBranch
     # Ensure we move core to the source branch so that the symlinks from the
     # other repos are correct
     core_repo = MultiRepo::Repo.new("ManageIQ/manageiq")
-    core_repo.fetch
-    core_repo.checkout(source_branch, "origin/#{source_branch}")
+    core_repo.git.fetch
+    core_repo.git.hard_checkout(source_branch, "origin/#{source_branch}")
 
     @first_time_setup = true
   end
@@ -129,7 +131,7 @@ class ReleaseBranch
   end
 
   def apply_branch_changes
-    return unless repo.options.has_rake_release_new_branch
+    return unless repo.config.has_rake_release_new_branch
 
     rake_release("new_branch")
 
@@ -137,7 +139,7 @@ class ReleaseBranch
   end
 
   def apply_master_changes
-    return unless repo.options.has_rake_release_new_branch_master
+    return unless repo.config.has_rake_release_new_branch_master
 
     repo.git.hard_checkout("master", "origin/master")
     rake_release("new_branch_master")
