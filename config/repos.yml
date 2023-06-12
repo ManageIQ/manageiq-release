@@ -142,6 +142,7 @@ petrosian:
   ManageIQ/manageiq-providers-red_hat_virtualization:
   ManageIQ/manageiq-providers-redfish:
   ManageIQ/manageiq-providers-vmware:
+  ManageIQ/manageiq-providers-workflows:
   ManageIQ/manageiq-rpm_build:
     has_rake_release: true
     has_rake_release_new_branch: true
