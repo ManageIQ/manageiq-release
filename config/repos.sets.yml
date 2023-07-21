@@ -39,5 +39,6 @@ providers: &providers
   ManageIQ/manageiq-providers-vmware:
   ManageIQ/manageiq-providers-workflows:
 all:
-  <<: *core
-  <<: *providers
+  <<:
+  - *core
+  - *providers
