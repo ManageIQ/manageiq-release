@@ -2,10 +2,10 @@
 # Label definitions
 #
 
-whitesource: &whitesource
+mend: &mend
   "configuration error": "ee0701"
   "security fix": "ee0701"
-  "security vulnerability": "ee0701"
+  "Mend: dependency security vulnerability": "ee0701"
 
 common: &common
   bug: "ee0701"
@@ -43,7 +43,7 @@ common: &common
   verified: "0e8a16"
   wip: "eeeeee"
   wontfix: "eeeeee"
-  <<: *whitesource
+  <<: *mend
 
 semver: &semver
   "semver/major": "6a92bc"
