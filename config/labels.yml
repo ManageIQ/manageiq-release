@@ -370,12 +370,6 @@ repos:
     - *repo_introduced_in_morphy_or_prior
     - *provider_plugin
     - *release
-  ManageIQ/manageiq-providers-scvmm:
-    <<:
-    - *common
-    - *repo_introduced_in_morphy_or_prior
-    - *provider_plugin
-    - *release
   ManageIQ/manageiq-providers-vmware:
     <<:
     - *common
