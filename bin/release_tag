@@ -6,6 +6,8 @@ gemfile do
   gem "multi_repo", require: "multi_repo/cli"
 end
 
+require "fileutils"
+
 opts = Optimist.options do
   opt :tag,    "The new tag name.",       :type => :string, :required => true
   opt :branch, "The branch to tag from.", :type => :string
