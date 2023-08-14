@@ -1,0 +1,29 @@
+#!/usr/bin/env ruby
+
+require "bundler/inline"
+gemfile do
+  source "https://rubygems.org"
+  gem "multi_repo", require: "multi_repo/cli"
+end
+
+opts = Optimist.options do
+  opt :branch,   "The branch name.", :type => :string, :required => true
+  opt :workflow, "The name of the workflow to run.", :default => "ci.yaml"
+
+  MultiRepo::CLI.common_options(self, :repo_set_default => nil)
+end
+opts[:repo_set] = opts[:branch] unless opts[:repo] || opts[:repo_set]
+
+github = MultiRepo::Service::Github.new(dry_run: opts[:dry_run])
+
+MultiRepo::CLI.each_repo(**opts) do |repo|
+  next if repo.config.has_real_releases
+
+  if opts[:dry_run]
+    puts "** dry-run: github.workflow_dispatch(#{repo.name.inspect}, #{opts[:workflow].inspect}, #{opts[:branch].inspect})".light_black
+  else
+    github.client.workflow_dispatch(repo.name, opts[:workflow], opts[:branch])
+  end
+rescue Octokit::UnprocessableEntity
+  puts "ERROR: #{repo.name} does not have the workflow_dispatch event for workflow #{opts[:workflow]}".light_red
+end
