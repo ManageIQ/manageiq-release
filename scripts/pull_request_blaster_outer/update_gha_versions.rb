@@ -1,7 +1,7 @@
 #! /usr/bin/env ruby
 
 ACTIONS_VERSIONS = {
-  "actions/checkout"                => "v3",
+  "actions/checkout"                => "v4",
   "actions/setup-go"                => "v4",
   "actions/setup-node"              => "v3",
   "paambaati/codeclimate-action"    => "v5",
