@@ -1,0 +1,37 @@
+#!/usr/bin/env ruby
+
+require "bundler/inline"
+gemfile do
+  source "https://rubygems.org"
+  gem "multi_repo", require: "multi_repo/cli"
+end
+
+opts = Optimist.options do
+  opt :branch, "The branch name.", :type => :string, :default => "master"
+
+  MultiRepo::CLI.common_options(self, :repo_set_default => nil)
+end
+opts[:repo_set] = opts[:branch] unless opts[:repo] || opts[:repo_set]
+
+MultiRepo::CLI.each_repo(**opts) do |repo|
+  next unless repo.git.remote_branch?("origin", opts[:branch])
+
+  repo.git.fetch
+  repo.git.hard_checkout(opts[:branch])
+
+  mend_file = repo.path.join(".whitesource")
+  next unless mend_file.exist?
+
+  mend_file.write(mend_file.read << "\n")
+
+  repo.git.client.add(".whitesource")
+  repo.git.client.commit("-m", "Update .whitesource to trigger a Mend run")
+  repo.git.client.show
+  puts
+
+  if opts[:dry_run]
+    puts "** dry-run: git push origin #{opts[:branch]}".light_black
+  else
+    repo.git.client.push("origin", opts[:branch])
+  end
+end
