@@ -1,0 +1,122 @@
+#!/usr/bin/env ruby
+
+require "bundler/inline"
+gemfile do
+  source "https://rubygems.org"
+  gem "multi_repo", require: "multi_repo/cli"
+end
+
+require "fileutils"
+
+opts = Optimist.options do
+  opt :branch,        "The branch to merge into.",              :type => :string, :required => true
+  opt :source_branch, "The source branch from which to merge.", :default => "master"
+
+  opt :review_only,   "Skip the merge and re-review the branch details", :default => false
+
+  MultiRepo::CLI.common_options(self, :repo_set_default => nil)
+end
+opts[:repo_set] = opts[:branch] unless opts[:repo] || opts[:repo_set]
+
+repos = MultiRepo::CLI.repos_for(**opts)
+Optimist.die(:branch, "not found in config/repos*.yml") if repos.nil?
+
+class ReleaseMergedBranch
+  attr_reader :repo, :branch, :source_branch, :dry_run
+
+  def self.first_time_setup(branch)
+    return if @first_time_setup
+
+    # Ensure we move core to the target branch so that the symlinks from the
+    # other repos are correct
+    core_repo = MultiRepo::Repo.new("ManageIQ/manageiq")
+    core_repo.git.fetch
+    core_repo.git.hard_checkout(branch, "origin/#{branch}")
+
+    @first_time_setup = true
+  end
+
+  def initialize(repo, branch:, source_branch: "master", dry_run:, **_)
+    @repo          = repo
+    @branch        = branch
+    @source_branch = source_branch
+    @dry_run       = dry_run
+  end
+
+  def run
+    self.class.first_time_setup(branch)
+
+    repo.git.fetch
+    repo.git.hard_checkout(branch)
+
+    repo.chdir do
+      begin
+        repo.git.client.merge("--no-ff", "--no-edit", "origin/#{source_branch}")
+      rescue MiniGit::GitError
+        $stderr.puts("ERROR: An error has occurred during git merge and may require manual conflict resolution.".light_red)
+        $stderr.puts("  Repo: #{repo.path}")
+        $stderr.puts("  Fix the error and press Enter to continue...")
+        $stdin.gets
+      end
+    end
+  end
+
+  def pretty_log(target_branch, count)
+    repo.git.client.capturing.log("-#{count}", "--color", "-p", target_branch, :graph => true, :pretty => "format:\%C(auto)\%h -\%d \%s \%C(green)(\%cr) \%C(cyan)<\%an>\%C(reset)").chomp
+  end
+
+  def master_diff
+    repo.git.client.capturing.diff("--color", "origin/#{source_branch}", branch)
+  end
+
+  def review
+    branch_diff = pretty_log(branch, 2)
+
+    [
+      MultiRepo::CLI.header("#{branch} changes", "-"),
+      branch_diff,
+      MultiRepo::CLI.header("diff between origin/#{source_branch} and #{branch}", "-"),
+      master_diff
+    ].compact.join("\n\n")
+  end
+
+  def post_review
+    "pushd #{repo.path}; OVERRIDE=true git push origin #{branch}; popd"
+  end
+end
+
+review = StringIO.new
+post_review = StringIO.new
+
+repos.each do |repo|
+  next if repo.config.has_real_releases
+
+  release_branch = ReleaseMergedBranch.new(repo, **opts)
+
+  unless opts[:review_only]
+    puts MultiRepo::CLI.header("Merging #{repo.name}")
+    release_branch.run
+    puts
+  end
+
+  review.puts MultiRepo::CLI.header(repo.name)
+  review.puts release_branch.review
+  review.puts
+
+  post_msg = release_branch.post_review
+  post_review.puts post_msg if post_msg
+end
+
+puts
+puts MultiRepo::CLI.separator
+puts
+puts "Review the following:"
+puts
+puts review.string
+puts
+puts "If all changes are correct,"
+puts "  run the following script to push all of the new branches"
+puts
+puts post_review.string
+puts
+puts "Once completed, be sure to follow the rest of the release checklist."
