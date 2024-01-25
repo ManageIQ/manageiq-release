@@ -2,11 +2,11 @@
 
 ACTIONS_VERSIONS = {
   "actions/checkout"                => "v4",
-  "actions/setup-go"                => "v4",
+  "actions/setup-go"                => "v5",
   "actions/setup-node"              => "v3",
   "paambaati/codeclimate-action"    => "v5",
   "peter-evans/create-pull-request" => "v5",
-  "peter-evans/repository-dispatch" => "v2",
+  "peter-evans/repository-dispatch" => "v3",
   "ruby/setup-ruby"                 => "v1"
 }.freeze
 
