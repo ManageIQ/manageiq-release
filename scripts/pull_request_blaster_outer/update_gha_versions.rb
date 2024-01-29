@@ -3,7 +3,9 @@
 ACTIONS_VERSIONS = {
   "actions/checkout"                => "v4",
   "actions/setup-go"                => "v5",
-  "actions/setup-node"              => "v3",
+  "actions/setup-node"              => "v4",
+  "github/codeql-action/analyze"    => "v3",
+  "github/codeql-action/init"       => "v3",
   "paambaati/codeclimate-action"    => "v5",
   "peter-evans/create-pull-request" => "v5",
   "peter-evans/repository-dispatch" => "v3",
@@ -15,7 +17,7 @@ IMAGE_VERSIONS = {
   "manageiq/postgresql" => "13"
 }.freeze
 
-files = Dir.glob(".github/workflows/*.yaml") + Dir.glob("lib/generators/manageiq/plugin/templates/.github/workflows/*.yaml")
+files = Dir.glob(".github/workflows/*.y*ml") + Dir.glob("lib/generators/manageiq/plugin/templates/.github/workflows/*.y*ml")
 files.sort.each do |f|
   contents = File.read(f)
 
