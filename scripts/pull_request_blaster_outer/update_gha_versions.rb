@@ -17,7 +17,7 @@ IMAGE_VERSIONS = {
   "manageiq/postgresql" => "13"
 }.freeze
 
-files = Dir.glob(".github/workflows/*.yaml") + Dir.glob("lib/generators/manageiq/plugin/templates/.github/workflows/*.yaml")
+files = Dir.glob(".github/workflows/*.y*ml") + Dir.glob("lib/generators/manageiq/plugin/templates/.github/workflows/*.y*ml")
 files.sort.each do |f|
   contents = File.read(f)
 
