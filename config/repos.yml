@@ -76,6 +76,84 @@ master:
   ManageIQ/manageiq-ui-service:
   ManageIQ/ui-components:
     skip_tag: true
+radjabov:
+  ManageIQ/amazon_ssa_support:
+    has_rake_release_new_branch: true
+  ManageIQ/container-amazon-smartstate:
+    has_rake_release_new_branch: true
+    skip_tag: true
+  ManageIQ/container-httpd:
+    has_real_releases: true
+  ManageIQ/container-memcached:
+    has_real_releases: true
+  ManageIQ/container-postgresql:
+    has_real_releases: true
+  ManageIQ/dbus_api_service:
+    has_real_releases: true
+  ManageIQ/httpd_configmap_generator:
+    has_real_releases: true
+  ManageIQ/manageiq:
+    has_rake_release: true
+    has_rake_release_new_branch: true
+    has_rake_release_new_branch_master: true
+  ManageIQ/manageiq-api:
+  ManageIQ/manageiq-appliance:
+  ManageIQ/manageiq-appliance-build:
+    has_rake_release_new_branch: true
+    has_rake_release_new_branch_master: true
+  ManageIQ/manageiq-appliance_console:
+    has_real_releases: true
+  ManageIQ/manageiq-automation_engine:
+  ManageIQ/manageiq-consumption:
+  ManageIQ/manageiq-content:
+    has_rake_release: true
+  ManageIQ/manageiq-decorators:
+  ManageIQ/manageiq-documentation:
+    has_rake_release_new_branch: true
+    has_rake_release_new_branch_master: true
+  ManageIQ/manageiq-gems-pending:
+  ManageIQ/manageiq-pods:
+    has_rake_release_new_branch: true
+    has_rake_release_new_branch_master: true
+  ManageIQ/manageiq-providers-amazon:
+    has_rake_release_new_branch: true
+  ManageIQ/manageiq-providers-ansible_tower:
+  ManageIQ/manageiq-providers-autosde:
+  ManageIQ/manageiq-providers-awx:
+  ManageIQ/manageiq-providers-azure:
+  ManageIQ/manageiq-providers-azure_stack:
+  ManageIQ/manageiq-providers-cisco_intersight:
+  ManageIQ/manageiq-providers-foreman:
+  ManageIQ/manageiq-providers-google:
+  ManageIQ/manageiq-providers-ibm_cic:
+  ManageIQ/manageiq-providers-ibm_cloud:
+  ManageIQ/manageiq-providers-ibm_power_hmc:
+  ManageIQ/manageiq-providers-ibm_power_vc:
+  ManageIQ/manageiq-providers-ibm_terraform:
+  ManageIQ/manageiq-providers-kubernetes:
+  ManageIQ/manageiq-providers-kubevirt:
+  ManageIQ/manageiq-providers-lenovo:
+  ManageIQ/manageiq-providers-nsxt:
+  ManageIQ/manageiq-providers-nuage:
+  ManageIQ/manageiq-providers-openshift:
+  ManageIQ/manageiq-providers-openstack:
+  ManageIQ/manageiq-providers-oracle_cloud:
+  ManageIQ/manageiq-providers-ovirt:
+  ManageIQ/manageiq-providers-red_hat_virtualization:
+  ManageIQ/manageiq-providers-redfish:
+  ManageIQ/manageiq-providers-vmware:
+  ManageIQ/manageiq-providers-workflows:
+  ManageIQ/manageiq-rpm_build:
+    has_rake_release: true
+    has_rake_release_new_branch: true
+    has_rake_release_new_branch_master: true
+  ManageIQ/manageiq-schema:
+  ManageIQ/manageiq-smartstate:
+    has_real_releases: true
+  ManageIQ/manageiq-ui-classic:
+  ManageIQ/manageiq-ui-service:
+  ManageIQ/ui-components:
+    skip_tag: true
 quinteros:
   ManageIQ/amazon_ssa_support:
     has_rake_release_new_branch: true

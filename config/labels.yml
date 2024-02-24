@@ -80,19 +80,26 @@ release: &release
   blocker: "000000"
   "bugzilla needed": "000000"
 
+release_radjabov: &release_radjabov
+  radjabov/yes: "000000"
+  radjabov/yes?: "000000"
+  radjabov/no: "000000"
+  radjabov/backported: "000000"
+  radjabov/conflict: "000000"
+
 release_quinteros: &release_quinteros
-  quinteros/yes: "000000"
-  quinteros/yes?: "000000"
-  quinteros/no: "000000"
-  quinteros/backported: "000000"
-  quinteros/conflict: "000000"
+  quinteros/yes: "555555"
+  quinteros/yes?: "555555"
+  quinteros/no: "555555"
+  quinteros/backported: "555555"
+  quinteros/conflict: "555555"
 
 release_petrosian: &release_petrosian
-  petrosian/yes: "555555"
-  petrosian/yes?: "555555"
-  petrosian/no: "555555"
-  petrosian/backported: "555555"
-  petrosian/conflict: "555555"
+  petrosian/yes: "dddddd"
+  petrosian/yes?: "dddddd"
+  petrosian/no: "dddddd"
+  petrosian/backported: "dddddd"
+  petrosian/conflict: "dddddd"
 
 release_oparin: &release_oparin
   oparin/yes: "dddddd"
@@ -115,8 +122,14 @@ release_morphy: &release_morphy
   morphy/backported: "dddddd"
   morphy/conflict: "dddddd"
 
+repo_introduced_in_radjabov: &repo_introduced_in_radjabov
+  <<:
+  - *release_radjabov
+
 repo_introduced_in_quinteros: &repo_introduced_in_quinteros
-  <<: *release_quinteros
+  <<:
+  - *release_quinteros
+  - *repo_introduced_in_radjabov
 
 repo_introduced_in_petrosian: &repo_introduced_in_petrosian
   <<:
