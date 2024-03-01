@@ -7,7 +7,7 @@ ACTIONS_VERSIONS = {
   "github/codeql-action/analyze"    => "v3",
   "github/codeql-action/init"       => "v3",
   "paambaati/codeclimate-action"    => "v5",
-  "peter-evans/create-pull-request" => "v5",
+  "peter-evans/create-pull-request" => "v6",
   "peter-evans/repository-dispatch" => "v3",
   "ruby/setup-ruby"                 => "v1"
 }.freeze
