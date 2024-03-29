@@ -18,6 +18,7 @@ providers: &providers
   ManageIQ/manageiq-providers-azure:
   ManageIQ/manageiq-providers-azure_stack:
   ManageIQ/manageiq-providers-cisco_intersight:
+  ManageIQ/manageiq-providers-embedded_terraform:
   ManageIQ/manageiq-providers-foreman:
   ManageIQ/manageiq-providers-google:
   ManageIQ/manageiq-providers-ibm_cic:
