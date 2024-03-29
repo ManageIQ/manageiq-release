@@ -3,7 +3,7 @@
 require "bundler/inline"
 gemfile do
   source "https://rubygems.org"
-  gem "multi_repo", require: "multi_repo/cli"
+  gem "multi_repo", ">= 0.4.0", require: "multi_repo/cli"
 end
 
 opts = Optimist.options do
@@ -28,26 +28,30 @@ puts "\n** Updating Labels"
 MultiRepo::Helpers::UpdateLabels.new(repo.name, **opts).run
 if opts[:plugin]
   puts "\n** Reserve rubygems entry"
-  MultiRepo::Helpers::RubygemsStub.new(repo.name, **opts).run
+  MultiRepo::Service::RubygemsStub.new(repo.short_name, **opts).run
 end
-
-puts "\n** Preparing Pull Request"
-MultiRepo::Helpers::PullRequestBlasterOuter.new(repo, **opts.merge(
-  :base    => "master",
-  :head    => "new_repo",
-  :script  => "scripts/pull_request_blaster_outer/new_repo.rb",
-  :message => "Prepare new repository"
-)).blast
+puts "\n** Enabling CodeClimate..."
+code_climate = MultiRepo::Service::CodeClimate.new(repo, **opts)
+code_climate.enable
+puts "\n** Creating CodeClimate GitHub repository secret..."
+code_climate.create_repo_secret
 
 puts
 puts "******* MANUAL THINGS *******"
+puts "- https://github.com/ManageIQ/#{repo.name}/settings/access should have the following teams"
+puts "  - bots (Write permission)"
+puts "  - core-admins (Admin permission)"
+if opts[:plugin]
+  puts "  - core-providers (Read permission - if a provider plugin)"
+  puts "  - a core-provider-plugins sub team (Read permission - if a provider plugin with a subteam)"
+  puts "  - core-ui (Read permission - if the plugin has a UI component)"
+end
+puts "  - security (Read permission)"
+puts "- https://codeclimate.com/github/#{repo.name} => Repo Settings => GitHub => Pull Request Status Updates => Install"
 if opts[:plugin]
   puts "- Add repo to repos.sets.yml if this is a new core or provider plugin"
   puts "- Add repo to mirror settings"
-  puts "- https://gitter.im/ManageIQ#createroom and create a new room linked to the repository"
 end
-puts "- https://codeclimate.com/github/#{repo.name} => Repo Settings => GitHub => Pull Request Status Updates => Install"
-puts "  - Ensure that CC_TEST_REPORTER_ID is set in the repo settings"
 puts "- Add repo to the bot"
 if opts[:plugin]
   puts "  - Also add repo to the bot settings list of plugins"
