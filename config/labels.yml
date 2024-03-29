@@ -276,6 +276,12 @@ repos:
     - *repo_introduced_in_najdorf
     - *provider_plugin
     - *release
+  ManageIQ/manageiq-providers-embedded_terraform:
+    <<:
+    - *common
+    - *repo_introduced_in_radjabov
+    - *provider_plugin
+    - *release
   ManageIQ/manageiq-providers-foreman:
     <<:
     - *common
