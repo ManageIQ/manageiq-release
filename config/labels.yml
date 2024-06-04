@@ -6,6 +6,7 @@ mend: &mend
   "configuration error": "ee0701"
   "security fix": "ee0701"
   "Mend: dependency security vulnerability": "ee0701"
+  "Mend: dependency dashboard": "ee0701"
 
 common: &common
   bug: "ee0701"
