@@ -4,16 +4,20 @@
 
 ##### Find vagrant builds from releases.manageiq.org #####
 
+require "bundler/inline"
+gemfile do
+  source "https://rubygems.org"
+  gem "aws-sdk-s3",          "~> 1.156"
+  gem "nokogiri"
+end
+
 def format_key(key)
   @string_size = [@string_size.to_i, key.length + 2].max
   key.ljust(@string_size, " ")
 end
 
 def s3_client
-  @client ||= begin
-    require 'aws-sdk-s3'
-    Aws::S3::Client.new(:access_key_id => ENV['SPACES_KEY'], :secret_access_key => ENV['SPACES_SECRET'], :endpoint => "https://nyc3.digitaloceanspaces.com", :region => 'us-east-1')
-  end
+  @client ||= Aws::S3::Client.new(:access_key_id => ENV['SPACES_KEY'], :secret_access_key => ENV['SPACES_SECRET'], :endpoint => "https://s3.us-east.cloud-object-storage.appdomain.cloud", :region => "us-east")
 end
 
 bucket            = "releases-manageiq-org"
@@ -40,7 +44,8 @@ end
 ##### Register vagrant builds on vagrantup.com #####
 
 def check_response!(response, object_name)
-  if response.status.success?
+  case response
+  when Net::HTTPSuccess then
     puts " - Created #{object_name}"
   else
     puts " - Failed to create #{object_name}"
@@ -48,52 +53,78 @@ def check_response!(response, object_name)
   end
 end
 
-def vagrant_client
-  require "http"
-  HTTP.persistent("https://app.vagrantup.com").headers("Content-Type" => "application/json", "Authorization" => "Bearer #{vagrant_token}")
-end
-
 def vagrant_token
   @vagrant_token ||= begin
-    api = HTTP.persistent("https://app.vagrantup.com").headers("Content-Type" => "application/json")
-    response = api.post("/api/v1/authenticate", json: {  token: { description: "Build registration script" },  user: { login: ENV["VAGRANT_USERNAME"], password: ENV["VAGRANT_PASSWORD"] }})
-    token = JSON.parse(response.body)["token"]
-    if !response.status.success? || !token
+    uri = URI("https://app.vagrantup.com/api/v1/authenticate")
+    http = Net::HTTP.new(uri.host, uri.port)
+    http.use_ssl = true
+    response = http.post(
+      "/api/v1/authenticate",
+      {token: { description: "Build registration script" },  user: { login: ENV["VAGRANT_USERNAME"], password: ENV["VAGRANT_PASSWORD"] }}.to_json,
+      {"Content-Type" => "application/json"}
+    )
+    case response
+    when Net::HTTPSuccess then
+      puts "Logged in!"
+      JSON.parse(response.body)["token"]
+    else
       puts "Failed to log in!"
       exit 1
     end
-
-    puts "Logged in!"
-    token
   end
 end
 
 releases_versions.each do |name, version_hash|
-  response = vagrant_client.get("/api/v1/box/manageiq/#{name}")
-  print "#{name} : "
-  if response.status.success?
+  uri = URI("https://app.vagrantup.com")
+  http = Net::HTTP.new(uri.host, uri.port)
+  http.use_ssl = true
+  response = http.get(
+    "/api/v1/box/manageiq/#{name}",
+    {"Content-Type" => "application/json", "Authorization" => "Bearer #{vagrant_token}"}
+  )
+  case response
+  when Net::HTTPSuccess then
     puts "Found"
   else
     print "Attempting to create..."
-    response = vagrant_client.post("/api/v1/boxes", json: {box: {username: "manageiq", name: name, short_description: "ManageIQ Open-Source Management Platform https://manageiq.org", is_private: false}})
+    response = http.post(
+      "/api/v1/boxes",
+      {box: {username: "manageiq", name: name, short_description: "ManageIQ Open-Source Management Platform https://manageiq.org", is_private: false}}.to_json,
+      {"Content-Type" => "application/json", "Authorization" => "Bearer #{vagrant_token}"}
+    )
     check_response!(response, "major version")
   end
 
   version_hash.each do |version, info|
     print "- #{version} : "
-    response = vagrant_client.get("/api/v1/box/manageiq/#{name}/version/#{version}")
-    if response.status == 200
+    response = http.get(
+      "/api/v1/box/manageiq/#{name}/version/#{version}",
+      {"Content-Type" => "application/json", "Authorization" => "Bearer #{vagrant_token}"}
+    )
+    case response
+    when Net::HTTPSuccess then
       puts "exists"
-      next
     else
       puts "missing, attempting to register..."
-      response = vagrant_client.post("/api/v1/box/manageiq/#{name}/versions", json: {version: {version: version, description: "#{info[:key].match(/manageiq-vagrant-(.*)\.box/)[1]} release"}})
+      response = http.post(
+        "/api/v1/box/manageiq/#{name}/versions",
+        {version: {version: version, description: "#{info[:key].match(/manageiq-vagrant-(.*)\.box/)[1]} release"}}.to_json,
+        {"Content-Type" => "application/json", "Authorization" => "Bearer #{vagrant_token}"}
+      )
       check_response!(response, "version")
 
-      response = vagrant_client.post("/api/v1/box/manageiq/#{name}/version/#{version}/providers", json: {provider: {name: "virtualbox", url: "https://releases.manageiq.org/#{info[:key]}", checksum: info[:md5], checksum_type: "md5"}})
+      response = http.post(
+        "/api/v1/box/manageiq/#{name}/version/#{version}/providers",
+        {provider: {name: "virtualbox", url: "https://releases.manageiq.org/#{info[:key]}", checksum: info[:md5], checksum_type: "md5"}}.to_json,
+        {"Content-Type" => "application/json", "Authorization" => "Bearer #{vagrant_token}"}
+      )
       check_response!(response, "provider")
 
-      response = vagrant_client.put("/api/v1/box/manageiq/#{name}/version/#{version}/release")
+      response = http.put(
+        "/api/v1/box/manageiq/#{name}/version/#{version}/release",
+        {}.to_json,
+        {"Content-Type" => "application/json", "Authorization" => "Bearer #{vagrant_token}"}
+      )
       check_response!(response, "release")
     end
   end
