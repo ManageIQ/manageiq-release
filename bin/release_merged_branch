@@ -51,7 +51,8 @@ class ReleaseMergedBranch
 
     repo.chdir do
       begin
-        repo.git.client.merge("--no-ff", "--no-edit", "origin/#{source_branch}")
+        FileUtils.rm_rf(".git/rr-cache") # Clear the rerere cache
+        repo.git.client.merge("--no-ff", "--no-edit", "-Xtheirs", "origin/#{source_branch}")
       rescue MiniGit::GitError
         $stderr.puts("ERROR: An error has occurred during git merge and may require manual conflict resolution.".light_red)
         $stderr.puts("  Repo: #{repo.path}")
