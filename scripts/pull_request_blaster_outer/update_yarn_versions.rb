@@ -18,7 +18,7 @@ end
 
 # Plugin generator changes
 plugin_dir = "lib/generators/manageiq/plugin/templates"
-if Dir.exists?(plugin_dir)
+if Dir.exist?(plugin_dir)
   yarnrc = File.join(plugin_dir, ".yarnrc.yml")
   package_json = File.join(plugin_dir, "package.json")
   yarn_release = File.join(plugin_dir, ".yarn/releases/yarn-*.cjs")
