@@ -86,6 +86,13 @@ release: &release
   blocker: "000000"
   "bugzilla needed": "000000"
 
+release_spassky: &release_spassky
+  spassky/yes: "000000"
+  spassky/yes?: "000000"
+  spassky/no: "000000"
+  spassky/backported: "000000"
+  spassky/conflict: "000000"
+
 release_radjabov: &release_radjabov
   radjabov/yes: "000000"
   radjabov/yes?: "000000"
@@ -128,9 +135,14 @@ release_morphy: &release_morphy
   morphy/backported: "dddddd"
   morphy/conflict: "dddddd"
 
+repo_introduced_in_spassky: &repo_introduced_in_spassky
+  <<:
+  - *release_spassky
+
 repo_introduced_in_radjabov: &repo_introduced_in_radjabov
   <<:
   - *release_radjabov
+  - *repo_introduced_in_spassky
 
 repo_introduced_in_quinteros: &repo_introduced_in_quinteros
   <<:
