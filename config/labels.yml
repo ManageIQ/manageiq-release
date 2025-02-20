@@ -482,6 +482,10 @@ repos:
     - *common
     - *release
     - *semver
+  ManageIQ/ruby-rpm-ffi2:
+    <<:
+    - *common
+    - *semver
   ManageIQ/ui-components:
     <<:
     - *common
