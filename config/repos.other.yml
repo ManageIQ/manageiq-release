@@ -8,6 +8,7 @@ gems:
   ManageIQ/binary_struct:
   ManageIQ/bundler-inject:
   ManageIQ/ffi-vix_disk_lib:
+  ManageIQ/floe:
   ManageIQ/foreman_api_client:
   ManageIQ/httpd_configmap_generator:
   ManageIQ/inventory_refresh:
@@ -36,6 +37,8 @@ gems:
   ManageIQ/pg-logical_replication:
   ManageIQ/pg-pglogical:
   ManageIQ/query_relation:
+  ManageIQ/rbvmomi2:
+  ManageIQ/ruby-rpm-ffi2:
   ManageIQ/vmware_web_service:
   ManageIQ/wim_parser:
 applications:
