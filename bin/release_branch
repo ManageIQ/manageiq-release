@@ -187,6 +187,7 @@ class ReleaseBranch
   end
 end
 
+require "stringio"
 review = StringIO.new
 post_review = StringIO.new
 
