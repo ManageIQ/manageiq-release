@@ -1,10 +1,9 @@
 #! /usr/bin/env ruby
 require "rubygems"
 versions = ENV["VERSIONS"].to_s.split(",").map(&:strip)
-puts "RAW_VERSION #{versions.any? { |v| v !~ /^\d+\.\d+$/ }}"
 if versions.empty? || versions.any? { |v| v !~ /^\d+\.\d+$/ }
   puts "ERROR: VERSIONS env var must be set to a comma separated list of version numbers such as:"
-  puts "VERSIONS=\"2.5.7,2.6.5\" GITHUB_API_TOKEN=XXX bin/pull_request_blaster_outer.rb --base master --head update_ci_rubies --script scripts/pull_request_blaster_outer/change_ci_ruby_versions.rb --message \"Test ruby 2.5.7/2.6.5, see: ManageIQ/manageiq#19414\""
+  puts "VERSIONS=\"3.1,3.3\" GITHUB_API_TOKEN=XXX bin/pull_request_blaster_outer.rb --base master --head update_ci_rubies --script scripts/pull_request_blaster_outer/change_ci_ruby_versions.rb --message \"Test ruby 3.1 and 3.3\""
   exit 1
 end
 
