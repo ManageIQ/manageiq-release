@@ -38,7 +38,7 @@ code_climate.create_repo_secret
 
 puts
 puts "******* MANUAL THINGS *******"
-puts "- https://github.com/ManageIQ/#{repo.name}/settings/access should have the following teams"
+puts "- https://github.com/#{repo.name}/settings/access should have the following teams"
 puts "  - bots (Write permission)"
 puts "  - core-admins (Admin permission)"
 if opts[:plugin]
