@@ -12,6 +12,7 @@ gems:
   ManageIQ/foreman_api_client:
   ManageIQ/httpd_configmap_generator:
   ManageIQ/inventory_refresh:
+  ManageIQ/kubevirt-sdk-ruby:
   ManageIQ/linux_admin:
   ManageIQ/linux_block_device:
   ManageIQ/log_decorator:

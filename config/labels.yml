@@ -467,6 +467,10 @@ repos:
     <<:
     - *common
     - *semver
+  ManageIQ/kubevirt-sdk-ruby:
+    <<:
+    - *common
+    - *semver
   ManageIQ/log_decorator:
     <<:
     - *common
