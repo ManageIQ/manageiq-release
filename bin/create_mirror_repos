@@ -23,7 +23,7 @@ def create_repo(org, name, dry_run:, **_)
 end
 
 def github
-  MultiRepo::Service.Github.client
+  MultiRepo::Service::Github.client
 end
 
 MultiRepo::CLI.repos_for(**opts).each do |repo|
