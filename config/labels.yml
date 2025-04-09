@@ -407,6 +407,12 @@ repos:
     - *repo_introduced_in_morphy_or_prior
     - *provider_plugin
     - *release
+  ManageIQ/manageiq-providers-terraform_enterprise:
+    <<:
+    - *common
+    - *repo_introduced_in_spassky
+    - *provider_plugin
+    - *release
   ManageIQ/manageiq-providers-vmware:
     <<:
     - *common
