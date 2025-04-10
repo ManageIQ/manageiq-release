@@ -7,6 +7,7 @@ gemfile do
 end
 
 require "fileutils"
+require "stringio"
 
 opts = Optimist.options do
   opt :tag,    "The new tag name.",       :type => :string, :required => true
