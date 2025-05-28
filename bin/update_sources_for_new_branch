@@ -26,7 +26,6 @@ MultiRepo::CLI.each_repo(**opts) do |repo|
     readme.gsub!("coveralls.io/repos/#{repo.name}/badge.svg?branch=master", "coveralls.io/repos/#{repo.name}/badge.svg?branch=#{opts[:branch]}")
     readme.gsub!("coveralls.io/github/#{repo.name}?branch=master", "coveralls.io/github/#{repo.name}?branch=#{opts[:branch]}")
     readme.gsub!("hakiri.io/github/#{repo.name}/master", "hakiri.io/github/#{repo.name}/#{opts[:branch]}")
-    readme.gsub!("buildstats.info/travisci/chart/#{repo.name}?branch=master", "buildstats.info/travisci/chart/#{repo.name}?branch=#{opts[:branch]}")
     File.write("README.md", readme)
 
     # Update the Gemfile for manageiq
