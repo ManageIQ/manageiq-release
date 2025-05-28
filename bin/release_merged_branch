@@ -50,12 +50,27 @@ class ReleaseMergedBranch
     repo.git.hard_checkout(branch)
 
     repo.chdir do
+      # Determine the commit SHA that makes changes on master for the next release, so we can undo that.
+      # This should be the first commit on master after the merge base.
+      revert_sha, comment = repo.git.client.capturing.log("--ancestry-path", {:format => "\%H\t\%s"}, "#{repo.git.client.capturing.merge_base(branch, source_branch).chomp}..#{source_branch}").chomp.split("\t")
+      revert_sha = nil unless comment == "Changes after new branch #{branch}"
+
       begin
         FileUtils.rm_rf(".git/rr-cache") # Clear the rerere cache
         repo.git.client.merge("--no-ff", "--no-edit", "-Xtheirs", "origin/#{source_branch}")
       rescue MiniGit::GitError
         $stderr.puts("ERROR: An error has occurred during git merge and may require manual conflict resolution.".light_red)
         $stderr.puts("  Repo: #{repo.path}")
+        $stderr.puts("  Fix the error and press Enter to continue...")
+        $stdin.gets
+      end
+
+      begin
+        repo.git.client.revert("--no-edit", revert_sha) if revert_sha
+      rescue MiniGit::GitError
+        $stderr.puts("ERROR: An error has occurred during git revert and may require manual conflict resolution.".light_red)
+        $stderr.puts("  Repo: #{repo.path}")
+        $stderr.puts("  Commit: #{revert_sha}")
         $stderr.puts("  Fix the error and press Enter to continue...")
         $stdin.gets
       end
@@ -71,7 +86,7 @@ class ReleaseMergedBranch
   end
 
   def review
-    branch_diff = pretty_log(branch, 2)
+    branch_diff = pretty_log(branch, 3)
 
     [
       MultiRepo::CLI.header("#{branch} changes", "-"),
@@ -86,6 +101,7 @@ class ReleaseMergedBranch
   end
 end
 
+require "stringio"
 review = StringIO.new
 post_review = StringIO.new
 
