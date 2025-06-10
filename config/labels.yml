@@ -499,6 +499,14 @@ repos:
     <<:
     - *common
     - *semver
+  ManageIQ/nutanix_clustermgmt-sdk-ruby:
+    <<:
+    - *common
+    - *semver
+  ManageIQ/nutanix_vmm-sdk-ruby:
+    <<:
+    - *common
+    - *semver
   ManageIQ/rbvmomi2:
     <<:
     - *common

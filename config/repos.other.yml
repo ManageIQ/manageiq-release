@@ -31,6 +31,8 @@ gems:
   ManageIQ/more_core_extensions:
   ManageIQ/multi_repo:
   ManageIQ/net_app_manageability:
+  ManageIQ/nutanix_clustermgmt-sdk-ruby:
+  ManageIQ/nutanix_vmm-sdk-ruby:
   ManageIQ/optimist:
   ManageIQ/ovirt:
   ManageIQ/ovirt_metrics:
