@@ -58,6 +58,7 @@
     manageiq-providers-lenovo:
     manageiq-providers-nsxt:
     manageiq-providers-nuage:
+    manageiq-providers-nutanix:
     manageiq-providers-openshift:
     manageiq-providers-openstack:
     manageiq-providers-oracle_cloud:

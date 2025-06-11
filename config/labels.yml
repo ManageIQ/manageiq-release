@@ -371,6 +371,12 @@ repos:
     - *repo_introduced_in_morphy_or_prior
     - *provider_plugin
     - *release
+  ManageIQ/manageiq-providers-nutanix:
+    <<:
+    - *common
+    - *repo_introduced_in_spassky
+    - *provider_plugin
+    - *release
   ManageIQ/manageiq-providers-openshift:
     <<:
     - *common
