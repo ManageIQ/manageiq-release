@@ -33,6 +33,7 @@ gems:
   ManageIQ/net_app_manageability:
   ManageIQ/nutanix_clustermgmt-sdk-ruby:
   ManageIQ/nutanix_vmm-sdk-ruby:
+  ManageIQ/nutanix_volumes-sdk-ruby:
   ManageIQ/optimist:
   ManageIQ/ovirt:
   ManageIQ/ovirt_metrics:

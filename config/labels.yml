@@ -513,6 +513,10 @@ repos:
     <<:
     - *common
     - *semver
+  ManageIQ/nutanix_volumes-sdk-ruby:
+    <<:
+    - *common
+    - *semver
   ManageIQ/rbvmomi2:
     <<:
     - *common
