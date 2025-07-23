@@ -29,6 +29,7 @@ common: &common
   question: "cc317c"
   refactoring: "fbca04"
   redesign: "e99695"
+  regression: "ee0701"
   rails6.1: "f9d0c4"
   rails7: "f9d0c4"
   rails7.1: "f9d0c4"
