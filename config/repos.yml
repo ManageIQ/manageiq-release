@@ -139,6 +139,7 @@ spassky:
   ManageIQ/manageiq-providers-lenovo:
   ManageIQ/manageiq-providers-nsxt:
   ManageIQ/manageiq-providers-nuage:
+  ManageIQ/manageiq-providers-nutanix:
   ManageIQ/manageiq-providers-openshift:
   ManageIQ/manageiq-providers-openstack:
   ManageIQ/manageiq-providers-oracle_cloud:
