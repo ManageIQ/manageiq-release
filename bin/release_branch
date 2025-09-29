@@ -115,7 +115,6 @@ class ReleaseBranch
       contents.gsub!(/(github\.com.+?branch=)#{source_branch}\b/, "\\1#{branch}")
       contents.gsub!(/(github\.com.+?\.svg)\)/, "\\1?branch=#{branch})")
       contents.gsub!(/(coveralls\.io.+?branch=)#{source_branch}\b/, "\\1#{branch}")
-      contents.gsub!(/Build history for (?:master|#{source_branch}) branch/, "Build history for #{branch} branch")
       contents
     end
 
