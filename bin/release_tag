@@ -58,7 +58,7 @@ class ReleaseTag
       Bundler.with_clean_env do
         repo.chdir do
           # Ensure that spec/manageiq is symlinked
-          FileUtils.ln_sf(repo.path.join("../manageiq").expand_path, repo.path.join("spec/manageiq"))
+          FileUtils.ln_sf(repo.path.join("../xaasio-cmp").expand_path, repo.path.join("spec/manageiq"))
 
           system!("bundle check || bundle update")
           system!({"RELEASE_VERSION" => tag}, "bundle exec rake release")
@@ -83,7 +83,7 @@ post_review = StringIO.new
 # Move manageiq repo to the end of the list.  The rake release script on manageiq
 #   depends on all of the other repos running their rake release scripts first.
 repos = MultiRepo::CLI.repos_for(**opts)
-repos = repos.partition { |r| r.name != "ManageIQ/manageiq" }.flatten
+repos = repos.partition { |r| r.name != "xaasio-cmp/xaasio-cmp" }.flatten
 
 # However, the other plugins require that manageiq is at the right checkout in
 #   order to run their rake release scripts
