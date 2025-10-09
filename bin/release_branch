@@ -114,9 +114,9 @@ class ReleaseBranch
     end
 
     readme = editing_file("README.md") do |contents|
-      contents.gsub!(/(gitlab\.xaasio\.com.+?branch=)#{source_branch}\b/, "\\1#{branch}")
-      contents.gsub!(/(gitlab\.xaasio\.com.+?\.svg)\)/, "\\1?branch=#{branch})")
-      #contents.gsub!(/(coveralls\.io.+?branch=)#{source_branch}\b/, "\\1#{branch}")
+      contents.gsub!(/(github\.com.+?branch=)#{source_branch}\b/, "\\1#{branch}")
+      contents.gsub!(/(github\.com.+?\.svg)\)/, "\\1?branch=#{branch})")
+      contents.gsub!(/(coveralls\.io.+?branch=)#{source_branch}\b/, "\\1#{branch}")
       contents
     end
 

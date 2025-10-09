@@ -19,62 +19,62 @@
       master:
     manageiq-v2v:
       master:
-  :productization_name: xaasio-cmp
+  :productization_name: manageiq
   :remotes:
-    :upstream: https://gitlab.xaasio.com/xaasio-cmp
+    :upstream: git@github.com:ManageIQ
   :repos_to_mirror:
     container-httpd:
     container-memcached:
     container-postgresql:
-    xaasio-api:
-    xaasio-appliance-build:
-    xaasio-appliance:
-    xaasio-automation_engine:
-    xaasio-consumption:
-    xaasio-content:
-    xaasio-decorators:
-    xaasio-documentation:
-    xaasio-gems-pending:
-    # xaasio-graphql has been removed as a plugin starting with najdorf, but we still need to mirror other branches
-    xaasio-graphql:
-    xaasio-pods:
-    xaasio-providers-amazon:
-    xaasio-providers-ansible_tower:
-    xaasio-providers-autosde:
-    xaasio-providers-awx:
-    xaasio-providers-azure:
-    xaasio-providers-azure_stack:
-    xaasio-providers-cisco_intersight:
-    xaasio-providers-embedded_terraform:
-    xaasio-providers-foreman:
-    xaasio-providers-google:
-    xaasio-providers-ibm_cic:
-    xaasio-providers-ibm_cloud:
-    xaasio-providers-ibm_power_hmc:
-    xaasio-providers-ibm_power_vc:
-    xaasio-providers-ibm_terraform:
-    xaasio-providers-kubernetes:
-    xaasio-providers-kubevirt:
-    xaasio-providers-lenovo:
-    xaasio-providers-nsxt:
-    xaasio-providers-nuage:
-    xaasio-providers-nutanix:
-    xaasio-providers-openshift:
-    xaasio-providers-openstack:
-    xaasio-providers-oracle_cloud:
-    xaasio-providers-ovirt:
-    xaasio-providers-red_hat_virtualization:
-    xaasio-providers-redfish:
-    xaasio-providers-terraform_enterprise:
-    xaasio-providers-vmware:
-    xaasio-providers-workflows:
-    xaasio-release:
-    xaasio-schema:
-    xaasio-ui-classic:
-    xaasio-ui-service:
-    # xaasio-v2v has been removed as a plugin starting with najdorf, but we still need to mirror other branches
-    xaasio-v2v:
-    xaasio-cmp:
+    manageiq-api:
+    manageiq-appliance-build:
+    manageiq-appliance:
+    manageiq-automation_engine:
+    manageiq-consumption:
+    manageiq-content:
+    manageiq-decorators:
+    manageiq-documentation:
+    manageiq-gems-pending:
+    # manageiq-graphql has been removed as a plugin starting with najdorf, but we still need to mirror other branches
+    manageiq-graphql:
+    manageiq-pods:
+    manageiq-providers-amazon:
+    manageiq-providers-ansible_tower:
+    manageiq-providers-autosde:
+    manageiq-providers-awx:
+    manageiq-providers-azure:
+    manageiq-providers-azure_stack:
+    manageiq-providers-cisco_intersight:
+    manageiq-providers-embedded_terraform:
+    manageiq-providers-foreman:
+    manageiq-providers-google:
+    manageiq-providers-ibm_cic:
+    manageiq-providers-ibm_cloud:
+    manageiq-providers-ibm_power_hmc:
+    manageiq-providers-ibm_power_vc:
+    manageiq-providers-ibm_terraform:
+    manageiq-providers-kubernetes:
+    manageiq-providers-kubevirt:
+    manageiq-providers-lenovo:
+    manageiq-providers-nsxt:
+    manageiq-providers-nuage:
+    manageiq-providers-nutanix:
+    manageiq-providers-openshift:
+    manageiq-providers-openstack:
+    manageiq-providers-oracle_cloud:
+    manageiq-providers-ovirt:
+    manageiq-providers-red_hat_virtualization:
+    manageiq-providers-redfish:
+    manageiq-providers-terraform_enterprise:
+    manageiq-providers-vmware:
+    manageiq-providers-workflows:
+    manageiq-release:
+    manageiq-schema:
+    manageiq-ui-classic:
+    manageiq-ui-service:
+    # manageiq-v2v has been removed as a plugin starting with najdorf, but we still need to mirror other branches
+    manageiq-v2v:
+    manageiq:
   :working_directory: mirrors
 :manageiq_rubygems:
   :s3_access_key:
