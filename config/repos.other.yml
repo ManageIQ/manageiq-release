@@ -35,7 +35,6 @@ gems:
   ManageIQ/nutanix_vmm-sdk-ruby:
   ManageIQ/nutanix_volumes-sdk-ruby:
   ManageIQ/optimist:
-  ManageIQ/ovirt:
   ManageIQ/ovirt_metrics:
   ManageIQ/pg-dsn_parser:
   ManageIQ/pg-logical_replication:
