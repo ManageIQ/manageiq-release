@@ -136,39 +136,39 @@ release_morphy: &release_morphy
   morphy/backported: "dddddd"
   morphy/conflict: "dddddd"
 
-repo_introduced_in_spassky: &repo_introduced_in_spassky
+release_spassky_plus: &release_spassky_plus
   <<:
   - *release_spassky
 
-repo_introduced_in_radjabov: &repo_introduced_in_radjabov
+release_radjabov_plus: &release_radjabov_plus
   <<:
   - *release_radjabov
-  - *repo_introduced_in_spassky
+  - *release_spassky_plus
 
-repo_introduced_in_quinteros: &repo_introduced_in_quinteros
+release_quinteros_plus: &release_quinteros_plus
   <<:
   - *release_quinteros
-  - *repo_introduced_in_radjabov
+  - *release_radjabov_plus
 
-repo_introduced_in_petrosian: &repo_introduced_in_petrosian
+release_petrosian_plus: &release_petrosian_plus
   <<:
   - *release_petrosian
-  - *repo_introduced_in_quinteros
+  - *release_quinteros_plus
 
-repo_introduced_in_oparin: &repo_introduced_in_oparin
+release_oparin_plus: &release_oparin_plus
   <<:
   - *release_oparin
-  - *repo_introduced_in_petrosian
+  - *release_petrosian_plus
 
-repo_introduced_in_najdorf: &repo_introduced_in_najdorf
+release_najdorf_plus: &release_najdorf_plus
   <<:
   - *release_najdorf
-  - *repo_introduced_in_oparin
+  - *release_oparin_plus
 
-repo_introduced_in_morphy: &repo_introduced_in_morphy_or_prior
+release_morphy_plus: &release_morphy_plus
   <<:
   - *release_morphy
-  - *repo_introduced_in_najdorf
+  - *release_najdorf_plus
 
 #
 # Label Assignments
@@ -187,272 +187,272 @@ repos:
   ManageIQ/amazon_ssa_support:
     <<:
     - *common
-    - *repo_introduced_in_morphy_or_prior
+    - *release_morphy_plus
     - *release
   ManageIQ/container-amazon-smartstate:
     <<:
     - *common
-    - *repo_introduced_in_morphy_or_prior
+    - *release_morphy_plus
     - *release
   ManageIQ/manageiq:
     <<:
     - *common
-    - *repo_introduced_in_morphy_or_prior
+    - *release_morphy_plus
     - *provider_types
     - *release
   ManageIQ/manageiq-api:
     <<:
     - *common
-    - *repo_introduced_in_morphy_or_prior
+    - *release_morphy_plus
     - *provider_types
     - *release
     - *semver
   ManageIQ/manageiq-appliance:
     <<:
     - *common
-    - *repo_introduced_in_morphy_or_prior
+    - *release_morphy_plus
     - *release
   ManageIQ/manageiq-appliance-build:
     <<:
     - *common
-    - *repo_introduced_in_morphy_or_prior
+    - *release_morphy_plus
     - *release
   ManageIQ/manageiq-automation_engine:
     <<:
     - *common
-    - *repo_introduced_in_morphy_or_prior
+    - *release_morphy_plus
     - *release
   ManageIQ/manageiq-consumption:
     <<:
     - *common
-    - *repo_introduced_in_morphy_or_prior
+    - *release_morphy_plus
     - *release
   ManageIQ/manageiq-content:
     <<:
     - *common
-    - *repo_introduced_in_morphy_or_prior
+    - *release_morphy_plus
     - *provider_types
     - *release
   ManageIQ/manageiq-decorators:
     <<:
     - *common
-    - *repo_introduced_in_morphy_or_prior
+    - *release_morphy_plus
     - *release
   ManageIQ/manageiq-documentation:
     <<:
-    - *repo_introduced_in_morphy_or_prior
+    - *release_morphy_plus
     - *release
   ManageIQ/manageiq-gems-pending:
     <<:
     - *common
-    - *repo_introduced_in_morphy_or_prior
+    - *release_morphy_plus
     - *release
   ManageIQ/manageiq-pods:
     <<:
     - *common
-    - *repo_introduced_in_morphy_or_prior
+    - *release_morphy_plus
     - *release
   ManageIQ/manageiq-providers-amazon:
     <<:
     - *common
-    - *repo_introduced_in_morphy_or_prior
+    - *release_morphy_plus
     - *provider_plugin
     - *release
   ManageIQ/manageiq-providers-ansible_tower:
     <<:
     - *common
-    - *repo_introduced_in_morphy_or_prior
+    - *release_morphy_plus
     - *provider_plugin
     - *release
   ManageIQ/manageiq-providers-autosde:
     <<:
     - *common
-    - *repo_introduced_in_morphy_or_prior
+    - *release_morphy_plus
     - *provider_plugin
     - *release
   ManageIQ/manageiq-providers-awx:
     <<:
     - *common
-    - *repo_introduced_in_oparin
+    - *release_oparin_plus
     - *provider_plugin
     - *release
   ManageIQ/manageiq-providers-azure:
     <<:
     - *common
-    - *repo_introduced_in_morphy_or_prior
+    - *release_morphy_plus
     - *provider_plugin
     - *release
   ManageIQ/manageiq-providers-azure_stack:
     <<:
     - *common
-    - *repo_introduced_in_morphy_or_prior
+    - *release_morphy_plus
     - *provider_plugin
     - *release
   ManageIQ/manageiq-providers-cisco_intersight:
     <<:
     - *common
-    - *repo_introduced_in_najdorf
+    - *release_najdorf_plus
     - *provider_plugin
     - *release
   ManageIQ/manageiq-providers-embedded_terraform:
     <<:
     - *common
-    - *repo_introduced_in_radjabov
+    - *release_radjabov_plus
     - *provider_plugin
     - *release
   ManageIQ/manageiq-providers-foreman:
     <<:
     - *common
-    - *repo_introduced_in_morphy_or_prior
+    - *release_morphy_plus
     - *provider_plugin
     - *release
   ManageIQ/manageiq-providers-google:
     <<:
     - *common
-    - *repo_introduced_in_morphy_or_prior
+    - *release_morphy_plus
     - *provider_plugin
     - *release
   ManageIQ/manageiq-providers-ibm_cic:
     <<:
     - *common
-    - *repo_introduced_in_najdorf
+    - *release_najdorf_plus
     - *provider_plugin
     - *release
   ManageIQ/manageiq-providers-ibm_cloud:
     <<:
     - *common
-    - *repo_introduced_in_morphy_or_prior
+    - *release_morphy_plus
     - *provider_plugin
     - *release
   ManageIQ/manageiq-providers-ibm_power_hmc:
     <<:
     - *common
-    - *repo_introduced_in_najdorf
+    - *release_najdorf_plus
     - *provider_plugin
     - *release
   ManageIQ/manageiq-providers-ibm_power_vc:
     <<:
     - *common
-    - *repo_introduced_in_morphy_or_prior
+    - *release_morphy_plus
     - *provider_plugin
     - *release
   ManageIQ/manageiq-providers-ibm_terraform:
     <<:
     - *common
-    - *repo_introduced_in_morphy_or_prior
+    - *release_morphy_plus
     - *provider_plugin
     - *release
   ManageIQ/manageiq-providers-kubernetes:
     <<:
     - *common
-    - *repo_introduced_in_morphy_or_prior
+    - *release_morphy_plus
     - *provider_plugin
     - *release
   ManageIQ/manageiq-providers-kubevirt:
     <<:
     - *common
-    - *repo_introduced_in_morphy_or_prior
+    - *release_morphy_plus
     - *provider_plugin
     - *release
   ManageIQ/manageiq-providers-lenovo:
     <<:
     - *common
-    - *repo_introduced_in_morphy_or_prior
+    - *release_morphy_plus
     - *provider_plugin
     - *release
   ManageIQ/manageiq-providers-nsxt:
     <<:
     - *common
-    - *repo_introduced_in_morphy_or_prior
+    - *release_morphy_plus
     - *provider_plugin
     - *release
   ManageIQ/manageiq-providers-nuage:
     <<:
     - *common
-    - *repo_introduced_in_morphy_or_prior
+    - *release_morphy_plus
     - *provider_plugin
     - *release
   ManageIQ/manageiq-providers-nutanix:
     <<:
     - *common
-    - *repo_introduced_in_spassky
+    - *release_spassky_plus
     - *provider_plugin
     - *release
   ManageIQ/manageiq-providers-openshift:
     <<:
     - *common
-    - *repo_introduced_in_morphy_or_prior
+    - *release_morphy_plus
     - *provider_plugin
     - *release
   ManageIQ/manageiq-providers-openstack:
     <<:
     - *common
-    - *repo_introduced_in_morphy_or_prior
+    - *release_morphy_plus
     - *provider_plugin
     - *release
   ManageIQ/manageiq-providers-oracle_cloud:
     <<:
     - *common
-    - *repo_introduced_in_morphy_or_prior
+    - *release_morphy_plus
     - *provider_plugin
     - *release
   ManageIQ/manageiq-providers-ovirt:
     <<:
     - *common
-    - *repo_introduced_in_morphy_or_prior
+    - *release_morphy_plus
     - *provider_plugin
     - *release
   ManageIQ/manageiq-providers-red_hat_virtualization:
     <<:
     - *common
-    - *repo_introduced_in_oparin
+    - *release_oparin_plus
     - *provider_plugin
     - *release
   ManageIQ/manageiq-providers-redfish:
     <<:
     - *common
-    - *repo_introduced_in_morphy_or_prior
+    - *release_morphy_plus
     - *provider_plugin
     - *release
   ManageIQ/manageiq-providers-terraform_enterprise:
     <<:
     - *common
-    - *repo_introduced_in_spassky
+    - *release_spassky_plus
     - *provider_plugin
     - *release
   ManageIQ/manageiq-providers-vmware:
     <<:
     - *common
-    - *repo_introduced_in_morphy_or_prior
+    - *release_morphy_plus
     - *provider_plugin
     - *release
   ManageIQ/manageiq-providers-workflows:
     <<:
     - *common
-    - *repo_introduced_in_petrosian
+    - *release_petrosian_plus
     - *provider_plugin
     - *release
   ManageIQ/manageiq-rpm_build:
     <<:
     - *common
-    - *repo_introduced_in_morphy_or_prior
+    - *release_morphy_plus
     - *release
   ManageIQ/manageiq-schema:
     <<:
     - *common
-    - *repo_introduced_in_morphy_or_prior
+    - *release_morphy_plus
     - *provider_types
     - *release
   ManageIQ/manageiq-ui-classic:
     <<:
     - *common
-    - *repo_introduced_in_morphy_or_prior
+    - *release_morphy_plus
     - *release
     - *ux
   ManageIQ/manageiq-ui-service:
     <<:
     - *common
-    - *repo_introduced_in_morphy_or_prior
+    - *release_morphy_plus
     - *release
     - *ux
   #
