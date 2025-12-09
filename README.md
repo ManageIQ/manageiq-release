@@ -1,6 +1,5 @@
 # ManageIQ release tools
 
-[![Code Climate](https://codeclimate.com/github/ManageIQ/manageiq-release.svg)](https://codeclimate.com/github/ManageIQ/manageiq-release)
 
 Tools for the ManageIQ project, including those for releasing new branches and tags.
 
