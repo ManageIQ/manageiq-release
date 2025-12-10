@@ -30,11 +30,6 @@ if opts[:plugin]
   puts "\n** Reserve rubygems entry"
   MultiRepo::Service::RubygemsStub.new(repo.short_name, **opts).run
 end
-puts "\n** Enabling CodeClimate..."
-code_climate = MultiRepo::Service::CodeClimate.new(repo, **opts)
-code_climate.enable
-puts "\n** Creating CodeClimate GitHub repository secret..."
-code_climate.create_repo_secret
 
 puts
 puts "******* MANUAL THINGS *******"
@@ -47,7 +42,6 @@ if opts[:plugin]
   puts "  - core-ui (Read permission - if the plugin has a UI component)"
 end
 puts "  - security (Read permission)"
-puts "- https://codeclimate.com/github/#{repo.name} => Repo Settings => GitHub => Pull Request Status Updates => Install"
 if opts[:plugin]
   puts "- Add repo to repos.sets.yml if this is a new core or provider plugin"
   puts "- Add repo to mirror settings"
