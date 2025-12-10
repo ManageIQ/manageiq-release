@@ -36,7 +36,7 @@ if includes.kind_of?(Array)
 end
 
 if changed
-  ci_yaml = YAML.dump(yaml)
+  ci_yaml = YAML.dump(yaml, line_width: -1)
   ci_yaml.gsub!(/^true:/, "on:") # YAML replaces on: with true:
 
   File.write(ci, ci_yaml)
