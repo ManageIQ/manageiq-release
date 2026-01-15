@@ -461,7 +461,7 @@ repos:
   #
   # Released gems and packages
   #
-  ansible/ansible_tower_client_ruby:
+  ManageIQ/ansible_tower_client_ruby:
     <<:
     - *common
     - *semver
