@@ -2,6 +2,7 @@ gems:
   ManageIQ/activerecord-id_regions:
   ManageIQ/activerecord-virtual_attributes:
   ManageIQ/amazon_ssa_support:
+  ManageIQ/ansible_tower_client_ruby:
   ManageIQ/awesome_spawn:
   ManageIQ/azure-armrest:
   ManageIQ/azure-signature:
