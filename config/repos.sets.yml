@@ -36,6 +36,7 @@ providers: &providers
   ManageIQ/manageiq-providers-openstack:
   ManageIQ/manageiq-providers-oracle_cloud:
   ManageIQ/manageiq-providers-ovirt:
+  ManageIQ/manageiq-providers-proxmox:
   ManageIQ/manageiq-providers-red_hat_virtualization:
   ManageIQ/manageiq-providers-redfish:
   ManageIQ/manageiq-providers-terraform_enterprise:
