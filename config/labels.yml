@@ -405,6 +405,12 @@ repos:
     - *release_morphy_plus
     - *provider_plugin
     - *release
+  ManageIQ/manageiq-providers-proxmox:
+    <<:
+    - *common
+    # - *release_tal_plus # TODO: Uncomment when we cut the tal branch
+    - *provider_plugin
+    - *release
   ManageIQ/manageiq-providers-red_hat_virtualization:
     <<:
     - *common
