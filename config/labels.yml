@@ -90,26 +90,33 @@ release: &release
   blocker: "000000"
   "bugzilla needed": "000000"
 
+release_tal: &release_tal
+  tal/yes: "000000"
+  tal/yes?: "000000"
+  tal/no: "000000"
+  tal/backported: "000000"
+  tal/conflict: "000000"
+
 release_spassky: &release_spassky
-  spassky/yes: "000000"
-  spassky/yes?: "000000"
-  spassky/no: "000000"
-  spassky/backported: "000000"
-  spassky/conflict: "000000"
+  spassky/yes: "555555"
+  spassky/yes?: "555555"
+  spassky/no: "555555"
+  spassky/backported: "555555"
+  spassky/conflict: "555555"
 
 release_radjabov: &release_radjabov
-  radjabov/yes: "000000"
-  radjabov/yes?: "000000"
-  radjabov/no: "000000"
-  radjabov/backported: "000000"
-  radjabov/conflict: "000000"
+  radjabov/yes: "dddddd"
+  radjabov/yes?: "dddddd"
+  radjabov/no: "dddddd"
+  radjabov/backported: "dddddd"
+  radjabov/conflict: "dddddd"
 
 release_quinteros: &release_quinteros
-  quinteros/yes: "555555"
-  quinteros/yes?: "555555"
-  quinteros/no: "555555"
-  quinteros/backported: "555555"
-  quinteros/conflict: "555555"
+  quinteros/yes: "dddddd"
+  quinteros/yes?: "dddddd"
+  quinteros/no: "dddddd"
+  quinteros/backported: "dddddd"
+  quinteros/conflict: "dddddd"
 
 release_petrosian: &release_petrosian
   petrosian/yes: "dddddd"
@@ -139,9 +146,14 @@ release_morphy: &release_morphy
   morphy/backported: "dddddd"
   morphy/conflict: "dddddd"
 
+release_tal_plus: &release_tal_plus
+  <<:
+  - *release_tal
+
 release_spassky_plus: &release_spassky_plus
   <<:
   - *release_spassky
+  - *release_tal_plus
 
 release_radjabov_plus: &release_radjabov_plus
   <<:
@@ -408,7 +420,7 @@ repos:
   ManageIQ/manageiq-providers-proxmox:
     <<:
     - *common
-    # - *release_tal_plus # TODO: Uncomment when we cut the tal branch
+    - *release_tal_plus
     - *provider_plugin
     - *release
   ManageIQ/manageiq-providers-red_hat_virtualization:
