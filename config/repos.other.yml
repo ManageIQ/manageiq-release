@@ -8,6 +8,7 @@ gems:
   ManageIQ/azure-signature:
   ManageIQ/binary_struct:
   ManageIQ/bundler-inject:
+  ManageIQ/database_cleaner-activerecord-seeded_deletion:
   ManageIQ/ffi-vix_disk_lib:
   ManageIQ/floe:
   ManageIQ/foreman_api_client:
