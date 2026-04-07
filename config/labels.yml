@@ -483,6 +483,10 @@ repos:
     <<:
     - *common
     - *semver
+  ManageIQ/database_cleaner-activerecord-seeded_deletion:
+    <<:
+    - *common
+    - *semver
   ManageIQ/dbus_api_service:
     <<:
     - *common
