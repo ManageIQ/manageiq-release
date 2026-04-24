@@ -381,12 +381,6 @@ repos:
     - *release_morphy_plus
     - *provider_plugin
     - *release
-  ManageIQ/manageiq-providers-nuage:
-    <<:
-    - *common
-    - *release_morphy_plus
-    - *provider_plugin
-    - *release
   ManageIQ/manageiq-providers-nutanix:
     <<:
     - *common

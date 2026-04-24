@@ -57,6 +57,7 @@
     manageiq-providers-kubevirt:
     manageiq-providers-lenovo:
     manageiq-providers-nsxt:
+    # manageiq-providers-nuage has been removed as a plugin starting with tal, but we still need to mirror other branches
     manageiq-providers-nuage:
     manageiq-providers-nutanix:
     manageiq-providers-openshift:
