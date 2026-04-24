@@ -5,12 +5,21 @@
     # container repos don't follow branch naming conventions, so don't mirror master to a release branch
     # and also include any container-specific branches directly
     container-httpd:
+      2-el8:
+      2-el9:
+      2-el10:
       master:
     container-memcached:
+      1-el8:
+      1-el9:
+      1-el10:
       master:
     container-postgresql:
-      master:
       10-el8:
+      13-el8:
+      13-el9:
+      16-el10:
+      master:
     # The following repos don't have release branches, so don't mirror master to a release branch
     manageiq-release:
       master:
