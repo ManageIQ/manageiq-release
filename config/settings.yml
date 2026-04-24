@@ -23,11 +23,6 @@
     # The following repos don't have release branches, so don't mirror master to a release branch
     manageiq-release:
       master:
-    # The following repos have been removed as a plugin starting with najdorf, so don't mirror master to a najdorf+ release branch
-    manageiq-graphql:
-      master:
-    manageiq-v2v:
-      master:
   :productization_name: manageiq
   :remotes:
     :upstream: git@github.com:ManageIQ
@@ -44,8 +39,6 @@
     manageiq-decorators:
     manageiq-documentation:
     manageiq-gems-pending:
-    # manageiq-graphql has been removed as a plugin starting with najdorf, but we still need to mirror other branches
-    manageiq-graphql:
     manageiq-pods:
     manageiq-providers-amazon:
     manageiq-providers-ansible_tower:
@@ -82,8 +75,6 @@
     manageiq-schema:
     manageiq-ui-classic:
     manageiq-ui-service:
-    # manageiq-v2v has been removed as a plugin starting with najdorf, but we still need to mirror other branches
-    manageiq-v2v:
     manageiq:
   :working_directory: mirrors
 :manageiq_rubygems:
