@@ -5,19 +5,23 @@
     # container repos don't follow branch naming conventions, so don't mirror master to a release branch
     # and also include any container-specific branches directly
     container-httpd:
+      2-el8:
+      2-el9:
+      2-el10:
       master:
     container-memcached:
+      1-el8:
+      1-el9:
+      1-el10:
       master:
     container-postgresql:
-      master:
       10-el8:
+      13-el8:
+      13-el9:
+      16-el10:
+      master:
     # The following repos don't have release branches, so don't mirror master to a release branch
     manageiq-release:
-      master:
-    # The following repos have been removed as a plugin starting with najdorf, so don't mirror master to a najdorf+ release branch
-    manageiq-graphql:
-      master:
-    manageiq-v2v:
       master:
   :productization_name: manageiq
   :remotes:
@@ -35,8 +39,6 @@
     manageiq-decorators:
     manageiq-documentation:
     manageiq-gems-pending:
-    # manageiq-graphql has been removed as a plugin starting with najdorf, but we still need to mirror other branches
-    manageiq-graphql:
     manageiq-pods:
     manageiq-providers-amazon:
     manageiq-providers-ansible_tower:
@@ -74,8 +76,6 @@
     manageiq-schema:
     manageiq-ui-classic:
     manageiq-ui-service:
-    # manageiq-v2v has been removed as a plugin starting with najdorf, but we still need to mirror other branches
-    manageiq-v2v:
     manageiq:
   :working_directory: mirrors
 :manageiq_rubygems:
