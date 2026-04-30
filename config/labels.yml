@@ -209,6 +209,9 @@ repos:
     - *common
     - *release_morphy_plus
     - *release
+  ManageIQ/container-build_tools:
+    <<:
+    - *common
   ManageIQ/manageiq:
     <<:
     - *common

@@ -50,6 +50,7 @@ applications:
   ManageIQ/dbus_api_service:
   ManageIQ/miq_bot:
 tools:
+  ManageIQ/container-build_tools:
   ManageIQ/manageiq-appliance:
   ManageIQ/manageiq-appliance-build:
   ManageIQ/manageiq-performance:
