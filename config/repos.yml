@@ -65,6 +65,7 @@ master:
   ManageIQ/manageiq-providers-proxmox:
   ManageIQ/manageiq-providers-red_hat_virtualization:
   ManageIQ/manageiq-providers-redfish:
+  ManageIQ/manageiq-providers-scvmm:
   ManageIQ/manageiq-providers-terraform_enterprise:
   ManageIQ/manageiq-providers-vmware:
   ManageIQ/manageiq-providers-workflows:
@@ -146,6 +147,7 @@ tal:
   ManageIQ/manageiq-providers-proxmox:
   ManageIQ/manageiq-providers-red_hat_virtualization:
   ManageIQ/manageiq-providers-redfish:
+  ManageIQ/manageiq-providers-scvmm:
   ManageIQ/manageiq-providers-terraform_enterprise:
   ManageIQ/manageiq-providers-vmware:
   ManageIQ/manageiq-providers-workflows:

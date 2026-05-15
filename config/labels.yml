@@ -432,6 +432,12 @@ repos:
     - *release_morphy_plus
     - *provider_plugin
     - *release
+  ManageIQ/manageiq-providers-scvmm:
+    <<:
+    - *common
+    - *release_tal_plus
+    - *provider_plugin
+    - *release
   ManageIQ/manageiq-providers-terraform_enterprise:
     <<:
     - *common
