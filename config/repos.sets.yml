@@ -54,7 +54,6 @@ ui:
   ManageIQ/manageiq-providers-ibm_cloud:
   ManageIQ/manageiq-providers-ibm_power_vc:
   ManageIQ/manageiq-providers-lenovo:
-  ManageIQ/manageiq-providers-nsxt:
   ManageIQ/manageiq-providers-redfish:
   # Related enough to UI that cross-repo typically needs it
   ManageIQ/manageiq-api:
