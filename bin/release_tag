@@ -10,9 +10,11 @@ require "fileutils"
 require "stringio"
 
 opts = Optimist.options do
-  opt :tag,    "The new tag name.",       :type => :string, :required => true
-  opt :branch, "The branch to tag from.", :type => :string
-  opt :skip,   "The repo(s) to skip.",    :type => :strings
+  opt :tag,           "The new tag name.",           :type => :string, :required => true
+  opt :branch,        "The branch to tag from.",     :type => :string
+  opt :skip,          "The repo(s) to skip.",        :type => :strings
+  opt :organization,  "The organization name",       :default => "ManageIQ"
+  opt :repo_prefix,   "The prefix for repositories", :default => "manageiq"
 
   MultiRepo::CLI.common_options(self, :repo_set_default => nil)
 end
@@ -58,7 +60,7 @@ class ReleaseTag
       Bundler.with_clean_env do
         repo.chdir do
           # Ensure that spec/manageiq is symlinked
-          FileUtils.ln_sf(repo.path.join("../manageiq").expand_path, repo.path.join("spec/manageiq"))
+          FileUtils.ln_sf(repo.path.join("../xaasio-cmp").expand_path, repo.path.join("spec/manageiq"))
 
           system!("bundle check || bundle update")
           system!({"RELEASE_VERSION" => tag}, "bundle exec rake release")
@@ -83,7 +85,7 @@ post_review = StringIO.new
 # Move manageiq repo to the end of the list.  The rake release script on manageiq
 #   depends on all of the other repos running their rake release scripts first.
 repos = MultiRepo::CLI.repos_for(**opts)
-repos = repos.partition { |r| r.name != "ManageIQ/manageiq" }.flatten
+repos = repos.partition { |r| r.name != "#{opts[:organization]}/#{opts[:repo_prefix]}" }.flatten
 
 # However, the other plugins require that manageiq is at the right checkout in
 #   order to run their rake release scripts
