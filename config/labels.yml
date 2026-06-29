@@ -500,6 +500,10 @@ repos:
     <<:
     - *common
     - *semver
+  ManageIQ/floe-servicenow:
+    <<:
+    - *common
+    - *semver
   ManageIQ/httpd_configmap_generator:
     <<:
     - *common
