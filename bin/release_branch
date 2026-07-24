@@ -12,6 +12,8 @@ opts = Optimist.options do
   opt :branch,        "The new branch name.",                                   :type => :string, :required => true
   opt :next_branch,   "The next branch name.",                                  :type => :string, :required => true
   opt :source_branch, "The source branch from which to create the new branch.", :default => "master"
+  opt :organization,  "The organization name",                                  :default => "ManageIQ"
+  opt :repo_prefix,   "The prefix for repositories",                            :default => "manageiq"
 
   MultiRepo::CLI.common_options(self, :repo_set_default => nil)
 end
@@ -30,7 +32,7 @@ class ReleaseBranch
 
     # Ensure we move core to the source branch so that the symlinks from the
     # other repos are correct
-    core_repo = MultiRepo::Repo.new("ManageIQ/manageiq")
+    core_repo = MultiRepo::Repo.new("#{opts[:organization]}/#{opts[:repo_prefix]}")
     core_repo.git.fetch
     core_repo.git.hard_checkout(source_branch, "origin/#{source_branch}")
 
@@ -67,7 +69,7 @@ class ReleaseBranch
     # symlinks from the other repos are correct. However, just do a regular
     # checkout and not a hard/clean checkout, as we need to keep the commits
     # to push later.
-    repo.git.client.checkout(source_branch) if repo.name == "ManageIQ/manageiq"
+    repo.git.client.checkout(source_branch) if repo.name == "#{opts[:organization]}/#{opts[:repo_prefix]}"
   end
 
   def pretty_log(target_branch, count)
@@ -99,11 +101,11 @@ class ReleaseBranch
   private
 
   def symlink_spec_manageiq
-    return if repo.name == "ManageIQ/manageiq"
+    return if repo.name == "#{opts[:organization]}/#{opts[:repo_prefix]}"
     return unless Pathname.new("spec").directory?
 
     FileUtils.rm_f("spec/manageiq")
-    FileUtils.ln_s("../../manageiq", "spec/manageiq")
+    FileUtils.ln_s("../../#{opts[:repo_prefix]}", "spec/manageiq")
   end
 
   def apply_common_branch_changes
