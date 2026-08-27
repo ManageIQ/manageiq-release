@@ -14,6 +14,8 @@ opts = Optimist.options do
 
   opt :review_only,   "Skip the merge and re-review the branch details", :default => false
 
+  opt :skip_first_time_setup, "Skip the first-time setup of manageiq core", :default => false
+
   MultiRepo::CLI.common_options(self, :repo_set_default => nil)
 end
 opts[:repo_set] = opts[:branch] unless opts[:repo] || opts[:repo_set]
@@ -36,11 +38,13 @@ class ReleaseMergedBranch
     @first_time_setup = true
   end
 
-  def initialize(repo, branch:, source_branch: "master", dry_run:, **_)
+  def initialize(repo, branch:, source_branch: "master", skip_first_time_setup: false, dry_run:, **_)
     @repo          = repo
     @branch        = branch
     @source_branch = source_branch
     @dry_run       = dry_run
+
+    @first_time_setup = true if skip_first_time_setup
   end
 
   def run
