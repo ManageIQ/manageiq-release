@@ -82,11 +82,11 @@ class ReleaseMergedBranch
   end
 
   def pretty_log(target_branch, count)
-    repo.git.client.capturing.log("-#{count}", "--color", "-p", target_branch, :graph => true, :pretty => "format:\%C(auto)\%h -\%d \%s \%C(green)(\%cr) \%C(cyan)<\%an>\%C(reset)").chomp
+    repo.git.client.capturing.log("-#{count}", "--color", "-p", target_branch, {:graph => true, :pretty => "format:\%C(auto)\%h -\%d \%s \%C(green)(\%cr) \%C(cyan)<\%an>\%C(reset)"}, "--", ":!.yarn/releases/yarn-*.cjs").chomp
   end
 
   def master_diff
-    repo.git.client.capturing.diff("--color", "origin/#{source_branch}", branch)
+    repo.git.client.capturing.diff("--color", "origin/#{source_branch}", branch, "--", ":!.yarn/releases/yarn-*.cjs")
   end
 
   def review
