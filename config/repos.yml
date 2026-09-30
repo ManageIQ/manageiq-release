@@ -4,6 +4,7 @@ master:
   ManageIQ/container-amazon-smartstate:
     has_rake_release_new_branch: true
     skip_tag: true
+  ManageIQ/container-ansible-ee:
   ManageIQ/container-httpd:
     has_real_releases: true
   ManageIQ/container-memcached:
