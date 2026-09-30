@@ -210,6 +210,11 @@ repos:
     - *common
     - *release_morphy_plus
     - *release
+  ManageIQ/container-ansible-ee:
+    <<:
+    - *common
+    - *release_tal_plus
+    - *release
   ManageIQ/container-build_tools:
     <<:
     - *common
