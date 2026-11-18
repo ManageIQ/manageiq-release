@@ -53,7 +53,8 @@ class BackportPrs
     @stats = {
       :skipped  => [],
       :success  => [],
-      :conflict => []
+      :conflict => [],
+      :failure  => []
     }
   end
 
@@ -70,23 +71,32 @@ class BackportPrs
       puts
       puts "** #{pr.html_url}".cyan.bold
 
-      if already_on_branch?(pr)
-        @stats[:skipped] << pr.html_url
+      begin
+        if already_on_branch?(pr)
+          @stats[:skipped] << pr.html_url
 
-        handle_already_on_branch(pr)
+          handle_already_on_branch(pr)
 
-        puts "The commit already exists on the branch. Skipping.".yellow
-      elsif backport_pr(pr)
-        @stats[:success] << pr.html_url
+          puts "The commit already exists on the branch. Skipping.".yellow
+        elsif backport_pr(pr)
+          @stats[:success] << pr.html_url
+
+          puts
+          repo.git.client.log("-1")
+          puts
+        else
+          @stats[:conflict] << pr.html_url
+
+          puts
+          puts "A conflict was encountered during backport.".red
+          puts "Stopping backports for #{repo_name}.".red
+          break
+        end
+      rescue StandardError => err
+        @stats[:failure] << "#{pr.html_url} (#{err.class}: #{err.message.lines.first&.chomp})"
 
         puts
-        repo.git.client.log("-1")
-        puts
-      else
-        @stats[:conflict] << pr.html_url
-
-        puts
-        puts "A conflict was encountered during backport.".red
+        puts "An error was encountered during backport: #{err.class}: #{err.message}".red
         puts "Stopping backports for #{repo_name}.".red
         break
       end
@@ -249,7 +259,8 @@ def backport_prs(branch, repos, opts)
   stats = {
     :success  => [],
     :skipped  => [],
-    :conflict => []
+    :conflict => [],
+    :failure  => []
   }
 
   backports = BackportPrs.search(repos.keys, "#{branch}/yes").sort!
@@ -277,6 +288,11 @@ def backport_prs(branch, repos, opts)
   if stats[:conflict].any?
     puts "The following PRs had conflicts:"
     puts stats[:conflict].map { |n| ("* #{n}") }
+    puts
+  end
+  if stats[:failure].any?
+    puts "The following PRs failed to backport:"
+    puts stats[:failure].map { |n| ("* #{n}") }
     puts
   end
   puts
